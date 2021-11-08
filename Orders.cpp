@@ -290,7 +290,7 @@ const std::string BombOrders::getName() const
     return *name;
 }
 
-void BombOrders::execute()
+void BombOrders::execute(Cards)
 {
 
 }
