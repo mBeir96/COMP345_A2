@@ -21,6 +21,10 @@ class GameEngine {
 		void executeOrder();
 		void endExecuteOrder();
 		void win();
+		bool getStartUp();
+		bool getPlay();
+		void setStartUp(bool);
+		void setPlay(bool);
 		
 	private:
 		bool StartUp;

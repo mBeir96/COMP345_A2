@@ -49,6 +49,19 @@ std::istream& operator>>(std::istream& in, GameEngine& g)
     return in;
 }
 
+bool GameEngine::getStartUp(){
+    return StartUp;
+}
+bool GameEngine::getPlay(){
+    return Play;
+}
+void GameEngine::setStartUp(bool StartUp){
+    this->StartUp = StartUp;
+}
+void GameEngine::setPlay(bool Play){
+    this->Play = Play;
+}
+
 void GameEngine::loadMap() {
 	//add code here later 
 }
