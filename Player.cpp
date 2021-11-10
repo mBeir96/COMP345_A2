@@ -23,7 +23,7 @@ Player::Player(string s)
 
 
 //Four parmeter constructor
-Player::Player(int reinforcementPool, string name, vector<Territory*> t, vector<Card*> h, vector<Orders*> o)
+Player::Player(int reinforcementPool, string name, vector<Territory*> t, vector<Hand*> h, vector<Orders*> o)
 {
 	this->reinforcementPool = reinforcementPool;
 	this->name = name;
@@ -166,7 +166,7 @@ Player::~Player()
 	orderList.clear();
 	//release memory
 	vector<Territory*>().swap(territory);
-	vector<Card*>().swap(handCard);
+	vector<Hand*>().swap(handCard);
 	vector<Orders*>().swap(orderList);
 }
 
@@ -200,7 +200,7 @@ vector<Territory*> Player::getTerritory()
 }
 
 
-vector<Card*> Player::getCard()
+vector<Hand*> Player::getCard()
 {
 
 	return handCard;
@@ -245,57 +245,6 @@ vector<Territory*> Player::toDefend()
 		return DefendList;
 	}
 
-}
-bool Player::playerContientBouns()
-{
-	string a = "NA";
-	string b = "AS";
-	string c = "SA";
-	string d = "AU";
-	string e = "EU";
-	string f = "AF";
-
-	int c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0;
-	for (int i = 0; i < territory.size(); i++)
-	{
-		string temp = (*territory[i]).getContinent();
-		if (temp.compare(a) == 0)
-		{
-			c1++;
-		}
-		if (temp.compare(b) == 0)
-		{
-			c2++;
-		}
-		if (temp.compare(c) == 0)
-		{
-			c3++;
-		}
-		if (temp.compare(d) == 0)
-		{
-			c4++;
-		}
-		if (temp.compare(e) == 0)
-		{
-			c5++;
-		}
-		if (temp.compare(f) == 0)
-		{
-			c6++;
-		}
-
-
-	}
-	if (c1 == 3) { return true; }//NA 
-	if (c2 == 3) { return true; }//AS
-	if (c3 == 1) { return true; }//SA
-	if (c4 == 1) { return true; }//AU
-	if (c5 == 1) { return true; }//EU
-	if (c6 == 1) { return true; }//EU
-
-
-
-	return false;
 }
 
 
@@ -381,14 +330,14 @@ void Player::setOrder(Orders* a)
 	orderList.push_back(a);
 }
 
-void Player::printOrder()
-{
+//void Player::printOrder()
+//{
 
-	for (int i = 0; i < orderList.size(); i++) {
-		cout << "<" << orderList.at(i)->getResult() << "> ";
-	}
-	cout << endl;
-}
+	//for (int i = 0; i < orderList.size(); i++) {
+	//	cout << "<" << orderList.at(i)->getResult() << "> ";
+	//}
+	//cout << endl;
+//}
 
 void Player::printHandcard()
 {

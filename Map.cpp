@@ -66,12 +66,7 @@ Territory::~Territory()
 	player = NULL;
 }
 
-//Territory stream insertion operator
-ostream& operator << (ostream& out, const Territory& t)
-{
-	out << t.country;
-	return out;
-}
+
 
 
 //Map class
@@ -124,12 +119,7 @@ Map::~Map()
 	theMap = NULL;
 }
 
-//Territory stream insertion operator
-ostream& operator << (ostream& out, const Map& m)
-{
-	out << m.theMap;
-	return out;
-} 
+
 
 //validate method
 void Map::validate()

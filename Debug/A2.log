@@ -1,0 +1,59 @@
+﻿  Cards.cpp
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(79): error C2259: 'BombOrders': cannot instantiate abstract class
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(70): message : see declaration of 'BombOrders'
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(79): message : due to following members:
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(79): message : 'void Orders::execute(void)': is abstract
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(21): message : see declaration of 'Orders::execute'
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(79,26): error C2259: 'BombOrders': cannot instantiate abstract class
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(70): message : see declaration of 'BombOrders'
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(79,26): message : due to following members:
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(79,26): message : 'void Orders::execute(void)': is abstract
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(21): message : see declaration of 'Orders::execute'
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(88): error C2259: 'Orders': cannot instantiate abstract class
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(8): message : see declaration of 'Orders'
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(88): message : due to following members:
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(88): message : 'void Orders::execute(void)': is abstract
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(21): message : see declaration of 'Orders::execute'
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(88,22): error C2259: 'Orders': cannot instantiate abstract class
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(8): message : see declaration of 'Orders'
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(88,22): message : due to following members:
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(88,22): message : 'void Orders::execute(void)': is abstract
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(21): message : see declaration of 'Orders::execute'
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(141,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\COMP345A2\Cards.cpp(212,20): warning C4018: '<': signed/unsigned mismatch
+  Orders.cpp
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Orders.cpp(447): error C2259: 'BombOrders': cannot instantiate abstract class
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(70): message : see declaration of 'BombOrders'
+C:\Users\Admin\source\repos\COMP345A2\Orders.cpp(447): message : due to following members:
+C:\Users\Admin\source\repos\COMP345A2\Orders.cpp(447): message : 'void Orders::execute(void)': is abstract
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(21): message : see declaration of 'Orders::execute'
+C:\Users\Admin\source\repos\COMP345A2\Orders.cpp(447,36): error C2259: 'BombOrders': cannot instantiate abstract class
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(70): message : see declaration of 'BombOrders'
+C:\Users\Admin\source\repos\COMP345A2\Orders.cpp(447,36): message : due to following members:
+C:\Users\Admin\source\repos\COMP345A2\Orders.cpp(447,36): message : 'void Orders::execute(void)': is abstract
+C:\Users\Admin\source\repos\COMP345A2\Orders.h(21): message : see declaration of 'Orders::execute'
+  Player.cpp
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\COMP345A2\Player.cpp(213,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\COMP345A2\Player.cpp(221,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\COMP345A2\Player.cpp(233,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\COMP345A2\Player.cpp(241,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\COMP345A2\Player.cpp(264,21): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...

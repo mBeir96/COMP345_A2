@@ -26,6 +26,17 @@ public:
 	int value;
 	int army;
 	vector<Territory*> edges;
+
+	//accessors for private values
+	string getTname();
+	string getContinent();
+	string getTerritoryOwner();
+	int getArmyAmount();
+	//mutator for priv values
+	void setTname(string);
+	void setContinent(string);
+	void setTerritoryOwner(string);
+	void setArmyAmount(int);
 };
 
 //Map class
@@ -41,6 +52,9 @@ public:
 	~Map();
 	void validate();
 	vector<Territory>* theMap;
+
+
+
 };
 
 //MapLoader class

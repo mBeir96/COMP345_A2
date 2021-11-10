@@ -1,12 +1,15 @@
 #pragma once
-#include <string>
-#include <vector>
-#include <iostream>
 #include "Orders.h"
 #include "Map.h"
 #include "Cards.h"
 #include "GameEngine.h"
+#include <string>
+#include <vector>
+#include <iostream>
+
 using namespace std;
+class Hand;
+class Orders;
 class Territory;
 //all class need to have an assignment operator, and stream insertion operator.
 class Player {
@@ -14,7 +17,7 @@ class Player {
 public:
     Player();       // Default constructor
     Player(string); //added
-    Player(int, string, vector<Territory*> territories, vector<Card*> handCard, vector<Orders*> order); //Constructor
+    Player(int, string, vector<Territory*> territories, vector<Hand*> handCard, vector<Orders*> order); //Constructor
     Player(const Player& p); //Copy constructor
     Player& operator = (const Player&); //added
     friend std::istream& operator>>(std::istream& in, Player& p);
@@ -28,11 +31,11 @@ public:
     vector<Territory*> toAttack();
     vector<Territory*> toDefend();
     vector<Orders*> getOrderList();
-    vector<Card*> getCard();
+    vector<Hand*> getCard();
     void issueOrder();
 
     string getName();
-    int getReinforcementPool();
+    int getReinforcementPool(); 
     void setReinforcementPool(int);
     void setOrder(Orders*);
     void setTerritory(Territory);
@@ -47,11 +50,11 @@ private:
     int reinforcementPool;
 
     vector<Territory*> territory;
-    vector<Card*> handCard;
+    vector<Hand*> handCard;
     vector<Orders*> orderList;
 
     //friend classes
-    friend class Card;
+    friend class Hand;
     friend class GameEngine;
     friend class Map;
 };

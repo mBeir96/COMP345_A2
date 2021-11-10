@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Player.h"
 
+class Player;
 
 // this is the declaration
 
@@ -19,6 +20,8 @@ class Orders
         virtual bool validate(bool);
         virtual void execute() = 0;
         virtual const std::string getName() const;
+
+
 
     private:
         const std::string refName = "";
