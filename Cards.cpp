@@ -76,7 +76,9 @@ Orders* Card::Play()
 	switch (*cardType)
 	{
 	case Bomb:
-		orders = new BombOrders();
+		//switch when bomb orders is no longer abstract
+		orders = nullptr;
+		//orders = new BombOrders();
 		break;
 	case Airlift:
 		orders = new AirliftOrders();
@@ -85,7 +87,7 @@ Orders* Card::Play()
 		orders = new BlockadeOrders();
 		break;
 	default:
-		orders = new Orders();
+		orders = nullptr;
 	}
 
 	return orders;
