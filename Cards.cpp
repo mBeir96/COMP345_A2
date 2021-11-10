@@ -29,6 +29,28 @@ Card::Card(const Card& card)
 	cardType = card.cardType;
 }
 
+Card& Card::operator=(const Card& c)
+{
+    if (this == &c)
+	{
+    	return *this;
+    }
+    cardType = new CardType(*(c.cardType));
+
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const Card& c)
+{
+    out << c.cardType << std::endl;
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Card& c)
+{
+    return in;
+}
+
 Card::~Card()
 {
 	//delete card type
@@ -82,6 +104,28 @@ Deck::Deck(const Deck& deck)
 {
 }
 
+Deck& Deck::operator=(const Deck& d)
+{
+    if (this == &d)
+	{
+    	return *this;
+    }
+    this->cards = d.cards;
+
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const Deck& d)
+{
+    out << d.cards << std::endl;
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Deck& d)
+{
+    return in;
+}
+
 Deck::~Deck()
 {
 	while (!cards->empty()) {
@@ -123,6 +167,28 @@ Hand::Hand()
 
 Hand::Hand(const Hand& hand)
 {
+}
+
+Hand& Hand::operator=(const Hand& h)
+{
+    if (this == &h)
+	{
+    	return *this;
+    }
+    this->cards = h.cards;
+
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const Hand& h)
+{
+    out << h.cards << std::endl;
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Hand& h)
+{
+    return in;
 }
 
 Hand::~Hand()

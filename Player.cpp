@@ -48,12 +48,108 @@ Player::Player(const Player& p)
 //added assignment operator
 Player& Player::operator=(const Player& player)
 {
+	if (this == &player)
+	{
+    	return *this;
+    }
 	this->name = player.name;
 	this->reinforcementPool = player.reinforcementPool;
 	this->territory = player.territory;
 	this->handCard = player.handCard;
 	this->orderList = player.orderList;
 	return *this;
+}
+
+bool Player::operator==(const Player& player)
+{
+	if (name == player.name && reinforcementPool == player.reinforcementPool)
+	{
+		if(territory.size() == player.territory.size() && handCard.size() == player.handCard.size() && orderList.size() == player.orderList.size())
+		{
+			for(int i = 0; i < (int)territory.size(); i++)
+			{
+				if(territory.at(i) == player.territory.at(i))
+				{
+					continue;
+				}
+				return false;
+			}
+
+			for(int i = 0; i < (int)handCard.size(); i++)
+			{
+				if(handCard.at(i) == player.handCard.at(i))
+				{
+					continue;
+				}
+				return false;
+			}
+
+			for(int i = 0; i < (int)orderList.size(); i++)
+			{
+				if(orderList.at(i) == player.orderList.at(i))
+				{
+					continue;
+				}
+				return false;
+			}
+			return true;
+		}
+		return false;	
+    }
+	
+	return false;
+}
+//maybe no necesary
+// bool Player::operator!=(const Player& player)
+// {
+// 	if (name != player.name && reinforcementPool != player.reinforcementPool)
+// 	{
+// 		if(territory.size() != player.territory.size() && handCard.size() != player.handCard.size() && orderList.size() != player.orderList.size())
+// 		{
+// 			for(int i = 0; i < (int)territory.size(); i++)
+// 			{
+// 				if(territory.at(i) != player.territory.at(i))
+// 				{
+// 					continue;
+// 				}
+// 				return false;
+// 			}
+
+// 			for(int i = 0; i < (int)handCard.size(); i++)
+// 			{
+// 				if(handCard.at(i) == player.handCard.at(i))
+// 				{
+// 					continue;
+// 				}
+// 				return false;
+// 			}
+
+// 			for(int i = 0; i < (int)orderList.size(); i++)
+// 			{
+// 				if(orderList.at(i) == player.orderList.at(i))
+// 				{
+// 					continue;
+// 				}
+// 				return false;
+// 			}
+// 			return true;
+// 		}
+// 		return false;	
+//     }
+	
+// 	return false;
+// }
+
+
+std::ostream& operator<<(std::ostream& out, const Player& p)
+{
+	out << p.handCard.at(0) << p.name << p.reinforcementPool << p.territory.at(0) << p.orderList.at(0);
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Player& p)
+{
+    return in;
 }
 
 //Destructor

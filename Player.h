@@ -17,6 +17,10 @@ public:
     Player(int, string, vector<Territory*> territories, vector<Card*> handCard, vector<Orders*> order); //Constructor
     Player(const Player& p); //Copy constructor
     Player& operator = (const Player&); //added
+    friend std::istream& operator>>(std::istream& in, Player& p);
+    friend std::ostream& operator<<(std::ostream &out, const Player &p);
+    bool operator == (const Player&);
+    bool operator != (const Player&);
     ~Player(); //Destructor
 
     //Methods

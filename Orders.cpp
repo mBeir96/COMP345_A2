@@ -469,9 +469,13 @@ OrdersList::OrdersList(const OrdersList& o)
     this->listOrders = o.listOrders;
 }
 
-OrdersList& OrdersList::operator=(const OrdersList& n)
+OrdersList& OrdersList::operator=(const OrdersList& ol)
 {
-    listOrders = n.listOrders;
+    if (this == &ol)
+	{
+    	return *this;
+    }
+    listOrders = ol.listOrders;
 
     return *this;
 }

@@ -33,9 +33,30 @@ Territory::Territory(const Territory& old)
 }
 
 //assignment operator
-Territory& Territory::operator = (const Territory& t)
+Territory& Territory::operator=(const Territory& t)
 {
-	return *this;
+    if (this == &t)
+	{
+    	return *this;
+    }
+    army = t.army;
+	continent = t.continent;
+	country = t.country;
+	value = t.value;
+	player = new std::string(*(t.player));
+
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const Territory& t)
+{
+    out << t.army << t.continent << t.country << t.player << t.value << t.edges.at(0);
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Territory& t)
+{
+    return in;
 }
 
 //destructor
@@ -74,9 +95,26 @@ Map::Map(const Map &old)
 }
 
 //assignemnt operator
-Map& Map::operator = (const Map &m)
+Map& Map::operator=(const Map& m)
 {
-	return *this;
+    if (this == &m)
+	{
+    	return *this;
+    }
+    this->theMap = m.theMap;
+
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const Map& m)
+{
+    out << m.theMap->at(0);
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Map& m)
+{
+    return in;
 }
 
 //destructor
@@ -130,6 +168,28 @@ void Map::validate()
 		cout << theMap->at(i).country << " belongs to " << theMap->at(i).continent << "\n";
 	}
 	
+}
+
+//MapLoader constructor and operator
+MapLoader& MapLoader::operator=(const MapLoader& m)
+{
+    if (this == &m)
+	{
+    	return *this;
+    }
+
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const MapLoader& m)
+{
+
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, MapLoader& m)
+{
+    return in;
 }
 
 //MapLOader class

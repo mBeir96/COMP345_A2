@@ -147,7 +147,7 @@ class OrdersList
     public:
         OrdersList();
         OrdersList(const OrdersList& o);
-        OrdersList& operator=(const OrdersList& o);
+        OrdersList& operator=(const OrdersList& ol);
         friend std::istream& operator>>(std::istream& in, OrdersList& o);
         friend std::ostream& operator<<(std::ostream &out, const OrdersList &o);
         ~OrdersList();
