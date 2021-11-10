@@ -7,6 +7,7 @@
 
 enum CardType { Bomb, Reinforcement, Airlift, Diplomacy, Blockade };
 
+//all class need to have an assignment operator, and stream insertion operator.
 
 class Card
 {
