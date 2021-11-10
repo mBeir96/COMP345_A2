@@ -1,5 +1,8 @@
 #include <vector>
 #include "Orders.h"
+#include "Cards.h"
+#include "Map.h"
+#include "Player.h"
 
 
 //this is the implementation initialisation
@@ -50,13 +53,11 @@ Orders::~Orders()
 //     return val;
 // }
 
-void Orders::setValidate(bool val)
-{
-    this->val = new bool(val);
-}
 
-void Orders::validate()
+bool Orders::validate(bool valid)
 {
+    std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
+    return valid;
 }
 
 const std::string Orders::getName() const
@@ -64,33 +65,21 @@ const std::string Orders::getName() const
     return *name;
 }
 
-bool Orders::getVal()
-{
-
-}
 
 //end of the orders class
 
 DeployOrders::DeployOrders()
 {
-    this->val = new bool;
-    this->name = new std::string;
-    
-}
-
-DeployOrders::DeployOrders(bool val)
-{
-    this->val = val;
     this->name = &refName;
     // std::cout << this->val << std::endl;
     // std::cout << *this->name << std::endl;
     // std::cout << this->getVal() << std::endl;
     // std::cout << this->getName() << std::endl;
+    
 }
 
 DeployOrders::DeployOrders(const DeployOrders &d)
 {
-    this->val = new bool((d.val));
     this->name = new std::string(*(d.name));
 }
 
@@ -107,7 +96,6 @@ DeployOrders& DeployOrders::operator=(const DeployOrders& d)
 	{
     	return *this;
     }
-    this->val = new bool((d.val));
     this->name = new std::string(*(d.name));
 
     return *this;
@@ -124,16 +112,6 @@ std::istream& operator>>(std::istream& in, DeployOrders& d)
     return in;
 }
 
-bool DeployOrders::getVal()
-{
-    return val;
-}
-
-void DeployOrders::setValidate(bool val)
-{
-    this->val = new bool(val);
-}
-
 const std::string DeployOrders::getName() const
 {
     return *name;
@@ -144,8 +122,10 @@ void DeployOrders::execute()
 
 }
 
-void DeployOrders::validate()
+bool DeployOrders::validate(bool valid)
 {
+    std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
+    return valid;
 }
 
 //end of DeployOrders
@@ -154,14 +134,6 @@ void DeployOrders::validate()
 
 AdvanceOrders::AdvanceOrders()
 {
-    this->val = new bool;
-    this->name = new std::string;
-}
-
-
-AdvanceOrders::AdvanceOrders(bool val)
-{ 
-    this->val = val;
     this->name = &refName;
 }
 
@@ -173,7 +145,6 @@ AdvanceOrders::~AdvanceOrders()
 
 AdvanceOrders::AdvanceOrders(const AdvanceOrders &a)
 {
-    val = new bool((a.val));
     name = new std::string(*(a.name));
 }
 
@@ -183,7 +154,6 @@ AdvanceOrders& AdvanceOrders::operator=(const AdvanceOrders& a)
 	{
     	return *this;
     }
-    val = new bool((a.val));
     name = new std::string(*(a.name));
 
     return *this;
@@ -200,16 +170,6 @@ std::istream& operator>>(std::istream& in, AdvanceOrders& a)
     return in;
 }
 
-bool AdvanceOrders::getVal()
-{
-    return val;
-}
-
-void AdvanceOrders::setValidate(bool val)
-{
-    this->val = new bool(val);
-}
-
 const std::string AdvanceOrders::getName() const
 {
     return *name;
@@ -220,8 +180,10 @@ void AdvanceOrders::execute()
 
 }
 
-void AdvanceOrders::validate()
+bool AdvanceOrders::validate(bool valid)
 {
+    std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
+    return valid;
 }
 
 //end of AdvanceOrders
@@ -229,20 +191,11 @@ void AdvanceOrders::validate()
 
 BombOrders::BombOrders()
 {
-    this->val = new bool;
-    this->name = new std::string;
-}
-
-
-BombOrders::BombOrders(bool val)
-{
-    this->val = val;
     this->name = &refName;
 }
 
 BombOrders::BombOrders(const BombOrders& b)
 {
-    val = new bool((b.val));
     name = new std::string(*(b.name));
 }
 
@@ -258,7 +211,7 @@ BombOrders& BombOrders::operator=(const BombOrders& b)
 	{
     	return *this;
     }
-    val = new bool((b.val));
+    
     name = new std::string(*(b.name));
 
     return *this;
@@ -275,48 +228,42 @@ std::istream& operator>>(std::istream& in, BombOrders& b)
     return in;
 }
 
-bool BombOrders::getVal()
-{
-    return val;
-}
-
-void BombOrders::setValidate(bool val)
-{
-    this->val = new bool(val);
-}
-
 const std::string BombOrders::getName() const
 {
     return *name;
 }
 
-void BombOrders::execute(Cards)
+void BombOrders::execute(Player self, Player enenemy, std::string target)
 {
-
+    if(enenemy == self)
+    {
+      this->validate(false);
+      return;                                                          
+    }
+    for(int i = 0; i < (int)enenemy.getTerritory().size(); i++)
+    {
+        if(enenemy.getTerritory().at(i)->country == target)
+        {
+            enenemy.getTerritory().at(i)->army = enenemy.getTerritory().at(i)->army / 2;
+        }
+    }      
 }
 
-void BombOrders::validate()
+bool BombOrders::validate(bool valid)
 {
+    std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
+    return valid;
 }
 
 //end BombOrders
 
 BlockadeOrders::BlockadeOrders()
 {
-    this->val = new bool;
-    this->name = new std::string;
-}
-
-
-BlockadeOrders::BlockadeOrders(bool val)
-{
-    this->val = val;
     this->name = &refName;
 }
 
 BlockadeOrders::BlockadeOrders(const BlockadeOrders& b)
 {
-    val = new bool((b.val));
     name = new std::string(*(b.name));
 }
 
@@ -332,7 +279,6 @@ BlockadeOrders& BlockadeOrders::operator=(const BlockadeOrders& b)
 	{
     	return *this;
     }
-    val = new bool((b.val));
     name = new std::string(*(b.name));
 
     return *this;
@@ -349,16 +295,6 @@ std::istream& operator>>(std::istream& in, BlockadeOrders& b)
     return in;
 }
 
-bool BlockadeOrders::getVal()
-{
-    return val;
-}
-
-void BlockadeOrders::setValidate(bool val)
-{
-    this->val = new bool(val);
-}
-
 const std::string BlockadeOrders::getName() const
 {
     return *name;
@@ -369,27 +305,21 @@ void BlockadeOrders::execute()
 
 }
 
-void BlockadeOrders::validate()
+bool BlockadeOrders::validate(bool valid)
 {
+    std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
+    return valid;
 }
 
 //end BlockadeOrders
 
 AirliftOrders::AirliftOrders()
 {
-    this->val = new bool;
-    this->name = new std::string;
-}
-
-AirliftOrders::AirliftOrders(bool val)
-{
-    this->val = val;
     this->name = &refName;
 }
 
 AirliftOrders::AirliftOrders(const AirliftOrders& a)
 {
-    val = new bool((a.val));
     name = new std::string(*(a.name));
 }
 
@@ -405,7 +335,6 @@ AirliftOrders& AirliftOrders::operator=(const AirliftOrders& a)
 	{
     	return *this;
     }
-    val = new bool((a.val));
     name = new std::string(*(a.name));
 
     return *this;
@@ -422,16 +351,6 @@ std::istream& operator>>(std::istream& in, AirliftOrders& a)
     return in;
 }
 
-bool AirliftOrders::getVal()
-{
-    return val;
-}
-
-void AirliftOrders::setValidate(bool val)
-{
-    this->val = new bool(val);
-}
-
 const std::string AirliftOrders::getName() const
 {
     return *name;
@@ -442,8 +361,10 @@ void AirliftOrders::execute()
 
 }
 
-void AirliftOrders::validate()
+bool AirliftOrders::validate(bool valid)
 {
+    std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
+    return valid;
 }
 
 
@@ -451,19 +372,11 @@ void AirliftOrders::validate()
 
 NegotiateOrders::NegotiateOrders()
 {
-    this->val = new bool;
-    this->name = new std::string;
-}
-
-NegotiateOrders::NegotiateOrders(bool val)
-{
-    this->val = val;
     this->name = &refName;
 }
 
 NegotiateOrders::NegotiateOrders(const NegotiateOrders& n)
 {
-    val = new bool((n.val));
     name = new std::string(*(n.name));
 }
 
@@ -479,7 +392,6 @@ NegotiateOrders& NegotiateOrders::operator=(const NegotiateOrders& n)
 	{
     	return *this;
     }
-    val = new bool((n.val));
     name = new std::string(*(n.name));
 
     return *this;
@@ -496,16 +408,6 @@ std::istream& operator>>(std::istream& in, NegotiateOrders& n)
     return in;
 }
 
-bool NegotiateOrders::getVal()
-{
-    return val;
-}
-
-void NegotiateOrders::setValidate(bool val)
-{
-    this->val = new bool(val);
-}
-
 const std::string NegotiateOrders::getName() const
 {
     return *name;
@@ -516,8 +418,10 @@ void NegotiateOrders::execute()
 
 }
 
-void NegotiateOrders::validate()
+bool NegotiateOrders::validate(bool valid)
 {
+    std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
+    return valid;
 }
 
 
@@ -538,16 +442,16 @@ OrdersList::OrdersList()
     //     listOrders.push_back(new NegotiateOrders(true));
     // }
     //the first parametre is validation;
-    DeployOrders* o1= new DeployOrders(false);
-    AdvanceOrders* o2 = new AdvanceOrders(true);
-    BombOrders* o3 = new BombOrders(true);
-    BlockadeOrders* o4 = new BlockadeOrders(false);
-    AirliftOrders* o5 = new AirliftOrders(false);
-    NegotiateOrders* o6 = new NegotiateOrders(true);
-    NegotiateOrders* o7 = new NegotiateOrders(true);
-    DeployOrders* o8 = new DeployOrders(true);
-    AirliftOrders* o9 = new AirliftOrders(false);
-    DeployOrders* o10 = new DeployOrders(false);
+    DeployOrders* o1= new DeployOrders();
+    AdvanceOrders* o2 = new AdvanceOrders();
+    BombOrders* o3 = new BombOrders();
+    BlockadeOrders* o4 = new BlockadeOrders();
+    AirliftOrders* o5 = new AirliftOrders();
+    NegotiateOrders* o6 = new NegotiateOrders();
+    NegotiateOrders* o7 = new NegotiateOrders();
+    DeployOrders* o8 = new DeployOrders();
+    AirliftOrders* o9 = new AirliftOrders();
+    DeployOrders* o10 = new DeployOrders();
     listOrders.push_back(o1);
     listOrders.push_back(o2);
     listOrders.push_back(o3);

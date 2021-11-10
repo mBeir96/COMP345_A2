@@ -8,7 +8,7 @@
 #include "GameEngine.h"
 using namespace std;
 class Territory;
-
+//all class need to have an assignment operator, and stream insertion operator.
 class Player {
 
 public:

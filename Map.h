@@ -7,6 +7,7 @@
 #include <sstream>
 using namespace std;
 
+//all class need to have an assignment operator, and stream insertion operator.
 //Territory class
 class Territory
 {
