@@ -233,6 +233,10 @@ const std::string BombOrders::getName() const
     return *name;
 }
 
+void BombOrders::execute()
+{
+}
+
 void BombOrders::execute(Player self, Player enenemy, std::string target)
 {
     if(enenemy == self)

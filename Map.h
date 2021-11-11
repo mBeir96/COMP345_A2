@@ -1,4 +1,5 @@
 #pragma once
+#include "Player.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -7,6 +8,7 @@
 #include <sstream>
 using namespace std;
 
+class Player;
 //all class need to have an assignment operator, and stream insertion operator.
 //Territory class
 class Territory
@@ -14,7 +16,7 @@ class Territory
 public:
 
 	Territory();
-	Territory(string continent, string country, string player, int value, int army, vector<Territory*> edges);
+	Territory(string continent, string country, Player* player, int value, int army, vector<Territory*> edges);
 	Territory(const Territory &old);
 	Territory& operator = (const Territory &t);
 	friend std::istream& operator>>(std::istream& in, Territory& t);
@@ -22,7 +24,7 @@ public:
 	~Territory();
 	string continent;
 	string country;
-	string *player; //replace with actual player
+	Player *player; //replace with actual player
 	int value;
 	int army;
 	vector<Territory*> edges;
@@ -30,13 +32,13 @@ public:
 	//accessors for private values
 	string getTname();
 	string getContinent();
-	string getTerritoryOwner();
+	Player* getTerritoryOwner();
 	int getArmyAmount();
 	//mutator for priv values
-	void setTname(string);
-	void setContinent(string);
-	void setTerritoryOwner(string);
-	void setArmyAmount(int);
+	void setTname(string n);
+	void setContinent(string n);
+	void setTerritoryOwner(Player p);
+	void setArmyAmount(int n);
 };
 
 //Map class

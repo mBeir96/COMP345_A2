@@ -11,11 +11,11 @@ Territory::Territory()
 }
 
 //parameterized constructor
-Territory::Territory(string cont, string coun, string pl, int val, int ar, vector<Territory*> ed)
+Territory::Territory(string cont, string coun, Player* pl, int val, int ar, vector<Territory*> ed)
 {
 	continent = cont;
 	country = coun;
-	player = &pl;
+	player = pl;
 	value = val;
 	army = ar;
 	edges = ed;
@@ -43,7 +43,7 @@ Territory& Territory::operator=(const Territory& t)
 	continent = t.continent;
 	country = t.country;
 	value = t.value;
-	player = new std::string(*(t.player));
+	player = t.player;
 
     return *this;
 }
@@ -66,6 +66,45 @@ Territory::~Territory()
 	player = NULL;
 }
 
+string Territory::getTname()
+{
+	return country;
+}
+
+string Territory::getContinent()
+{
+	return continent;
+}
+
+Player* Territory::getTerritoryOwner()
+{
+	return player;
+}
+
+int Territory::getArmyAmount()
+{
+	return army;
+}
+
+//mutator for priv values
+void Territory::setTname(string n)
+{
+	country = n;
+}
+void Territory::setContinent(string n)
+{
+	continent = n;
+}
+
+void Territory::setTerritoryOwner(Player p)
+{
+	player = &p;
+}
+
+void Territory::setArmyAmount(int n)
+{
+	army = n;
+}
 
 
 

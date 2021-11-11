@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
-
 using namespace std;
+
 class Hand;
 class Orders;
 class Territory;

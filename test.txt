@@ -1,0 +1,4 @@
+loadmap europass.map
+validatemap
+addplayer
+gamestart

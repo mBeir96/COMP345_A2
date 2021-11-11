@@ -213,7 +213,7 @@ vector<Territory*> Player::toAttack()
 	for (int i = 0; i < territory.size(); i++)
 	{
 		string temp = getName();
-		if (!temp.compare(territory[i]->getTerritoryOwner()) == 0)
+		if (!temp.compare(territory[i]->getTerritoryOwner()->getName()) == 0)
 			AttackList.push_back(territory[i]);
 
 	}
@@ -232,7 +232,7 @@ vector<Territory*> Player::toDefend()
 
 		for (int i = 0; i < territory.size(); i++)
 		{
-			if (getName().compare(territory[i]->getTerritoryOwner()) == 0)
+			if (getName().compare(territory[i]->getTerritoryOwner()->getName()) == 0)
 
 				DefendList.push_back(territory[i]);
 		}

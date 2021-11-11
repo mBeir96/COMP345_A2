@@ -78,6 +78,7 @@ class BombOrders : public Orders
         ~BombOrders();
         bool validate(bool);
         void execute(Player, Player, std::string);
+        void execute();
         const std::string getName() const;
 
     private:
