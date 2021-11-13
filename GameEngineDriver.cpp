@@ -1,4 +1,5 @@
 #include "GameEngine.h"
+#include "CommandProcessing.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -13,6 +14,7 @@ int main() {
 
 	RiskState currentState = START;
 	GameEngine gm;
-	gm.States();
-	return 0;
+	gm.StartupPhase();
+
+	cout << "Hello";
 }

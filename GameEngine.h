@@ -1,10 +1,18 @@
 #pragma once
-
+#include "GameEngine.h"
+#include "CommandProcessing.h"
+#include "Map.h"
 #include <iostream>
 #include <string>
+#include <algorithm>
 enum RiskState {
 	START, MAPLOADED, MAPVALIDATED, PLAYERSADDED, ASSIGNMENTREIFORCEMENT, ISSUEORDERS, EXECUTEORDERS, WIN
 };
+class Map;
+class MapLoader;
+class Territory;
+class Deck;
+
 class GameEngine {
 public:
 	GameEngine();
@@ -27,6 +35,23 @@ public:
 	void setPlay(bool);
 	void currentState();
 	void changeState();
+
+	//
+	Map* theMap;
+	MapLoader* loader;
+	vector<Territory>* loadedMap;
+
+	FileCommandProcessorAdapter processor;
+	CommandProcessor* cp = new CommandProcessor();
+	FileLineReader* flr = new FileLineReader();
+
+	static int CommandCount;
+	ifstream inFile;
+
+	vector<Player*> players;
+
+	Deck* deck;
+
 	//states
 	void Start();
 	void MapLoaded();
@@ -37,8 +62,9 @@ public:
 	void ExecuteOrders();
 	void Win();
 
-	//loop
-	void States();
+	//loops
+	void StartupPhase();
+	void play();
 private:
 	bool StartUp;
 	bool Play;

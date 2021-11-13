@@ -10,8 +10,9 @@ using namespace std;
 class CommandProcessor;
 class Command
 {
-	void saveEffect(CommandProcessor* cp, string effect);
 public:
+	void saveEffect(CommandProcessor* cp, string effect);
+
 	Command();
 	Command(string typed, string effect);
 	string typed;
@@ -24,8 +25,8 @@ class CommandProcessor
 public:
 	CommandProcessor();
 	vector<Command*> commands;
-	virtual void getCommand();
-	bool validate(string command);
+	virtual string getCommand(int state);
+	bool validate(int state, string command);
 
 protected:
 	virtual string readCommand();
@@ -41,13 +42,16 @@ public:
 class FileCommandProcessorAdapter : public CommandProcessor, public FileLineReader
 {
 private:
-	CommandProcessor* cp;
-	FileLineReader* flr;
+	
 public:
+	FileCommandProcessorAdapter();
 	FileCommandProcessorAdapter(CommandProcessor* cp);
 	FileCommandProcessorAdapter(FileLineReader* flr);
-	
-	void getCommand(ifstream* file);
+	CommandProcessor* cp;
+	FileLineReader* flr;
+	string getCommand(int state);
+	string getCommand(int state, ifstream* file);
+	string readCommand();
 	string readCommand(ifstream* file);
 };
 

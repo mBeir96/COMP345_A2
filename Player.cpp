@@ -8,22 +8,25 @@ using namespace std;
 Player::Player()
 {
 	name = "default";
-	int reinforcementPool = 0;
-	vector<Territory*> territory;
-	vector<Card*> handCard;
-	vector<Orders*> orderList;
+	reinforcementPool = 0;
+	territory;
+	handCard = new Hand();
+	orderList;
 }
 
 //added constructor
 Player::Player(string s)
 {
 	this->name = s;
-
+	reinforcementPool = 0;
+	handCard = new Hand();
+	orderList;
+	territory;
 }
 
 
 //Four parmeter constructor
-Player::Player(int reinforcementPool, string name, vector<Territory*> t, vector<Hand*> h, vector<Orders*> o)
+Player::Player(int reinforcementPool, string name, vector<Territory*> t, Hand* h, vector<Orders*> o)
 {
 	this->reinforcementPool = reinforcementPool;
 	this->name = name;
@@ -64,7 +67,7 @@ bool Player::operator==(const Player& player)
 {
 	if (name == player.name && reinforcementPool == player.reinforcementPool)
 	{
-		if(territory.size() == player.territory.size() && handCard.size() == player.handCard.size() && orderList.size() == player.orderList.size())
+		if(territory.size() == player.territory.size() && handCard->cards->size() == player.handCard->cards->size() && orderList.size() == player.orderList.size())
 		{
 			for(int i = 0; i < (int)territory.size(); i++)
 			{
@@ -75,9 +78,9 @@ bool Player::operator==(const Player& player)
 				return false;
 			}
 
-			for(int i = 0; i < (int)handCard.size(); i++)
+			for(int i = 0; i < (int)handCard->cards->size(); i++)
 			{
-				if(handCard.at(i) == player.handCard.at(i))
+				if(handCard->cards->at(i) == player.handCard->cards->at(i))
 				{
 					continue;
 				}
@@ -142,8 +145,9 @@ bool Player::operator==(const Player& player)
 
 
 std::ostream& operator<<(std::ostream& out, const Player& p)
-{
-	out << p.handCard.at(0) << p.name << p.reinforcementPool << p.territory.at(0) << p.orderList.at(0);
+{	
+	p.handCard->ShowCards();
+	out << p.name << p.reinforcementPool << p.territory.at(0) << p.orderList.at(0);
     return out;
 }
 
@@ -155,19 +159,23 @@ std::istream& operator>>(std::istream& in, Player& p)
 //Destructor
 Player::~Player()
 {
-	name = "";
-	reinforcementPool = 0;
-	territory.clear();
-	handCard.clear();
-	for (auto order : orderList)
+
+	if (handCard != NULL)
 	{
-		delete order;
+		delete handCard;
+		handCard = NULL;
 	}
-	orderList.clear();
-	//release memory
-	vector<Territory*>().swap(territory);
-	vector<Hand*>().swap(handCard);
-	vector<Orders*>().swap(orderList);
+	
+	if (!orderList.empty())
+	{
+		for (auto order : orderList)
+		{
+			delete order;
+			order = NULL;
+		}
+	}
+	
+
 }
 
 //added
@@ -193,6 +201,11 @@ void Player::setTerritory(Territory t)
 	this->territory.push_back(&t);
 }
 
+void Player::setHand(Card* c)
+{
+	this->handCard->AddCard(c);
+}
+
 vector<Territory*> Player::getTerritory()
 {
 	return territory;
@@ -200,7 +213,7 @@ vector<Territory*> Player::getTerritory()
 }
 
 
-vector<Hand*> Player::getCard()
+Hand* Player::getCard()
 {
 
 	return handCard;
@@ -299,7 +312,7 @@ void Player::issueOrder()
 		Attack = Attack - Enemy;
 		AttackList[actionNumber1]->setArmyAmount(Attack);
 		DefendList[actionNumber2]->setArmyAmount(0);
-		AttackList[actionNumber1]->setTerritoryOwner(getName());
+		AttackList[actionNumber1]->setTerritoryOwner(AttackList[actionNumber1]->getTerritoryOwner());
 	}
 	//Advance order Defend
 

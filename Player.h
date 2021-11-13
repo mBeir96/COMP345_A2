@@ -11,13 +11,14 @@ using namespace std;
 class Hand;
 class Orders;
 class Territory;
+class Card;
 //all class need to have an assignment operator, and stream insertion operator.
 class Player {
 
 public:
     Player();       // Default constructor
     Player(string); //added
-    Player(int, string, vector<Territory*> territories, vector<Hand*> handCard, vector<Orders*> order); //Constructor
+    Player(int, string, vector<Territory*> territories, Hand* handCard, vector<Orders*> order); //Constructor
     Player(const Player& p); //Copy constructor
     Player& operator = (const Player&); //added
     friend std::istream& operator>>(std::istream& in, Player& p);
@@ -31,7 +32,7 @@ public:
     vector<Territory*> toAttack();
     vector<Territory*> toDefend();
     vector<Orders*> getOrderList();
-    vector<Hand*> getCard();
+    Hand* getCard();
     void issueOrder();
 
     string getName();
@@ -40,6 +41,7 @@ public:
     void setOrder(Orders*);
     void setTerritory(Territory);
     void setName(string);
+    void setHand(Card* c);
     
     void printOrder();
     void printHandcard();
@@ -50,7 +52,7 @@ private:
     int reinforcementPool;
 
     vector<Territory*> territory;
-    vector<Hand*> handCard;
+    Hand* handCard;
     vector<Orders*> orderList;
 
     //friend classes

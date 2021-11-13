@@ -1,47 +1,11 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (A2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Cards.cpp
-C:\Users\phili\source\repos\COMP345\Cards.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+﻿  GameEngine.cpp
 C:\Users\phili\source\repos\COMP345\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\phili\source\repos\COMP345\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\phili\source\repos\COMP345\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\phili\source\repos\COMP345\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.cpp(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.cpp(143,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Cards.cpp(214,20): warning C4018: '<': signed/unsigned mismatch
-  CommandProcessing.cpp
-  GameEngine.cpp
-  GameEngineDriver.cpp
-  Map.cpp
-C:\Users\phili\source\repos\COMP345\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Map.cpp(169,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Map.cpp(172,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Map.cpp(182,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Map.cpp(184,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Map.cpp(195,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Map.cpp(401,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Map.cpp(406,15): warning C4018: '<=': signed/unsigned mismatch
-  Orders.cpp
-C:\Users\phili\source\repos\COMP345\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Player.cpp
-C:\Users\phili\source\repos\COMP345\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Player.cpp(213,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Player.cpp(221,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Player.cpp(233,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Player.cpp(241,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\Player.cpp(264,21): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  LINK : C:\Users\phili\source\repos\COMP345\Debug\Assignment.exe not found or not built by the last incremental link; performing full link
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(400,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(412,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(417,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(422,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(484,31): warning C4018: '<': signed/unsigned mismatch
   Assignment.vcxproj -> C:\Users\phili\source\repos\COMP345\Debug\Assignment.exe
