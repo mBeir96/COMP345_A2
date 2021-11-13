@@ -102,46 +102,6 @@ bool Player::operator==(const Player& player)
 	
 	return false;
 }
-//maybe no necesary
-// bool Player::operator!=(const Player& player)
-// {
-// 	if (name != player.name && reinforcementPool != player.reinforcementPool)
-// 	{
-// 		if(territory.size() != player.territory.size() && handCard.size() != player.handCard.size() && orderList.size() != player.orderList.size())
-// 		{
-// 			for(int i = 0; i < (int)territory.size(); i++)
-// 			{
-// 				if(territory.at(i) != player.territory.at(i))
-// 				{
-// 					continue;
-// 				}
-// 				return false;
-// 			}
-
-// 			for(int i = 0; i < (int)handCard.size(); i++)
-// 			{
-// 				if(handCard.at(i) == player.handCard.at(i))
-// 				{
-// 					continue;
-// 				}
-// 				return false;
-// 			}
-
-// 			for(int i = 0; i < (int)orderList.size(); i++)
-// 			{
-// 				if(orderList.at(i) == player.orderList.at(i))
-// 				{
-// 					continue;
-// 				}
-// 				return false;
-// 			}
-// 			return true;
-// 		}
-// 		return false;	
-//     }
-	
-// 	return false;
-// }
 
 
 std::ostream& operator<<(std::ostream& out, const Player& p)

@@ -3,9 +3,9 @@ C:\Users\phili\source\repos\COMP345\Cards.h(3,10): warning C4067: unexpected tok
 C:\Users\phili\source\repos\COMP345\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\phili\source\repos\COMP345\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\phili\source\repos\COMP345\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(400,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(412,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(417,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(422,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(484,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(413,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(420,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(425,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(430,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(492,31): warning C4018: '<': signed/unsigned mismatch
   Assignment.vcxproj -> C:\Users\phili\source\repos\COMP345\Debug\Assignment.exe

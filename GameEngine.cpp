@@ -37,13 +37,20 @@ GameEngine::GameEngine(const GameEngine& g)
 
 GameEngine::~GameEngine()
 {
-    delete theMap;
+    
     delete loader;
     delete loadedMap;
+    delete cp;
+    delete flr;
+    delete deck;
+    delete theMap;
     theMap = NULL;
     loader = NULL;
     loadedMap = NULL;
-    std::cout << "The object is destroyed..." << std::endl;
+    cp = NULL;
+    flr = NULL;
+    deck = NULL;
+    std::cout << "Game Engine successfully destroyed" << std::endl;
 }
 
 GameEngine& GameEngine::operator=(const GameEngine& g)
@@ -398,15 +405,15 @@ void GameEngine::AssignReinforcement() {
     {
         //dividing the territories to the players 
         //making the territory belong to te player
-        for (int i = 0; i < theMap->theMap->size(); i++)
+        /*for (int i = 0; i < theMap->theMap->size(); i++)
         {  
             theMap->theMap->at(i).setTerritoryOwner((players.at(i % players.size())));
-        }
+        }*/
         //making the player own the territory
-        /*for (int i = 0; i < theMap->theMap->size(); i++)
+        for (int i = 0; i < theMap->theMap->size(); i++)
         {
             players.at(i % players.size())->setTerritory(theMap->theMap->at(i));
-        }*/
+        }
         //initializing play order
         random_shuffle(players.begin(), players.end());
         //giving every player 50 initial armies to their reinforcement pool
@@ -499,21 +506,21 @@ void GameEngine::Win() {
 
 
 void GameEngine::StartupPhase() {
-    while (state == 0) {
+    while (state == 0) 
+    {
         Start();
-        while (state == 1) {
-            MapLoaded();
-        }
-        while (state == 2) {
-            MapValidated();
-        }
-        while (state == 3) {
-            PlayersAdded();
-        }
-        while (state == 4) {
-            AssignReinforcement();
-        }
-        
+    }
+    while (state == 1) {
+        MapLoaded();
+    }
+    while (state == 2) {
+        MapValidated();
+    }
+    while (state == 3) {
+        PlayersAdded();
+    }
+    while (state == 4) {
+        AssignReinforcement();
     }
 }
 
