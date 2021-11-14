@@ -22,19 +22,21 @@ GameEngine::GameEngine()
     deck = new Deck();
 }
 
+//param const
 GameEngine::GameEngine(bool StartUp, bool Play)
 {
     this->StartUp = StartUp;
     this->Play = Play;
 }
 
-
+//copy const
 GameEngine::GameEngine(const GameEngine& g)
 {
     StartUp = new bool(g.StartUp);
     Play = new bool(g.Play);
 }
 
+//destructor
 GameEngine::~GameEngine()
 {
     
@@ -53,6 +55,7 @@ GameEngine::~GameEngine()
     std::cout << "Game Engine successfully destroyed" << std::endl;
 }
 
+//assignment op
 GameEngine& GameEngine::operator=(const GameEngine& g)
 {
     if (this == &g)
@@ -65,17 +68,20 @@ GameEngine& GameEngine::operator=(const GameEngine& g)
     return *this;
 }
 
+//out tsream
 std::ostream& operator<<(std::ostream& out, const GameEngine& g)
 {
     out << g.StartUp << " " << g.Play << std::endl;
     return out;
 }
 
+//in stream
 std::istream& operator>>(std::istream& in, GameEngine& g)
 {
     return in;
 }
 
+//counts how many commands have been issued
 int GameEngine::CommandCount = 0;
 
 //states and gameplay
@@ -98,6 +104,7 @@ void GameEngine::Start() {
     if (a == "-console") 
     {
         processor.cp = cp;
+        //loadmap when they command loadmap
         if (processor.getCommand(state) == "loadmap")
         {
             CommandCount++;
@@ -121,6 +128,7 @@ void GameEngine::Start() {
         }
         
     }
+    //if they want to use a file
     else if (a == "-file")
     {
         cin >> a;
@@ -149,17 +157,20 @@ void GameEngine::Start() {
     
 }
 
+//Map loaded state
 void GameEngine::MapLoaded() {
 
     cout << "Map is Loaded. You can Load a new map (loadmap) or validate the map you have (validatemap)\nStart with -console or -file" << endl;
     string isValid;
     cin >> isValid;
 
+    //if they want to use console
     if (isValid == "-console")
     {
         processor.cp = cp;
         processor.flr = NULL;
         isValid = processor.getCommand(state);
+        //load map brings them back to start stage
         if (isValid == "loadmap") 
         {
             CommandCount++;
@@ -167,6 +178,7 @@ void GameEngine::MapLoaded() {
             state = 1;
             Start();
         }
+        //validates map
         else if (isValid == "validatemap") 
         {
             CommandCount++;
@@ -185,11 +197,14 @@ void GameEngine::MapLoaded() {
             
         }
     }
+
+    //if they want to use file
     else if (isValid == "-file")
     {
         
         processor.cp = NULL;
         processor.flr = flr;
+        //checks if user want to use the same file as before
         if (!inFile.is_open())
         {
             cin >> isValid;
@@ -208,7 +223,7 @@ void GameEngine::MapLoaded() {
             }
         }
         isValid = processor.getCommand(state, &inFile);
-
+        //loadmap takes them back to start
         if (isValid == "loadmap")
         {
             CommandCount++;
@@ -216,6 +231,7 @@ void GameEngine::MapLoaded() {
             state = 1;
             Start();
         }
+        //validate map
         else if (isValid == "validatemap")
         {
             CommandCount++;
@@ -234,15 +250,15 @@ void GameEngine::MapLoaded() {
 
         }
     }
-    
-
 
 }
+//vmapvalidated state
 void GameEngine::MapValidated() {
     cout << "\n\nMap Has Been Validated. Now you can start adding players by writting \"addplayer player\" \n start with -console or -file" << endl;
 
     string a;
     cin >> a;
+    //if they want to use console
     if (a == "-console")
     {
         processor.cp = cp;
@@ -250,8 +266,10 @@ void GameEngine::MapValidated() {
         a = processor.getCommand(state);
         if (a == "addplayer")
         {
+            //gets player name
             a = processor.readCommand();
             Player* one = new Player(a);
+            //put player in players vector because it's impossible for them to have more than 6 players at this state
             players.push_back(one);
             CommandCount++;
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, "added player " + a);
@@ -259,11 +277,13 @@ void GameEngine::MapValidated() {
             state = 3;
         }
     }
+    //if they want to use file
     else if (a == "-file")
     {
 
         processor.cp = NULL;
         processor.flr = flr;
+        //checks if file is already open and if they want to use the same file
         if (!inFile.is_open())
         {
             cin >> a;
@@ -284,8 +304,10 @@ void GameEngine::MapValidated() {
         a = processor.getCommand(state, &inFile);
         if (a == "addplayer")
         {
+            //gets player name
             a = processor.readCommand(&inFile);
             Player* one = new Player(a);
+            //put player in players vector because it's impossible for them to have more than 6 players at this state
             players.push_back(one);
             CommandCount++;
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, "added player " + a);
@@ -295,10 +317,12 @@ void GameEngine::MapValidated() {
     }
 }
 
+//players added state
 void GameEngine::PlayersAdded() {
     cout << "Enter \"addplayer\" to add player (minimum 2, maximum 6), or \"gamestart\" to go to the next state" << endl;
     string a;
     cin >> a;
+    //if they want to use console
     if (a == "-console")
     {
         processor.cp = cp;
@@ -306,6 +330,7 @@ void GameEngine::PlayersAdded() {
         a = processor.getCommand(state);
         if (a == "addplayer") 
         {
+            //checks if we have less than 6 players (since thats the max)
             if (players.size() < 6)
             {
                 a = processor.readCommand();
@@ -324,6 +349,7 @@ void GameEngine::PlayersAdded() {
                 
             
         }
+        //goes to game start if we have 2 or more players
         else if (a == "gamestart") 
         {
             if (players.size() >= 2)
@@ -338,11 +364,13 @@ void GameEngine::PlayersAdded() {
             
         }
     }
+    //if they want to use a file
     else if (a == "-file")
     {
 
         processor.cp = NULL;
         processor.flr = flr;
+        //checks if file is open and if they want to use the same one
         if (!inFile.is_open())
         {
             cin >> a;
@@ -361,6 +389,7 @@ void GameEngine::PlayersAdded() {
             }
         }
         a = processor.getCommand(state, &inFile);
+        //adddplayer command if there is less than 6 players
         if (a == "addplayer")
         {
             if (players.size() < 6)
@@ -369,6 +398,7 @@ void GameEngine::PlayersAdded() {
                 Player* one = new Player(a);
                 players.push_back(one);
                 CommandCount++;
+                //saveeffect
                 processor.commands.at(CommandCount - 1)->saveEffect(&processor, "added player " + a);
                 cout << "\nPlayer " << players.size() << " added.";
                 state = 3;
@@ -381,6 +411,7 @@ void GameEngine::PlayersAdded() {
 
 
         }
+        //goes to gamestart if there 2 or more players
         else if (a == "gamestart")
         {
             if (players.size() >= 2)
@@ -396,6 +427,8 @@ void GameEngine::PlayersAdded() {
         }
     }
 }
+
+//AasignReinforcement state
 void GameEngine::AssignReinforcement() {
 
     cout << "\nEnter \"continue\" to assign reinforcements and begin to play" << endl;
@@ -404,11 +437,6 @@ void GameEngine::AssignReinforcement() {
     if (a == "continue") 
     {
         //dividing the territories to the players 
-        //making the territory belong to te player
-        /*for (int i = 0; i < theMap->theMap->size(); i++)
-        {  
-            theMap->theMap->at(i).setTerritoryOwner((players.at(i % players.size())));
-        }*/
         //making the player own the territory
         for (int i = 0; i < theMap->theMap->size(); i++)
         {
@@ -433,6 +461,7 @@ void GameEngine::AssignReinforcement() {
             players.at(i)->handCard->ShowCards();
         }
         state = 5;
+        //calling play function
         play();
     }
 
@@ -466,16 +495,21 @@ void GameEngine::ExecuteOrders() {
         issueOrder();
     }
 }
+
+//Win state
 void GameEngine::Win() {
 
     cout << "Enter \"replay\" to play again,  Enter \"quit\" to exit the program\n start with \"-console\" or \"-file\"" << endl;
     string a;
     cin >> a;
+
+    //if they want to use console
     if (a == "-console")
     {
         processor.cp = cp;
         processor.flr = NULL;
         a = processor.getCommand(state);
+        //replay brings them back to start
         if (a == "replay")
         {
             CommandCount++;
@@ -483,7 +517,7 @@ void GameEngine::Win() {
             state = 0;
             Start();
         }
-        
+        //quit prints the commands and effects used during the game and exits the game
         else if (a == "quit")
         {
             cout << "Exiting Game! Hope you had fun!" << endl;
@@ -504,7 +538,7 @@ void GameEngine::Win() {
     }
 }
 
-
+//startupPhase method loops every state until state change
 void GameEngine::StartupPhase() {
     while (state == 0) 
     {
@@ -524,6 +558,7 @@ void GameEngine::StartupPhase() {
     }
 }
 
+//play method loops every state until state change
 void GameEngine::play()
 {
         while (state == 5) {

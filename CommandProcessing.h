@@ -15,6 +15,10 @@ public:
 
 	Command();
 	Command(string typed, string effect);
+	Command(const Command& old);
+	Command& operator = (const Command& t);
+	friend std::istream& operator>>(std::istream& in, Command& t);
+	friend std::ostream& operator<<(std::ostream& out, const Command& t);
 	string typed;
 	string effect;
 };
@@ -28,6 +32,11 @@ public:
 	virtual string getCommand(int state);
 	bool validate(int state, string command);
 
+	CommandProcessor(const CommandProcessor& old);
+	CommandProcessor& operator = (const CommandProcessor& t);
+	friend std::istream& operator>>(std::istream& in, CommandProcessor& t);
+	friend std::ostream& operator<<(std::ostream& out, const CommandProcessor& t);
+
 protected:
 	virtual string readCommand();
 	void saveCommand(string toSave);
@@ -36,6 +45,12 @@ protected:
 class FileLineReader
 {
 public:
+	FileLineReader();
+	FileLineReader(const FileLineReader& old);
+	FileLineReader& operator = (const FileLineReader& t);
+	friend std::istream& operator>>(std::istream& in, FileLineReader& t);
+	friend std::ostream& operator<<(std::ostream& out, const FileLineReader& t);
+
 	string readLineFromFile(ifstream* file);
 };
 
@@ -47,6 +62,12 @@ public:
 	FileCommandProcessorAdapter();
 	FileCommandProcessorAdapter(CommandProcessor* cp);
 	FileCommandProcessorAdapter(FileLineReader* flr);
+
+	FileCommandProcessorAdapter(const FileCommandProcessorAdapter& old);
+	FileCommandProcessorAdapter& operator = (const FileCommandProcessorAdapter& t);
+	friend std::istream& operator>>(std::istream& in, FileCommandProcessorAdapter& t);
+	friend std::ostream& operator<<(std::ostream& out, const FileCommandProcessorAdapter& t);
+
 	CommandProcessor* cp;
 	FileLineReader* flr;
 	string getCommand(int state);
