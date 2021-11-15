@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "Player.h"
+#include "Map.h";
 #include "GameEngine.h"
 
 class Player;
@@ -78,12 +79,18 @@ class AdvanceOrders : public Orders
         const std::string getName() const;
         void setSelfPlayers(Player *self);
         void setTargetTerritory(Territory* terr);
+        void setSourceTerritory(Territory*);
+        void setArmyUnits(int units);
+        bool isAdjacent();
+        int getCasualties(int army, bool isAttacking);
 
     private:
         const std::string refName = "Advance Orders";
         const std::string *name;
         Player* player;
         Territory* terr;
+        Territory* source;
+        int* armyUnits;
 
 };
 

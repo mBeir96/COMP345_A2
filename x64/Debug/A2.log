@@ -1,13 +1,143 @@
-﻿  GameEngineDriver.cpp
+﻿  Cards.cpp
+D:\Github\COMP345_A2\Cards.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Orders.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.cpp(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.cpp(81,26): error C2512: 'BombOrders::BombOrders': no appropriate default constructor available
+D:\Github\COMP345_A2\Cards.cpp(84,29): error C2512: 'AirliftOrders::AirliftOrders': no appropriate default constructor available
+D:\Github\COMP345_A2\Cards.cpp(87,30): error C2512: 'BlockadeOrders::BlockadeOrders': no appropriate default constructor available
+D:\Github\COMP345_A2\Cards.cpp(90,28): error C2512: 'DeployOrders::DeployOrders': no appropriate default constructor available
+D:\Github\COMP345_A2\Cards.cpp(93,31): error C2512: 'NegotiateOrders::NegotiateOrders': no appropriate default constructor available
+  GameEngineDriver.cpp
 D:\Github\COMP345_A2\GameEngineDriver.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Orders.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Map.cpp
+D:\Github\COMP345_A2\Orders.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Orders.h(26,41): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(28,33): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(28,33): error C3646: 'getTargetTerritory': unknown override specifier
+D:\Github\COMP345_A2\Orders.h(28,52): error C2059: syntax error: ')'
+D:\Github\COMP345_A2\Orders.h(28,59): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(34,18): error C2143: syntax error: missing ';' before '*'
+D:\Github\COMP345_A2\Orders.h(34,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(34,24): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(41,38): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(51,33): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(55,25): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(55,25): error C3646: 'getTargetTerritory': unknown override specifier
+D:\Github\COMP345_A2\Orders.h(55,44): error C2059: syntax error: ')'
+D:\Github\COMP345_A2\Orders.h(55,51): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(61,18): error C2143: syntax error: missing ';' before '*'
+D:\Github\COMP345_A2\Orders.h(61,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(61,24): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(68,39): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(78,33): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(79,33): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(88,18): error C2143: syntax error: missing ';' before '*'
+D:\Github\COMP345_A2\Orders.h(88,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(88,24): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(89,18): error C2143: syntax error: missing ';' before '*'
+D:\Github\COMP345_A2\Orders.h(89,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(89,26): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(97,36): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(107,33): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(109,25): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(109,25): error C3646: 'getTargetTerritory': unknown override specifier
+D:\Github\COMP345_A2\Orders.h(109,44): error C2059: syntax error: ')'
+D:\Github\COMP345_A2\Orders.h(109,51): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(115,18): error C2143: syntax error: missing ';' before '*'
+D:\Github\COMP345_A2\Orders.h(115,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(115,24): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(122,40): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(132,33): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(134,25): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(134,25): error C3646: 'getTargetTerritory': unknown override specifier
+D:\Github\COMP345_A2\Orders.h(134,44): error C2059: syntax error: ')'
+D:\Github\COMP345_A2\Orders.h(134,51): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(141,18): error C2143: syntax error: missing ';' before '*'
+D:\Github\COMP345_A2\Orders.h(141,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(141,24): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(148,39): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(158,33): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(159,33): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(161,25): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(161,25): error C3646: 'getTargetTerritory': unknown override specifier
+D:\Github\COMP345_A2\Orders.h(161,44): error C2059: syntax error: ')'
+D:\Github\COMP345_A2\Orders.h(161,51): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(162,25): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(162,25): error C3646: 'getSourceTerritory': unknown override specifier
+D:\Github\COMP345_A2\Orders.h(162,44): error C2059: syntax error: ')'
+D:\Github\COMP345_A2\Orders.h(162,51): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(170,18): error C2143: syntax error: missing ';' before '*'
+D:\Github\COMP345_A2\Orders.h(170,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(170,26): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(171,18): error C2143: syntax error: missing ';' before '*'
+D:\Github\COMP345_A2\Orders.h(171,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(171,26): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Orders.h(180,41): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(191,33): error C2061: syntax error: identifier 'Territory'
+D:\Github\COMP345_A2\Orders.h(197,18): error C2143: syntax error: missing ';' before '*'
+D:\Github\COMP345_A2\Orders.h(197,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Github\COMP345_A2\Orders.h(197,24): error C2238: unexpected token(s) preceding ';'
+D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Orders.cpp
+D:\Github\COMP345_A2\Orders.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Orders.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Orders.cpp(154,1): error C2084: function 'const std::string Orders::getName(void) const' already has a body
+D:\Github\COMP345_A2\Orders.cpp(57): message : see previous definition of 'getName'
+D:\Github\COMP345_A2\Orders.cpp(298,50): error C2276: '!': illegal operation on bound member function expression
+D:\Github\COMP345_A2\Orders.cpp(316,1): warning C4010: single-line comment contains line-continuation character
+D:\Github\COMP345_A2\Orders.cpp(318,21): error C2601: 'AdvanceOrders::validate': local function definitions are illegal
+D:\Github\COMP345_A2\Orders.cpp(296): message : this line contains a '{' which has not yet been matched
+D:\Github\COMP345_A2\Orders.cpp(327,24): error C2275: 'Player': illegal use of this type as an expression
+D:\Github\COMP345_A2\Orders.cpp(8): message : see declaration of 'Player'
+D:\Github\COMP345_A2\Orders.cpp(327,51): error C2065: 'territory': undeclared identifier
+D:\Github\COMP345_A2\Orders.cpp(327,40): error C2275: 'Territory': illegal use of this type as an expression
+D:\Github\COMP345_A2\Player.h(13): message : see declaration of 'Territory'
+D:\Github\COMP345_A2\Orders.cpp(329,35): error C2059: syntax error: ';'
+D:\Github\COMP345_A2\Orders.cpp(330,28): error C2065: 'territory': undeclared identifier
+D:\Github\COMP345_A2\Orders.cpp(428,31): error C2100: illegal indirection
+D:\Github\COMP345_A2\Orders.cpp(439,14): error C2440: 'delete': cannot convert from 'GameEngine' to 'void*'
+D:\Github\COMP345_A2\Orders.cpp(439,12): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+D:\Github\COMP345_A2\Orders.cpp(500,33): error C2039: 'players': is not a member of 'GameEngine'
+D:\Github\COMP345_A2\Orders.cpp(9): message : see declaration of 'GameEngine'
+D:\Github\COMP345_A2\Orders.cpp(502,15): error C2039: 'player': is not a member of 'GameEngine'
+D:\Github\COMP345_A2\Orders.cpp(9): message : see declaration of 'GameEngine'
+D:\Github\COMP345_A2\Orders.cpp(504,16): error C2039: 'player': is not a member of 'GameEngine'
+D:\Github\COMP345_A2\Orders.cpp(9): message : see declaration of 'GameEngine'
+D:\Github\COMP345_A2\Orders.cpp(507,26): error C2039: 'players': is not a member of 'GameEngine'
+D:\Github\COMP345_A2\Orders.cpp(9): message : see declaration of 'GameEngine'
+D:\Github\COMP345_A2\Orders.cpp(650,46): error C2512: 'AdvanceOrders::AdvanceOrders': no appropriate default constructor available
+D:\Github\COMP345_A2\Orders.cpp(651,52): error C2660: 'AdvanceOrders::execute': function does not take 4 arguments
+D:\Github\COMP345_A2\Orders.cpp(295,21): message : see declaration of 'AdvanceOrders::execute'
+  OrdersDriver.cpp
+D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Orders.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   Player.cpp
+D:\Github\COMP345_A2\Orders.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   Generating Code...
-  A2.vcxproj -> D:\Github\COMP345_A2\x64\Debug\A2.exe

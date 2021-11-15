@@ -1,3 +1,4 @@
+#include <random>;
 #include <vector>
 #include "Orders.h"
 #include "Cards.h"
@@ -245,35 +246,106 @@ const std::string AdvanceOrders::getName() const
     return *name;
 }
 
-
-//en dernier
-void AdvanceOrders::execute(Player self, Player enemy, std::string source, std::string target, int numArmy, Territory edges)
+void AdvanceOrders::setSourceTerritory(Territory* sourceTerr)
 {
-     for(int i = 0, j = (int)self.getTerritory().size(); i < (int)self.getTerritory().size(); i++, j--)
-    {
+    source = sourceTerr;
+}
 
-        //If the source territory does not belong to the player that issued the order, the order is invalid.
-        if(self.getTerritory().at(i)->country != source && i == (int)self.getTerritory().size() - 1)
+void AdvanceOrders::setArmyUnits(int units)
+{
+    *(armyUnits) = units;
+}
+
+//checks if source and target are adjacent
+bool AdvanceOrders::isAdjacent() {
+    
+    for (int i = 0; i < source->edges.size(); i++)
+    {
+        if (source->edges.at(i) == terr)
         {
-            this->validate(false);
-            return;
-        }else if(self.getTerritory().at(i)->country == source && self.getTerritory().at(j)->country == target)
-        {
-            // If both the source and target territories belong to the player that issue the airlift order, then the selected
-            // number of armies is moved from the source to the target territory.
-            self.getTerritory().at(i)->army = self.getTerritory().at(i)->army - numArmy;
-            self.getTerritory().at(j)->army = numArmy;
-        }else
-        {
-            // If the target territory does not belong to the player that issued the airlift order, the selected number of
-            // armies is attacking that territory (see “advance order”).
-            //maybe put it on the hand of player?
-            AdvanceOrders *ao = new AdvanceOrders();
-            ao->execute();
-            delete ao;
-            ao = nullptr;
+            return true;
         }
     }
+    
+    return false;
+}
+
+int AdvanceOrders::getCasualties(int units, bool attacking) {
+    int rand;
+    int total;
+    int percentage;
+
+    if (attacking)
+    {
+        percentage = 60;
+    }
+    else
+    {
+        percentage = 70;
+    }
+
+    for (int i = 0; i < units; i++)
+    {
+        rand = std::rand() % 100;
+        if (rand <= percentage)
+        {
+            total++;
+        }
+    }
+
+    return total;
+}
+
+//en dernier
+void AdvanceOrders::execute()
+{
+    //invalid if not owner of source or adjacent
+    if (source->getTerritoryOwner() == player || !isAdjacent) {
+        this->validate(false);
+        return;
+    }
+
+    //add army units if player owns territory
+    if (terr->getTerritoryOwner() == player)
+    {
+        terr->setArmyAmount(terr->getArmyAmount() + *(armyUnits));
+        this->validate(true);
+        return;
+    }
+
+    //attacking protion now
+    int playerAttacks = getCasualties(source->army, true);
+    int enemyAttacks = getCasualties(terr->army, false);
+
+    //set army counts
+
+    //set player army count
+    if (source->army - enemyAttacks <=0)
+    {
+        source->setArmyAmount(0);
+    }
+    else
+    {
+        source->setArmyAmount(source->army - enemyAttacks);
+    }
+
+    //set enemy army count
+    if (terr->army - playerAttacks <= 0)
+    {
+        terr->setArmyAmount(0);
+    }
+    else
+    {
+        terr->setArmyAmount(terr->army - playerAttacks);
+    }
+
+    //transfer terr (target territory) to player
+    if (terr->army == 0) {
+        
+    }
+
+    this->validate(true);
+
 }
 
 bool AdvanceOrders::validate(bool valid)
@@ -356,7 +428,8 @@ const Territory BombOrders::getTargetTerritory() const
 void BombOrders::execute()
 {
 
-    if(this->terr->getTerritoryOwner() == this->player)
+
+    if((*terr).getTerritoryOwner() == this->player)
     {
         //If the target territory does not belong to the player that issued the order, the order is invalid.
         this->validate(false);
@@ -391,14 +464,10 @@ BlockadeOrders::BlockadeOrders(const BlockadeOrders& b)
     this->terr = new Territory(*(b.terr));
     name = new std::string(*(b.name));
 }
-
+ 
 BlockadeOrders::~BlockadeOrders()
 {
     delete name;
-    delete player;
-    delete terr;
-    delete gm;
-    name = nullptr;
 }
 
 BlockadeOrders& BlockadeOrders::operator=(const BlockadeOrders& b)
@@ -449,7 +518,8 @@ void BlockadeOrders::setTargetTerritory(Territory *target){
 void BlockadeOrders::execute()
 {
 
-    if(terr->getTerritoryOwner() != player)
+
+    if((*terr).getTerritoryOwner() != player)
     {
         //If the target territory belongs to an enemy player, the order is declared invalid.
         this->validate(false);
@@ -471,12 +541,11 @@ void BlockadeOrders::execute()
             gm.addPlayer();
         }
     }
-
-    for(int i = 0; i < (int) player.getTerritoies().size(); i++)
+    for(int i = 0; i < (int) player->getTerritory().size(); i++)
     {
-        if(player.getTerritoies().at(i) == terr)
+        if(player->getTerritory().at(i) == terr)
         {
-            player.getTerritoies().at(i) = nullptr;
+            player->getTerritory().at(i) = nullptr;
             break;
         }
     }
@@ -677,15 +746,21 @@ const std::string NegotiateOrders::getName() const
 
 void NegotiateOrders::execute()
 {
-    if(enemy == self)
+    //if you negotiate yourself its invalid
+    if(terr->getTerritoryOwner() == player)
     {
-        //if you negotiate yourself its invalid
         this->validate(false);
 
     }
+    
 
     //If the target is an enemy player, then the effect is that any attack that may be declared between territories
     //of the player issuing the negotiate order and the target player will result in an invalid order  
+    //add truce to both players
+    player->addTruce(terr->getTerritoryOwner());
+    terr->getTerritoryOwner()->addTruce(player);
+    this->validate(true);
+
 }
 
 bool NegotiateOrders::validate(bool valid)
@@ -745,9 +820,4 @@ void OrdersList::put(Orders* o)
 {
     listOrders.push_back(o);
 }
-
-
-
-
-
 
