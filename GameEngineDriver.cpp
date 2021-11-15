@@ -1,5 +1,6 @@
 #include "GameEngine.h"
 #include "CommandProcessing.h"
+#include "Player.h";
 #include <iostream>
 #include <string>
 using namespace std;
@@ -11,7 +12,6 @@ using namespace std;
 }*/
 
 int main() {
-
 	RiskState currentState = START;
 	GameEngine gm;
 	gm.StartupPhase();

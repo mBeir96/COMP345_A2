@@ -4,32 +4,28 @@
 #include "Map.h"
 #include "Player.h"
 
-
+class Player;
+class GameEngine;
 //this is the implementation initialisation
 
+void Orders::setSelfPlayers(Player *self){
+    this->player = self;
+}
 
-// Orders::Orders()
-// {
-//     //this->val = new bool;
-// }
+void Orders::setTargetTerritory(Territory *target){
+    terr = target;
+}
 
-// Orders::Orders(const Orders& o)
-// {
-//     // val = new bool(o.val);
-//     // name = new std::string(*(o.name));
-// }
+Orders& Orders::operator=(const Orders& o)
+{
+    if (this == &o)
+	{
+    	return *this;
+    }
+    this->name = new std::string(*(o.name));
 
-// Orders& Orders::operator=(const Orders& o)
-// {
-//     // if (this == &o)
-// 	// {
-//     // 	return *this;
-//     // }
-//     // this->val = new bool((o.val));
-//     // this->name = new std::string(*(o.name));
-
-//     // return *this;
-// }
+    return *this;
+}
 
 std::ostream& operator<<(std::ostream& out, const Orders& o)
 {
@@ -45,13 +41,10 @@ std::istream& operator>>(std::istream& in, Orders& o)
 Orders::~Orders()
 {
     delete name;
+    delete player;
+    delete terr;
     name = nullptr;
 }
-
-// bool Orders::getVal()
-// {
-//     return val;
-// }
 
 
 bool Orders::validate(bool valid)
@@ -65,11 +58,26 @@ const std::string Orders::getName() const
     return *name;
 }
 
+const Player Orders::getSelfPlayers() const
+{
+    return *player;
+}
+
+const Territory Orders::getTargetTerritory() const
+{
+    return *terr;
+}
+
+
+
 
 //end of the orders class
 
-DeployOrders::DeployOrders()
+DeployOrders::DeployOrders(Player *player, Territory *territory, int numArmy)
 {
+    player = new Player(*(player));
+    terr = new Territory(*(territory));
+    numArmy = numArmy;
     this->name = &refName;
     // std::cout << this->val << std::endl;
     // std::cout << *this->name << std::endl;
@@ -80,12 +88,17 @@ DeployOrders::DeployOrders()
 
 DeployOrders::DeployOrders(const DeployOrders &d)
 {
+    this->player = new Player(*(d.player));
+    this->terr = new Territory(*(d.terr));
     this->name = new std::string(*(d.name));
+    this->numArmy = d.numArmy;
 }
 
 DeployOrders::~DeployOrders()
 {
     delete name;
+    delete player;
+    delete terr;
     name = nullptr;
 }
 
@@ -112,13 +125,59 @@ std::istream& operator>>(std::istream& in, DeployOrders& d)
     return in;
 }
 
+void DeployOrders::setSelfPlayers(Player *self){
+    this->player = self;
+}
+
+void DeployOrders::setTargetTerritory(Territory *target){
+    terr = target;
+}
+
 const std::string DeployOrders::getName() const
 {
     return *name;
 }
 
+int DeployOrders::getNumArmy()
+{
+    return numArmy;
+}
+
+void DeployOrders::setNumArmy(int number)
+{
+    numArmy = number;
+}
+
+
+const std::string Orders::getName() const
+{
+    return *name;
+}
+
+const Player DeployOrders::getSelfPlayers() const
+{
+    return *player;
+}
+
+const Territory DeployOrders::getTargetTerritory() const
+{
+    return *terr;
+}
+
 void DeployOrders::execute()
 {
+
+    if(this->terr->getTerritoryOwner() != this->player)
+    {
+        //If the target territory does not belong to the player that issued the order, the order is invalid.
+        this->validate(false);
+        return;
+    }
+
+    //the selected number of armies is added to the number of armies on that territory.
+    player->setReinforcementPool(player->getReinforcementPool() - numArmy);
+    terr->army = terr->army + numArmy;
+
 
 }
 
@@ -130,21 +189,32 @@ bool DeployOrders::validate(bool valid)
 
 //end of DeployOrders
 
-
-
 AdvanceOrders::AdvanceOrders()
 {
+    player = nullptr;
+    terr;
+    name;
+}
+
+AdvanceOrders::AdvanceOrders(Player *player, Territory *territory)
+{
+    player = new Player(*(player));
+    terr = new Territory(*(territory));
     this->name = &refName;
 }
 
 AdvanceOrders::~AdvanceOrders()
 {
     delete name;
+    delete player;
+    delete terr;
     name = nullptr;
 }
 
 AdvanceOrders::AdvanceOrders(const AdvanceOrders &a)
 {
+    this->player = new Player(*(a.player));
+    this->terr = new Territory(*(a.terr));
     name = new std::string(*(a.name));
 }
 
@@ -175,9 +245,35 @@ const std::string AdvanceOrders::getName() const
     return *name;
 }
 
-void AdvanceOrders::execute()
-{
 
+//en dernier
+void AdvanceOrders::execute(Player self, Player enemy, std::string source, std::string target, int numArmy, Territory edges)
+{
+     for(int i = 0, j = (int)self.getTerritory().size(); i < (int)self.getTerritory().size(); i++, j--)
+    {
+
+        //If the source territory does not belong to the player that issued the order, the order is invalid.
+        if(self.getTerritory().at(i)->country != source && i == (int)self.getTerritory().size() - 1)
+        {
+            this->validate(false);
+            return;
+        }else if(self.getTerritory().at(i)->country == source && self.getTerritory().at(j)->country == target)
+        {
+            // If both the source and target territories belong to the player that issue the airlift order, then the selected
+            // number of armies is moved from the source to the target territory.
+            self.getTerritory().at(i)->army = self.getTerritory().at(i)->army - numArmy;
+            self.getTerritory().at(j)->army = numArmy;
+        }else
+        {
+            // If the target territory does not belong to the player that issued the airlift order, the selected number of
+            // armies is attacking that territory (see “advance order”).
+            //maybe put it on the hand of player?
+            AdvanceOrders *ao = new AdvanceOrders();
+            ao->execute();
+            delete ao;
+            ao = nullptr;
+        }
+    }
 }
 
 bool AdvanceOrders::validate(bool valid)
@@ -189,19 +285,25 @@ bool AdvanceOrders::validate(bool valid)
 //end of AdvanceOrders
 
 
-BombOrders::BombOrders()
+BombOrders::BombOrders(Player *player, Territory *territory)
 {
+    player = new Player(*(player));
+    terr = new Territory(*(territory));
     this->name = &refName;
 }
 
 BombOrders::BombOrders(const BombOrders& b)
 {
+    this->player = new Player(*(b.player));
+    this->terr = new Territory(*(b.terr));
     name = new std::string(*(b.name));
 }
 
 BombOrders::~BombOrders()
 {
     delete name;
+    delete player;
+    delete terr;
     name = nullptr;
 }
 
@@ -228,29 +330,41 @@ std::istream& operator>>(std::istream& in, BombOrders& b)
     return in;
 }
 
+void BombOrders::setSelfPlayers(Player *self){
+    this->player = self;
+}
+
+void BombOrders::setTargetTerritory(Territory *target){
+    terr = target;
+}
+
 const std::string BombOrders::getName() const
 {
     return *name;
 }
 
-void BombOrders::execute()
+const Player BombOrders::getSelfPlayers() const
 {
+    return *player;
 }
 
-void BombOrders::execute(Player self, Player enenemy, std::string target)
+const Territory BombOrders::getTargetTerritory() const
 {
-    if(enenemy == self)
+    return *terr;
+}
+
+void BombOrders::execute()
+{
+
+    if(this->terr->getTerritoryOwner() == this->player)
     {
-      this->validate(false);
-      return;                                                          
+        //If the target territory does not belong to the player that issued the order, the order is invalid.
+        this->validate(false);
+        return;
     }
-    for(int i = 0; i < (int)enenemy.getTerritory().size(); i++)
-    {
-        if(enenemy.getTerritory().at(i)->country == target)
-        {
-            enenemy.getTerritory().at(i)->army = enenemy.getTerritory().at(i)->army / 2;
-        }
-    }      
+
+    this->terr->army = this->terr->army / 2;
+    
 }
 
 bool BombOrders::validate(bool valid)
@@ -261,19 +375,29 @@ bool BombOrders::validate(bool valid)
 
 //end BombOrders
 
-BlockadeOrders::BlockadeOrders()
+BlockadeOrders::BlockadeOrders(Player *player, Territory *territory, GameEngine* gm)
 {
+    player = new Player(*(player));
+    terr = new Territory(*(territory));
+    gm = gm;
+
     this->name = &refName;
 }
 
 BlockadeOrders::BlockadeOrders(const BlockadeOrders& b)
 {
+    this->gm = new GameEngine(*(b.gm));
+    this->player = new Player(*(b.player));
+    this->terr = new Territory(*(b.terr));
     name = new std::string(*(b.name));
 }
 
 BlockadeOrders::~BlockadeOrders()
 {
     delete name;
+    delete player;
+    delete terr;
+    delete gm;
     name = nullptr;
 }
 
@@ -304,9 +428,60 @@ const std::string BlockadeOrders::getName() const
     return *name;
 }
 
+const Player BlockadeOrders::getSelfPlayers() const
+{
+    return *player;
+}
+
+const Territory BlockadeOrders::getTargetTerritory() const
+{
+    return *terr;
+}
+
+void BlockadeOrders::setSelfPlayers(Player *self){
+    this->player = self;
+}
+
+void BlockadeOrders::setTargetTerritory(Territory *target){
+    terr = target;
+}
+
 void BlockadeOrders::execute()
 {
 
+    if(terr->getTerritoryOwner() != player)
+    {
+        //If the target territory belongs to an enemy player, the order is declared invalid.
+        this->validate(false);
+        return;
+    }
+
+    terr->army = terr->army * 2;
+    //the territory will belong to an neutral player
+    for(int i = 0; i < (int) gm->players.size(); i++)
+    {
+        if(gm.players.at(i).getName() == "Neutral Player")
+        {
+            gm.players.at(i).setTerritory(terr);
+            break;
+        }
+        if(i == (int) gm.players.size() - 2)
+        {
+            //create a neutral player
+            gm.addPlayer();
+        }
+    }
+
+    for(int i = 0; i < (int) player.getTerritoies().size(); i++)
+    {
+        if(player.getTerritoies().at(i) == terr)
+        {
+            player.getTerritoies().at(i) = nullptr;
+            break;
+        }
+    }
+
+    
 }
 
 bool BlockadeOrders::validate(bool valid)
@@ -317,19 +492,28 @@ bool BlockadeOrders::validate(bool valid)
 
 //end BlockadeOrders
 
-AirliftOrders::AirliftOrders()
+AirliftOrders::AirliftOrders(Player *player, Territory *source, Territory *target)
 {
+    player = new Player(*(player));
+    source = new Territory(*(source));
+    target = new Territory(*(target));
     this->name = &refName;
 }
 
 AirliftOrders::AirliftOrders(const AirliftOrders& a)
 {
+    this->player = new Player(*(a.player));
+    this->source = new Territory(*(a.source));
+    this->target = new Territory(*(a.target));
     name = new std::string(*(a.name));
 }
 
 AirliftOrders::~AirliftOrders()
 {
     delete name;
+    delete player;
+    delete source;
+    delete target;
     name = nullptr;
 }
 
@@ -360,9 +544,77 @@ const std::string AirliftOrders::getName() const
     return *name;
 }
 
+int AirliftOrders::getNumArmy()
+{
+    return numArmy;
+}
+
+const Player AirliftOrders::getSelfPlayers() const
+{
+    return *player;
+}
+
+const Territory AirliftOrders::getTargetTerritory() const
+{
+    return *target;
+}
+
+const Territory AirliftOrders::getSourceTerritory() const
+{
+    return *source;
+}
+
+void AirliftOrders::setNumArmy(int number)
+{
+    numArmy = number;
+}
+
+void AirliftOrders::setSelfPlayers(Player *self){
+    this->player = self;
+}
+
+void AirliftOrders::setTargetTerritory(Territory *target){
+    target = target;
+}
+
+
+void AirliftOrders::setSourceTerritory(Territory *target){
+    source = target;
+}
+
+
+
+
 void AirliftOrders::execute()
 {
 
+
+    if(source->getTerritoryOwner() != player && target->getTerritoryOwner() != player)
+    {
+        //If the target territory belongs to an enemy player, the order is declared invalid.
+        this->validate(false);
+        return;
+    }
+
+    if(source->getTerritoryOwner() == player && target->getTerritoryOwner() == player)
+    {
+        // If both the source and target territories belong to the player that issue the airlift order, then the selected
+        // number of armies is moved from the source to the target territory.
+        source->army = source->army - numArmy;
+        target->army = numArmy;
+        return;
+    }
+
+    if(source->getTerritoryOwner() == player && target->getTerritoryOwner() != player)
+    {
+        // If the target territory does not belong to the player that issued the airlift order, the selected number of
+        // armies is attacking that territory (see “advance order”).
+        //maybe put it on the hand of player?
+        AdvanceOrders *ao = new AdvanceOrders();
+        ao->execute(player, source, target, numArmy);
+        delete ao;
+        ao = nullptr;
+    }
 }
 
 bool AirliftOrders::validate(bool valid)
@@ -374,19 +626,25 @@ bool AirliftOrders::validate(bool valid)
 
 //end AirliftOrders
 
-NegotiateOrders::NegotiateOrders()
+NegotiateOrders::NegotiateOrders(Player *player, Territory *territory)
 {
+    player = new Player(*(player));
+    terr = new Territory(*(territory));
     this->name = &refName;
 }
 
 NegotiateOrders::NegotiateOrders(const NegotiateOrders& n)
 {
+    this->player = new Player(*(n.player));
+    this->terr = new Territory(*(n.terr));
     name = new std::string(*(n.name));
 }
 
 NegotiateOrders::~NegotiateOrders()
 {
     delete name;
+    delete player;
+    delete terr;
     name = nullptr;
 }
 
@@ -419,7 +677,15 @@ const std::string NegotiateOrders::getName() const
 
 void NegotiateOrders::execute()
 {
+    if(enemy == self)
+    {
+        //if you negotiate yourself its invalid
+        this->validate(false);
 
+    }
+
+    //If the target is an enemy player, then the effect is that any attack that may be declared between territories
+    //of the player issuing the negotiate order and the target player will result in an invalid order  
 }
 
 bool NegotiateOrders::validate(bool valid)
@@ -434,38 +700,6 @@ bool NegotiateOrders::validate(bool valid)
 
 OrdersList::OrdersList()
 {
-    // if(cardtype == bomb){
-    //     listOrders.push_back(new BombOrders(true));
-    // }else if(cardtype == reinforcement){
-    //     listOrders.push_back(new DeployOrders(false));
-    // }else if(cardtype == blockade){
-    //     listOrders.push_back(new BlockadeOrders(false));
-    // }else if(cardtype == airlift){
-    //     listOrders.push_back(new AirliftOrders(false));
-    // }else if(cardtype == diplomacy){
-    //     listOrders.push_back(new NegotiateOrders(true));
-    // }
-    //the first parametre is validation;
-    DeployOrders* o1= new DeployOrders();
-    AdvanceOrders* o2 = new AdvanceOrders();
-    BombOrders* o3 = new BombOrders();
-    BlockadeOrders* o4 = new BlockadeOrders();
-    AirliftOrders* o5 = new AirliftOrders();
-    NegotiateOrders* o6 = new NegotiateOrders();
-    NegotiateOrders* o7 = new NegotiateOrders();
-    DeployOrders* o8 = new DeployOrders();
-    AirliftOrders* o9 = new AirliftOrders();
-    DeployOrders* o10 = new DeployOrders();
-    listOrders.push_back(o1);
-    listOrders.push_back(o2);
-    listOrders.push_back(o3);
-    listOrders.push_back(o4);
-    listOrders.push_back(o5);
-    listOrders.push_back(o6);
-    listOrders.push_back(o7);
-    listOrders.push_back(o8);
-    listOrders.push_back(o9);
-    listOrders.push_back(o10);
 }
 
 OrdersList::OrdersList(const OrdersList& o)
@@ -473,13 +707,9 @@ OrdersList::OrdersList(const OrdersList& o)
     this->listOrders = o.listOrders;
 }
 
-OrdersList& OrdersList::operator=(const OrdersList& ol)
+OrdersList& OrdersList::operator=(const OrdersList& n)
 {
-    if (this == &ol)
-	{
-    	return *this;
-    }
-    listOrders = ol.listOrders;
+    listOrders = n.listOrders;
 
     return *this;
 }
@@ -510,6 +740,12 @@ void OrdersList::remove(int index)
     std::cout << "You remove the orders " << listOrders.at(index - 1)->getName() << std::endl;
     listOrders.erase(listOrders.begin() + (index - 1));
 }
+
+void OrdersList::put(Orders* o)
+{
+    listOrders.push_back(o);
+}
+
 
 
 

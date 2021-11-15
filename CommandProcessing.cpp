@@ -224,6 +224,7 @@ string FileCommandProcessorAdapter::getCommand(int state)
 	else
 		cout << "invalid command at this state";
 	return "";
+	
 }
 
 //getCommand when flr

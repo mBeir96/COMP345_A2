@@ -80,13 +80,19 @@ Orders* Card::Play()
 	case Bomb:
 		//switch when bomb orders is no longer abstract
 		orders = nullptr;
-		//orders = new BombOrders();
+		orders = new BombOrders();
 		break;
 	case Airlift:
 		orders = new AirliftOrders();
 		break;
 	case Blockade:
 		orders = new BlockadeOrders();
+		break;
+	case Reinforcement:
+		orders = new DeployOrders();
+		break;
+	case Diplomacy:
+		orders = new NegotiateOrders();
 		break;
 	default:
 		orders = nullptr;

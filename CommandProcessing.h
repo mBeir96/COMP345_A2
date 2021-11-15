@@ -24,7 +24,7 @@ public:
 };
 
 
-class CommandProcessor
+class CommandProcessor// : public ILoggable
 {
 public:
 	CommandProcessor();
