@@ -480,6 +480,8 @@ void GameEngine::IssueOrders() {
 
 }
 void GameEngine::ExecuteOrders() {
+    
+    /*
     cout << "Enter \"win\" to win,  Enter \"executeOrder\" to repeat executeOrder Enter \"new\"to go back to issue new order" << endl;
     string a;
     cin >> a;
@@ -494,6 +496,38 @@ void GameEngine::ExecuteOrders() {
         state = 5;
         issueOrder();
     }
+    */
+
+    for each (Player *player in players)
+    {
+        for (int i = 0; i < player->orderList.size(); i++)
+        {
+            //execute and remove if its a deploy order
+            if (player->orderList.at(i)->getName() == "Deploy Orders")
+            {
+                //validate, excute and delete order
+                player->orderList.at(i)->validate(true);
+                player->orderList.at(i)->execute();
+                player->orderList.erase(player->orderList.begin() + i);
+                i--;
+            }
+        }
+    }
+
+    //there should be no more deploy orders
+
+    for each (Player * player in players)
+    {
+        while (!player->orderList.empty())
+        {
+            //validate, excute and delete order
+            player->orderList.at(0)->validate(true);
+            player->orderList.at(0)->execute();
+            player->orderList.erase(player->orderList.begin());
+        }
+    }
+
+    //order list should be empty
 }
 
 //Win state

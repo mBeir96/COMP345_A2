@@ -300,7 +300,7 @@ int AdvanceOrders::getCasualties(int units, bool attacking) {
 void AdvanceOrders::execute()
 {
     //invalid if not owner of source or adjacent
-    if (source->getTerritoryOwner() == player || !isAdjacent) {
+    if (source->getTerritoryOwner() == player || !isAdjacent()) {
         this->validate(false);
         return;
     }
