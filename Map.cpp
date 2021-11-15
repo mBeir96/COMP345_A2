@@ -38,6 +38,7 @@ Territory& Territory::operator = (const Territory& t)
 	return *this;
 }
 
+
 //destructor
 Territory::~Territory()
 {
