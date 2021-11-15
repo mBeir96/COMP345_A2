@@ -83,7 +83,7 @@ class BombOrders : public Orders
 
     private:
         const std::string refName = "Bomb Orders";
-        const std::string *name;
+        const std::string* name;
 
 };
 
