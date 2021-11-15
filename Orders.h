@@ -7,7 +7,8 @@
 #include "GameEngine.h"
 
 class Player;
-
+class Territory;
+class GameEngine;
 // this is the declaration
 
 class Orders 
@@ -65,6 +66,7 @@ class DeployOrders : public Orders
 class AdvanceOrders : public Orders
 {
     public:
+        AdvanceOrders();
         AdvanceOrders(Player* player, Territory* territory);    
         AdvanceOrders(const AdvanceOrders& a);
         AdvanceOrders& operator=(const AdvanceOrders& a);
@@ -73,6 +75,7 @@ class AdvanceOrders : public Orders
         ~AdvanceOrders();
         bool validate(bool);
         void execute();
+        void execute(Player self, Player enemy, std::string source, std::string target, int numArmy, Territory edges);
         const std::string getName() const;
         void setSelfPlayers(Player *self);
         void setTargetTerritory(Territory* terr);
@@ -115,7 +118,7 @@ class BombOrders : public Orders
         Territory* terr;
 
 };
-
+class GameEngine;
 class BlockadeOrders : public Orders
 {
     public:
@@ -132,7 +135,7 @@ class BlockadeOrders : public Orders
         void setTargetTerritory(Territory* terr);
         const Player getSelfPlayers() const;
         const Territory getTargetTerritory() const;
-        GameEngine gm;
+        GameEngine* gm;
 
     private:
         const std::string refName = "Blockade Orders";
@@ -198,7 +201,7 @@ class NegotiateOrders : public Orders
 };
 
 
-class OrdersList
+class OrdersList//: public ILoggable
 {
     public:
         OrdersList();

@@ -37,7 +37,7 @@ public:
 	//mutator for priv values
 	void setTname(string n);
 	void setContinent(string n);
-	void setTerritoryOwner(Player p);
+	void setTerritoryOwner(Player* p);
 	void setArmyAmount(int n);
 };
 
@@ -52,7 +52,7 @@ public:
     friend std::ostream& operator<<(std::ostream &out, const Map &m);
 	Map(const Map &old);
 	~Map();
-	void validate();
+	bool validate();
 	vector<Territory>* theMap;
 
 

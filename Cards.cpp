@@ -5,7 +5,7 @@
 #include <iostream>;
 #include <string>;
 
-
+class Deck;
 //Get text version of enums
 const char* CardNames[] = {
 	"Bomb",
@@ -64,6 +64,8 @@ void Card::PrintCardType()
 	std::cout << "\n";
 }
 
+
+
 //gets card type
 CardType Card::GetCardType() {
 	return *cardType;
@@ -106,10 +108,13 @@ Orders* Card::Play()
 Deck::Deck()
 {
 	cards = new std::vector<Card*>;
+	fillDeck(this);
+	random_shuffle(cards->begin(), cards->end());
 }
 
 Deck::Deck(const Deck& deck)
 {
+	this->cards = deck.cards;
 }
 
 Deck& Deck::operator=(const Deck& d)
@@ -151,6 +156,45 @@ void Deck::ShowCards()
 	}
 }
 
+void Deck::fillDeck(Deck* d)
+{
+	//adding bomb Cards
+	Card* bomb[10];
+	for (int i = 0; i < 10; i++)
+	{
+		bomb[i] = new Card(Bomb);
+		d->AddCard(bomb[i]);
+	}
+	//adding reinforcement Cards
+	Card* reinforcement[10];
+	for (int i = 0; i < 10; i++)
+	{
+		reinforcement[i] = new Card(Reinforcement);
+		d->AddCard(reinforcement[i]);
+	}
+	//adding Airlift Cards
+	Card* airlift[10];
+	for (int i = 0; i < 10; i++)
+	{
+		airlift[i] = new Card(Airlift);
+		d->AddCard(airlift[i]);
+	}
+	//adding Diplomacy Cards
+	Card* diplomacy[10];
+	for (int i = 0; i < 10; i++)
+	{
+		diplomacy[i] = new Card(Diplomacy);
+		d->AddCard(diplomacy[i]);
+	}
+	//adding Blockade Cards
+	Card* blockade[10];
+	for (int i = 0; i < 10; i++)
+	{
+		blockade[i] = new Card(Blockade);
+		d->AddCard(blockade[i]);
+	}
+}
+
 void Deck::AddCard(Card* card)
 {
 	cards->push_back( card);
@@ -159,6 +203,11 @@ void Deck::AddCard(Card* card)
 
 Card* Deck::Draw()
 {
+	if (this->cards->empty())
+	{
+		this->fillDeck(this);
+	}
+
 	int rand = std::rand() % cards->size();
 	Card* temp = cards->at(rand);
 	cards->erase(cards->begin() + rand);
@@ -170,11 +219,12 @@ Card* Deck::Draw()
 
 Hand::Hand()
 {
-	cards = new std::vector<Card*>;
+	cards = new vector<Card*>;
 }
 
 Hand::Hand(const Hand& hand)
 {
+	this->cards = hand.cards;
 }
 
 Hand& Hand::operator=(const Hand& h)
@@ -201,17 +251,23 @@ std::istream& operator>>(std::istream& in, Hand& h)
 
 Hand::~Hand()
 {
-	while (!cards->empty()) {
-		delete(cards->front());
-		cards->erase(cards->begin());
+	if (cards != NULL)
+	{
+		while (!cards->empty()) {
+			delete(cards->front());
+			cards->erase(cards->begin());
+		}
 	}
+	
 
-	delete(cards);
+	delete cards;
+	cards = NULL;
+
 }
 
 void Hand::AddCard(Card* card)
 {
-	cards->push_back( card);
+	cards->push_back(card);
 
 }
 

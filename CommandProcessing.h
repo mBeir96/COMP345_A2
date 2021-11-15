@@ -10,22 +10,32 @@ using namespace std;
 class CommandProcessor;
 class Command
 {
-	void saveEffect(CommandProcessor* cp, string effect);
 public:
+	void saveEffect(CommandProcessor* cp, string effect);
+
 	Command();
 	Command(string typed, string effect);
+	Command(const Command& old);
+	Command& operator = (const Command& t);
+	friend std::istream& operator>>(std::istream& in, Command& t);
+	friend std::ostream& operator<<(std::ostream& out, const Command& t);
 	string typed;
 	string effect;
 };
 
 
-class CommandProcessor
+class CommandProcessor// : public ILoggable
 {
 public:
 	CommandProcessor();
 	vector<Command*> commands;
-	virtual void getCommand();
-	bool validate(string command);
+	virtual string getCommand(int state);
+	bool validate(int state, string command);
+
+	CommandProcessor(const CommandProcessor& old);
+	CommandProcessor& operator = (const CommandProcessor& t);
+	friend std::istream& operator>>(std::istream& in, CommandProcessor& t);
+	friend std::ostream& operator<<(std::ostream& out, const CommandProcessor& t);
 
 protected:
 	virtual string readCommand();
@@ -35,19 +45,34 @@ protected:
 class FileLineReader
 {
 public:
+	FileLineReader();
+	FileLineReader(const FileLineReader& old);
+	FileLineReader& operator = (const FileLineReader& t);
+	friend std::istream& operator>>(std::istream& in, FileLineReader& t);
+	friend std::ostream& operator<<(std::ostream& out, const FileLineReader& t);
+
 	string readLineFromFile(ifstream* file);
 };
 
 class FileCommandProcessorAdapter : public CommandProcessor, public FileLineReader
 {
 private:
-	CommandProcessor* cp;
-	FileLineReader* flr;
+	
 public:
+	FileCommandProcessorAdapter();
 	FileCommandProcessorAdapter(CommandProcessor* cp);
 	FileCommandProcessorAdapter(FileLineReader* flr);
-	
-	void getCommand(ifstream* file);
+
+	FileCommandProcessorAdapter(const FileCommandProcessorAdapter& old);
+	FileCommandProcessorAdapter& operator = (const FileCommandProcessorAdapter& t);
+	friend std::istream& operator>>(std::istream& in, FileCommandProcessorAdapter& t);
+	friend std::ostream& operator<<(std::ostream& out, const FileCommandProcessorAdapter& t);
+
+	CommandProcessor* cp;
+	FileLineReader* flr;
+	string getCommand(int state);
+	string getCommand(int state, ifstream* file);
+	string readCommand();
 	string readCommand(ifstream* file);
 };
 

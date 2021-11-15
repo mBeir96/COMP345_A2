@@ -28,7 +28,7 @@ class Card
 		//this is a dummy function meant to print card type
 		//this is not meant to be used during the actual gamevoid PrintCardType();
 		void PrintCardType();
-
+		
 		CardType GetCardType();
 		Orders* Play();
 	private:
@@ -47,6 +47,7 @@ class Deck
 		void ShowCards();
 		void AddCard(Card* card);
 		Card* Draw();
+		void fillDeck(Deck* d);
 	private:
 		std::vector<Card *>* cards;
 };
@@ -63,7 +64,7 @@ class Hand
 		void AddCard(Card* card);
 		void ShowCards();
 		Card * Draw(int position);
-	private:
+
 		std::vector<Card*>* cards;
 };
 

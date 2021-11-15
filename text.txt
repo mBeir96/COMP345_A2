@@ -1,0 +1,6 @@
+loadmap europass.map
+validatemap
+addplayer Steve
+addplayer Joe
+addplayer Mama
+gamestart

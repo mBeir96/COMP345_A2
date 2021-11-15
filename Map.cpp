@@ -7,7 +7,12 @@
 //default constructor
 Territory::Territory()
 {
-	//empty on purpose
+	continent = "";
+	country = "";
+	player = nullptr;
+	value = 0;
+	army = 0;
+	edges;
 }
 
 //parameterized constructor
@@ -44,6 +49,7 @@ Territory& Territory::operator=(const Territory& t)
 	country = t.country;
 	value = t.value;
 	player = t.player;
+	edges = t.edges;
 
     return *this;
 }
@@ -62,8 +68,13 @@ std::istream& operator>>(std::istream& in, Territory& t)
 //destructor
 Territory::~Territory()
 {
-	delete player;
-	player = NULL;
+	if (player != NULL)
+	{
+		delete player;
+		player = NULL;
+	}
+	
+	
 }
 
 string Territory::getTname()
@@ -96,9 +107,9 @@ void Territory::setContinent(string n)
 	continent = n;
 }
 
-void Territory::setTerritoryOwner(Player p)
+void Territory::setTerritoryOwner(Player* p)
 {
-	player = &p;
+	player = p;
 }
 
 void Territory::setArmyAmount(int n)
@@ -161,8 +172,12 @@ Map::~Map()
 
 
 //validate method
-void Map::validate()
+bool Map::validate()
 {
+	if (theMap->size() == 0)
+	{
+		return false;
+	}
 	//showing that theMap is a connected graph
 	cout << "\nThe following is the relations between each country: \n";
 	
@@ -197,6 +212,7 @@ void Map::validate()
 		cout << theMap->at(i).country << " belongs to " << theMap->at(i).continent << "\n";
 	}
 	
+	return true;
 }
 
 //MapLoader constructor and operator
@@ -225,7 +241,7 @@ std::istream& operator>>(std::istream& in, MapLoader& m)
 vector<Territory>* MapLoader::readMap(string file_name)
 {
 	vector<Territory>* territories = new vector<Territory>;
-	Territory empty;
+	
 	int count = 0;
 
 	ifstream inFile(file_name.c_str());
@@ -302,53 +318,54 @@ vector<Territory>* MapLoader::readMap(string file_name)
 
 	//storing the values of the territories
 	if (next == "[countries]")
-	{
-		while (next != "")
-		{
-			std::getline(inFile, next);
-			if (next != "" && next.length() < 50)
+	{		while (next != "")
 			{
-				size_t pos = 0;
-				string space = " ";
-				//seperating the words by spaces
-				while ((pos = next.find(space)) != string::npos)
+				Territory empty;
+				std::getline(inFile, next);
+				if (next != "" && next.length() < 50)
 				{
-					words.push_back(next.substr(0, pos));
-					next.erase(0, pos + space.length());
+					size_t pos = 0;
+					string space = " ";
+					//seperating the words by spaces
+					while ((pos = next.find(space)) != string::npos)
+					{
+						words.push_back(next.substr(0, pos));
+						next.erase(0, pos + space.length());
+					}
+
+					
+					//storing the numerical value of the territory into the vector of Territories
+					//if it is a number
+					if (isdigit(words.at(0).at(0)))
+					{
+						empty.value = std::stoi(words.at(0));
+					}
+					else
+					{
+						cout << "invalid coutries section. The first value on each line should be the country's number";
+						return NULL;
+					}
+					//storing the name of the country into the vector of Territories
+					empty.country = words.at(1);
+					//storing the name of the continent it belongs to into the vector of Territories
+					//if it is a number
+					if (isdigit(words.at(2).at(0)))
+					{
+						empty.continent = continent.at(std::stoi(words.at(2)) - 1);
+					}
+					else
+					{
+						cout << "invalid coutries section. The third value on each line should be the country's continent";
+						return NULL;
+					}
+					//erasing previous values for vector words
+					words.erase(words.begin(), words.end());
+					territories->push_back(empty);
+					empty.player = new Player;
+					count++;
 				}
 
-				territories->push_back(empty);
-				//storing the numerical value of the territory into the vector of Territories
-				//if it is a number
-				if (isdigit(words.at(0).at(0)))
-				{
-					territories->at(count).value = std::stoi(words.at(0));
-				}
-				else
-				{
-					cout << "invalid coutries section. The first value on each line should be the country's number";
-					return NULL;
-				}
-				//storing the name of the country into the vector of Territories
-				territories->at(count).country = words.at(1);
-				//storing the name of the continent it belongs to into the vector of Territories
-				//if it is a number
-				if (isdigit(words.at(2).at(0)))
-				{
-					territories->at(count).continent = continent.at(std::stoi(words.at(2)) - 1);
-				}
-				else
-				{
-					cout << "invalid coutries section. The third value on each line should be the country's continent";
-					return NULL;
-				}
-				//erasing previous values for vector words
-				words.erase(words.begin(), words.end());
-
-				count++;
 			}
-
-		}
 	}
 	//reset value of count
 	count = 0;

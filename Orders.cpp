@@ -190,7 +190,12 @@ bool DeployOrders::validate(bool valid)
 
 //end of DeployOrders
 
-
+AdvanceOrders::AdvanceOrders()
+{
+    player = nullptr;
+    terr;
+    name;
+}
 
 AdvanceOrders::AdvanceOrders(Player *player, Territory *territory)
 {
@@ -423,6 +428,7 @@ const Territory BombOrders::getTargetTerritory() const
 void BombOrders::execute()
 {
 
+
     if((*terr).getTerritoryOwner() == this->player)
     {
         //If the target territory does not belong to the player that issued the order, the order is invalid.
@@ -512,6 +518,7 @@ void BlockadeOrders::setTargetTerritory(Territory *target){
 void BlockadeOrders::execute()
 {
 
+
     if((*terr).getTerritoryOwner() != player)
     {
         //If the target territory belongs to an enemy player, the order is declared invalid.
@@ -521,11 +528,11 @@ void BlockadeOrders::execute()
 
     terr->army = terr->army * 2;
     //the territory will belong to an neutral player
-    for(int i = 0; i < (int) gm.players.size(); i++)
+    for(int i = 0; i < (int) gm->players.size(); i++)
     {
-        if(gm.player.at(i).getName() == "Neutral Player")
+        if(gm.players.at(i).getName() == "Neutral Player")
         {
-            gm.player.at(i).setTerritory(terr);
+            gm.players.at(i).setTerritory(terr);
             break;
         }
         if(i == (int) gm.players.size() - 2)
@@ -650,6 +657,7 @@ void AirliftOrders::setSourceTerritory(Territory *target){
 void AirliftOrders::execute()
 {
 
+
     if(source->getTerritoryOwner() != player && target->getTerritoryOwner() != player)
     {
         //If the target territory belongs to an enemy player, the order is declared invalid.
@@ -742,7 +750,7 @@ void NegotiateOrders::execute()
     if(terr->getTerritoryOwner() == player)
     {
         this->validate(false);
-        return;  
+
     }
     
 
@@ -812,9 +820,4 @@ void OrdersList::put(Orders* o)
 {
     listOrders.push_back(o);
 }
-
-
-
-
-
 
