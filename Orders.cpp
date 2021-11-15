@@ -458,14 +458,10 @@ BlockadeOrders::BlockadeOrders(const BlockadeOrders& b)
     this->terr = new Territory(*(b.terr));
     name = new std::string(*(b.name));
 }
-
+ 
 BlockadeOrders::~BlockadeOrders()
 {
     delete name;
-    delete player;
-    delete terr;
-    delete gm;
-    name = nullptr;
 }
 
 BlockadeOrders& BlockadeOrders::operator=(const BlockadeOrders& b)
