@@ -346,5 +346,33 @@ void Player::printHandcard()
 
 }
 
+void Player::addTruce(Player* player)
+{
+	playerTruces.push_back(player);
+}
+
+void Player::removeAllTruces()
+{
+	/*for (int i = 0; i < playerTruces.size(); i++)
+	{
+		delete(playerTruces.at(i));
+	}*/
+	playerTruces.clear();
+}
+
+bool Player::hasTruce(Player* player)
+{
+	for (int i = 0; i < playerTruces.size(); i++)
+	{
+		if (playerTruces.at(i) == player)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
+
 
 

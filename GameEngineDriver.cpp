@@ -1,4 +1,5 @@
 #include "GameEngine.h"
+#include "Player.h";
 #include <iostream>
 #include <string>
 using namespace std;
@@ -10,9 +11,9 @@ using namespace std;
 }*/
 
 int main() {
-
 	RiskState currentState = START;
 	GameEngine gm;
 	gm.States();
 	return 0;
+	
 }

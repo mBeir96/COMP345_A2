@@ -44,6 +44,9 @@ public:
     void printOrder();
     void printHandcard();
     bool playerContientBouns();
+    void addTruce(Player*);
+    void removeAllTruces();
+    bool hasTruce(Player*);
 
 private:
     string name;
@@ -52,6 +55,7 @@ private:
     vector<Territory*> territory;
     vector<Hand*> handCard;
     vector<Orders*> orderList;
+    vector<Player*> playerTruces;
 
     //friend classes
     friend class Hand;
