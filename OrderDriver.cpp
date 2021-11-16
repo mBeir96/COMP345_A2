@@ -230,6 +230,60 @@ void orderDriver() {
 
 #pragma endregion
 
+#pragma region Negotiate test
+
+	cout << "\n\Negotiate Orders Test...\n\n";
+
+	cout << "Attempting truce with player2 as player2\n";
+	timePause();
+	NegotiateOrders* neg1 = new NegotiateOrders();
+	neg1->setSelfPlayers(p2);
+	neg1->setPeacePlayer(p2);
+	neg1->execute();
+	userPause();
+
+	cout << "\nAttempting truce with player1 as player2\n";
+
+	timePause();
+	NegotiateOrders* neg2 = new NegotiateOrders();
+	neg2->setSelfPlayers(p2);
+	neg2->setPeacePlayer(p1);
+	neg2->execute();
+
+	userPause();
+
+	cout << "\Attempting to bomb Terr5 as Player1 during truce\n";
+	cout << "Previous Terr5 army: " << t5->getArmyAmount() << "\n";
+
+	timePause();
+	BombOrders* bomb3 = new BombOrders();
+	bomb3->setSelfPlayers(p1);
+	bomb3->setTargetTerritory(t5);
+	bomb3->execute();
+
+	cout << "\Current Terr5 army: " << t5->getArmyAmount() << "\n";
+	userPause();
+
+	cout << "\Attacking Terr5 from Terr4 as Player1 during truce\n";
+	cout << "Previous Terr5 army: " << t5->getArmyAmount() << "\n";
+	cout << "Previous Terr4 army: " << t4->getArmyAmount() << "\n";
+
+	timePause();
+	AdvanceOrders* adv4 = new AdvanceOrders();
+	adv4->setSelfPlayers(p1);
+	adv4->setSourceTerritory(t4);
+	adv4->setTargetTerritory(t5);
+	adv4->setArmyUnits(5);
+	adv4->execute();
+
+	cout << "\Current Terr5 army: " << t5->getArmyAmount() << "\n";
+	cout << "\Current Terr4 army: " << t4->getArmyAmount() << "\n";
+
+	userPause();
+
+#pragma endregion
+
+
 
 }
 

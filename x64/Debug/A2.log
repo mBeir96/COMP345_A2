@@ -1,44 +1,4 @@
-﻿  Cards.cpp
-D:\Github\COMP345_A2\Cards.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngine.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.cpp(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  CommandProcessing.cpp
-D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\gameEngine.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  GameEngine.cpp
-D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngine.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  GameEngineDriver.cpp
-D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngine.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngineDriver.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngineDriver.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngineDriver.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngineDriver.cpp(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Map.cpp
-D:\Github\COMP345_A2\GameEngine.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  OrderDriver.cpp
+﻿  OrderDriver.cpp
 D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
@@ -60,18 +20,17 @@ D:\Github\COMP345_A2\OrderDriver.cpp(210,10): warning C4129: 'C': unrecognized c
 D:\Github\COMP345_A2\OrderDriver.cpp(214,10): warning C4129: 'A': unrecognized character escape sequence
 D:\Github\COMP345_A2\OrderDriver.cpp(226,10): warning C4129: 'C': unrecognized character escape sequence
 D:\Github\COMP345_A2\OrderDriver.cpp(227,10): warning C4129: 'C': unrecognized character escape sequence
+D:\Github\COMP345_A2\OrderDriver.cpp(235,10): warning C4129: 'N': unrecognized character escape sequence
+D:\Github\COMP345_A2\OrderDriver.cpp(255,10): warning C4129: 'A': unrecognized character escape sequence
+D:\Github\COMP345_A2\OrderDriver.cpp(264,10): warning C4129: 'C': unrecognized character escape sequence
+D:\Github\COMP345_A2\OrderDriver.cpp(267,10): warning C4129: 'A': unrecognized character escape sequence
+D:\Github\COMP345_A2\OrderDriver.cpp(279,10): warning C4129: 'C': unrecognized character escape sequence
+D:\Github\COMP345_A2\OrderDriver.cpp(280,10): warning C4129: 'C': unrecognized character escape sequence
   Orders.cpp
 D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\GameEngine.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Player.cpp
-D:\Github\COMP345_A2\GameEngine.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Cards.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Player.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   Generating Code...
   A2.vcxproj -> D:\Github\COMP345_A2\x64\Debug\A2.exe

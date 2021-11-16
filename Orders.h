@@ -197,6 +197,8 @@ class NegotiateOrders : public Orders
         friend std::ostream& operator<<(std::ostream &out, const NegotiateOrders &n);
         ~NegotiateOrders();
         bool validate(bool);
+        void setSelfPlayers(Player* self);
+        void setPeacePlayer(Player* target);
         void execute();
         const std::string getName() const;
 
@@ -205,6 +207,7 @@ class NegotiateOrders : public Orders
         const std::string refName = "Negotiate Orders";
         const std::string* name; 
         Player* player;
+        Player* peacePlayer;
         Territory* terr; 
 };
 

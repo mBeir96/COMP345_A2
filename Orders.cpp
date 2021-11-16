@@ -318,7 +318,7 @@ void AdvanceOrders::setTargetTerritory(Territory* terr)
 void AdvanceOrders::execute()
 {
     //invalid if not owner of source or not adjacent
-    if (source->getTerritoryOwner() != player || !isAdjacent()) {
+    if (source->getTerritoryOwner() != player || !isAdjacent() || player->hasTruce(terr->getTerritoryOwner())) {
         this->validate(false);
         return;
     }
@@ -473,13 +473,14 @@ const Territory BombOrders::getTargetTerritory() const
 void BombOrders::execute()
 {
 
-    if(this->terr->getTerritoryOwner() == this->player)
+    if(this->terr->getTerritoryOwner() == this->player || player->hasTruce(this->terr->getTerritoryOwner()))
     {
         //If the target territory does not belong to the player that issued the order, the order is invalid.
         this->validate(false);
         return;
     }
 
+    this->validate(true);
     this->terr->setArmyAmount(this->terr->army / 2);
     
 }
@@ -808,16 +809,17 @@ const std::string NegotiateOrders::getName() const
 void NegotiateOrders::execute()
 {
     //if you negotiate yourself its invalid
-    if(terr->getTerritoryOwner() == player)
+    if(peacePlayer == player)
     {
         this->validate(false);
+        return;
     }
 
     //If the target is an enemy player, then the effect is that any attack that may be declared between territories
     //of the player issuing the negotiate order and the target player will result in an invalid order  
     //add truce to both players
-    player->addTruce(terr->getTerritoryOwner());
-    terr->getTerritoryOwner()->addTruce(player);
+    player->addTruce(peacePlayer);
+    peacePlayer->addTruce(player);
 
     this->validate(true);
 }
@@ -826,6 +828,16 @@ bool NegotiateOrders::validate(bool valid)
 {
     std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
     return valid;
+}
+
+void NegotiateOrders::setSelfPlayers(Player* self)
+{
+    this->player = self;
+}
+
+void NegotiateOrders::setPeacePlayer(Player* target)
+{
+    this->peacePlayer = target;
 }
 
 
