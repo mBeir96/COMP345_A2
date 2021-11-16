@@ -597,7 +597,7 @@ void BlockadeOrders::execute()
     {
         if(player->getTerritory().at(i) == terr)
         {
-            player->getTerritory().at(i) = nullptr;
+            terr->player->removeTerritory(i);
             break;
         }
     }
@@ -617,11 +617,12 @@ AirliftOrders::AirliftOrders()
 {
 }
 
-AirliftOrders::AirliftOrders(Player *player, Territory *source, Territory *target)
+AirliftOrders::AirliftOrders(Player *player, Territory *source, Territory *target, int numArmy)
 {
     player = new Player(*(player));
     source = new Territory(*(source));
     target = new Territory(*(target));
+    numArmy = numArmy;
     this->name = &refName;
 }
 
@@ -630,6 +631,7 @@ AirliftOrders::AirliftOrders(const AirliftOrders& a)
     this->player = new Player(*(a.player));
     this->source = new Territory(*(a.source));
     this->target = new Territory(*(a.target));
+    numArmy = a.numArmy;
     name = new std::string(*(a.name));
 }
 
@@ -729,18 +731,21 @@ void AirliftOrders::execute()
         return;
     }
 
-    /*
+    
     if(this->source->getTerritoryOwner() == player && this->target->getTerritoryOwner() != player)
     {
         // If the target territory does not belong to the player that issued the airlift order, the selected number of
         // armies is attacking that territory (see “advance order”).
-        //maybe put it on the hand of player?
         AdvanceOrders *ao = new AdvanceOrders();
+        ao->setSelfPlayers(player);
+        ao->setSourceTerritory(source);
+        ao->setTargetTerritory(target);
+        ao->setArmyUnits(numArmy);
         ao->execute();
         delete ao;
         ao = nullptr;
     }
-    */
+    
 }
 
 bool AirliftOrders::validate(bool valid)

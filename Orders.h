@@ -155,7 +155,7 @@ class AirliftOrders : public Orders
 {
     public:
         AirliftOrders();
-        AirliftOrders(Player* player, Territory* source, Territory* target);
+        AirliftOrders(Player* player, Territory* source, Territory* target, int numArmy);
         AirliftOrders(const AirliftOrders& a);
         AirliftOrders& operator=(const AirliftOrders& a);
         friend std::istream& operator>>(std::istream& in, AirliftOrders& a);
