@@ -39,6 +39,7 @@ class Orders
 class DeployOrders : public Orders
 {
     public:
+        DeployOrders();
         DeployOrders(Player* player, Territory* territory, int numArmy);
         DeployOrders(const DeployOrders& d);
         DeployOrders& operator=(const DeployOrders& d);
@@ -97,6 +98,7 @@ class AdvanceOrders : public Orders
 class BombOrders : public Orders
 {
     public:
+        BombOrders();
         BombOrders(Player* player, Territory* territory);
         BombOrders(const BombOrders& b);
         BombOrders& operator=(const BombOrders& b);
@@ -122,6 +124,7 @@ class GameEngine;
 class BlockadeOrders : public Orders
 {
     public:
+        BlockadeOrders();
         BlockadeOrders(Player* player, Territory* territory, GameEngine *gm);
         BlockadeOrders(const BlockadeOrders& b);
         BlockadeOrders& operator=(const BlockadeOrders& b);
@@ -148,6 +151,7 @@ class BlockadeOrders : public Orders
 class AirliftOrders : public Orders
 {
     public:
+        AirliftOrders();
         AirliftOrders(Player* player, Territory* source, Territory* target);
         AirliftOrders(const AirliftOrders& a);
         AirliftOrders& operator=(const AirliftOrders& a);
@@ -180,6 +184,7 @@ class AirliftOrders : public Orders
 class NegotiateOrders : public Orders
 {
     public:
+        NegotiateOrders();
         NegotiateOrders(Player* player, Territory* territory);
         NegotiateOrders(bool val);
         NegotiateOrders(const NegotiateOrders& n);

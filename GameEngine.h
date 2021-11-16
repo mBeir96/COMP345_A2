@@ -2,6 +2,8 @@
 #include "GameEngine.h"
 #include "CommandProcessing.h"
 #include "Map.h"
+#include "Orders.h";
+#include "Player.h";
 #include <iostream>
 #include <string>
 #include <algorithm>
