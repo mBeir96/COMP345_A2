@@ -151,8 +151,6 @@ void DeployOrders::setNumArmy(int number)
 }
 
 
-
-
 const Player DeployOrders::getSelfPlayers() const
 {
     return *player;

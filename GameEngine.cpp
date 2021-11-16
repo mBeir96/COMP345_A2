@@ -440,8 +440,8 @@ void GameEngine::AssignReinforcement() {
         //making the player own the territory
         for (int i = 0; i < theMap->theMap->size(); i++)
         {
-            Territory* t = &theMap->theMap->at(i);
-            players.at(i % players.size())->setTerritory(t);
+            players.at(i % players.size())->setTerritory(&(theMap->theMap->at(i)));
+
         }
         //initializing play order
         random_shuffle(players.begin(), players.end());
