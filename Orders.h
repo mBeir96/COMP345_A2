@@ -84,6 +84,9 @@ class AdvanceOrders : public Orders
         int getCasualties(int army, bool isAttacking);
         const Player getSelfPlayers() const;
         const Territory getTargetTerritory() const;
+        void setSelfPlayers(Player* self);
+        void setTargetTerritory(Territory* terr);
+
 
     private:
         const std::string refName = "Advance Orders";

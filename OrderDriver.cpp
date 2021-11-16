@@ -21,8 +21,9 @@ void orderDriver() {
 #pragma region Initialization
 
 	Player* p1 = new Player();
+	p1->setName("Player1");
 	Player* p2 = new Player();
-
+	p2->setName("Player2");
 	//player1 territories
 	Territory* t1 = new Territory();
 	Territory* t2 = new Territory();
@@ -68,19 +69,25 @@ void orderDriver() {
 	t6->setArmyAmount(3);
 
 	//give player 1 territories
-	p1->getTerritory().push_back(t1);
+	vector<Territory*> *t = new vector<Territory*>;
+	t->push_back(t1);
+	t->push_back(t2);
+	t->push_back(t3);
+
+	p1->setTerritory(t1);
 	t1->setTerritoryOwner(p1);
-	p1->getTerritory().push_back(t2);
+	p1->setTerritory(t2);
 	t2->setTerritoryOwner(p1);
-	p1->getTerritory().push_back(t3);
+	p1->setTerritory(t3);
 	t3->setTerritoryOwner(p1);
+	
 
 	//give player 2 territories
-	p2->getTerritory().push_back(t4);
+	p2->setTerritory(t4);
 	t4->setTerritoryOwner(p2);
-	p2->getTerritory().push_back(t5);
+	p2->setTerritory(t5);
 	t5->setTerritoryOwner(p2);
-	p2->getTerritory().push_back(t6);
+	p2->setTerritory(t6);
 	t6->setTerritoryOwner(p2);
 
 	cout << "Player1 owns territory 1, 2 and 3\n";
@@ -89,7 +96,6 @@ void orderDriver() {
 	userPause();
 
 #pragma endregion
-
 
 #pragma region Deploy test
 
@@ -150,7 +156,7 @@ void orderDriver() {
 	userPause();
 #pragma endregion
 
-#pragma region Bomb
+#pragma region Bomb test
 
 	cout << "\n\Bomb Orders Test...\n\n";
 
@@ -174,6 +180,56 @@ void orderDriver() {
 	cout << "\Current Terr4 army: " << t4->getArmyAmount() << "\n";
 	userPause();
 #pragma endregion
+
+#pragma region Advance test
+
+	cout << "\n\Advance Orders Test...\n\n";
+
+	cout << "Attempting to move to Terr3 from Terr1 as Player1\n";
+	timePause();
+	AdvanceOrders* adv1 = new AdvanceOrders();
+	adv1->setSelfPlayers(p1);
+	adv1->setTargetTerritory(t3);
+	adv1->setSourceTerritory(t1);
+	adv1->execute();
+	userPause();
+
+	cout << "\Attempting to move Terr3 from Terr2 as Player1\n";
+	cout << "Previous Terr3 army: " << t3->getArmyAmount() << "\n";
+	cout << "Previous Terr2 army: " << t2->getArmyAmount() << "\n";
+
+	timePause();
+	AdvanceOrders* adv2 = new AdvanceOrders();
+	adv2->setSelfPlayers(p1);
+	adv2->setSourceTerritory(t2);
+	adv2->setTargetTerritory(t3);
+	adv2->setArmyUnits(2);
+	adv2->execute();
+
+	cout << "\Current Terr3 army: " << t3->getArmyAmount() << "\n";
+	cout << "\Current Terr2 army: " << t2->getArmyAmount() << "\n";
+
+	userPause();
+
+	cout << "\Attacking Terr4 from Terr3 as Player1\n";
+	cout << "Previous Terr4 army: " << t4->getArmyAmount() << "\n";
+	cout << "Previous Terr3 army: " << t3->getArmyAmount() << "\n";
+
+	timePause();
+	AdvanceOrders* adv3 = new AdvanceOrders();
+	adv3->setSelfPlayers(p1);
+	adv3->setSourceTerritory(t3);
+	adv3->setTargetTerritory(t4);
+	adv3->setArmyUnits(5);
+	adv3->execute();
+
+	cout << "\Current Terr4 army: " << t4->getArmyAmount() << "\n";
+	cout << "\Current Terr3 army: " << t3->getArmyAmount() << "\n";
+
+	userPause();
+
+#pragma endregion
+
 
 }
 

@@ -251,7 +251,7 @@ void AdvanceOrders::setSourceTerritory(Territory* sourceTerr)
 
 void AdvanceOrders::setArmyUnits(int units)
 {
-    *(armyUnits) = units;
+    armyUnits = &units;
 }
 
 //checks if source and target are adjacent
@@ -270,7 +270,7 @@ bool AdvanceOrders::isAdjacent() {
 
 int AdvanceOrders::getCasualties(int units, bool attacking) {
     int rand;
-    int total;
+    int total = 0;
     int percentage;
 
     if (attacking)
@@ -304,19 +304,31 @@ const Territory AdvanceOrders::getTargetTerritory() const
     return *terr;
 }
 
+void AdvanceOrders::setSelfPlayers(Player* self)
+{
+    this->player = self;
+}
+
+void AdvanceOrders::setTargetTerritory(Territory* terr)
+{
+    this->terr = terr;
+}
+
 //en dernier
 void AdvanceOrders::execute()
 {
-    //invalid if not owner of source or adjacent
-    if (source->getTerritoryOwner() == player || !isAdjacent()) {
+    //invalid if not owner of source or not adjacent
+    if (source->getTerritoryOwner() != player || !isAdjacent()) {
         this->validate(false);
         return;
     }
 
+    //remove army from territory
+    source->setArmyAmount(source->army - *armyUnits);
+
     //add army units if player owns territory
     if (terr->getTerritoryOwner() == player)
     {
-        source->setArmyAmount(source->army - *armyUnits);
         terr->setArmyAmount(terr->getArmyAmount() + *(armyUnits));
         this->validate(true);
         return;
@@ -324,19 +336,19 @@ void AdvanceOrders::execute()
 
     this->validate(true);
     //attacking portion now
-    int playerAttacks = getCasualties(source->army, true);
+    int playerAttacks = getCasualties(*armyUnits, true);
     int enemyAttacks = getCasualties(terr->army, false);
 
-    //set army counts
 
+    //set army counts
     //set player army count
-    if (source->army - enemyAttacks <=0)
+    if (*armyUnits - enemyAttacks <=0)
     {
-        source->setArmyAmount(0);
+        *armyUnits = 0;
     }
     else
     {
-        source->setArmyAmount(source->army - enemyAttacks);
+        *armyUnits -= enemyAttacks;
     }
 
     //set enemy army count
@@ -363,11 +375,17 @@ void AdvanceOrders::execute()
         }
 
         //remove from enemy 
-        terr->player->getTerritory().erase(terr->player->getTerritory().begin() + index);
+        //terr->player->getTerritory().erase(terr->player->getTerritory().begin() + index);
+        terr->player->removeTerritory(index);
         //change ownership
         terr->setTerritoryOwner(player);
         //give player ownership
-        player->getTerritory().push_back(terr);
+        terr->setArmyAmount(*armyUnits);
+        player->setTerritory(terr);
+    }
+    else
+    {
+        source->army += *armyUnits;
     }
 
 
