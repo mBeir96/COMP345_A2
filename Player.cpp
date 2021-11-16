@@ -1,4 +1,8 @@
 #include "Player.h"
+#include "Cards.h"
+#include "GameEngine.h"
+#include "Orders.h"
+
 #include <time.h>
 #include <algorithm>  
 #include <assert.h>  
