@@ -582,6 +582,11 @@ void BlockadeOrders::setTargetTerritory(Territory *target){
     terr = target;
 }
 
+void BlockadeOrders::setNeutralPlayer(Player* player)
+{
+    this->neutralPlayer = player;
+}
+
 void BlockadeOrders::execute()
 {
 
@@ -590,6 +595,16 @@ void BlockadeOrders::execute()
         //If the target territory belongs to an enemy player, the order is declared invalid.
         this->validate(false);
         return;
+    }
+
+    int index = 0;
+    for (int i = 0; i < (int)player->getTerritory().size(); i++)
+    {
+        if (player->getTerritory().at(i) == terr)
+        {
+            index = i;
+            break;
+        }
     }
 
     terr->army = terr->army * 2;
@@ -609,14 +624,7 @@ void BlockadeOrders::execute()
         }
     }
 
-    for(int i = 0; i < (int) player->getTerritory().size(); i++)
-    {
-        if(player->getTerritory().at(i) == terr)
-        {
-            player->getTerritory().at(i) = nullptr;
-            break;
-        }
-    }
+    
     
     LogObserver* lo = new LogObserver(this);
     Notify(this, "Blockade Order");

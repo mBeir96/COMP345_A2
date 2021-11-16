@@ -150,6 +150,7 @@ class BlockadeOrders : public Orders
         const std::string getName() const;
         void setSelfPlayers(Player *self);
         void setTargetTerritory(Territory* terr);
+        void setNeutralPlayer(Player* player);
         const Player getSelfPlayers() const;
         const Territory getTargetTerritory() const;
         GameEngine *gm;
@@ -159,6 +160,7 @@ class BlockadeOrders : public Orders
         const std::string *name;
         Player* player;
         Territory* terr;
+        Player* neutralPlayer;
 
 };
 
