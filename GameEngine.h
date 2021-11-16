@@ -65,6 +65,8 @@ public:
 	void MapValidated();
 	void PlayersAdded();
 	void AssignReinforcement();
+	void reinforcmentPhase(); // reinforcment phase part 3.1
+	void issueOrdersPhase(); // issue Orders phase part 3.2
 	void IssueOrders();
 	void ExecuteOrders();
 	void Win();
