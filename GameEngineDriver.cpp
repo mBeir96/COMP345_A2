@@ -1,8 +1,11 @@
 #include "GameEngine.h"
 #include "CommandProcessing.h"
 #include "Player.h";
+#include "Orders.h";
+#include "Map.h";
 #include <iostream>
 #include <string>
+#include "OrderDriver.h";
 using namespace std;
 
 
@@ -12,9 +15,11 @@ using namespace std;
 }*/
 
 int main() {
-	RiskState currentState = START;
-	GameEngine gm;
-	gm.StartupPhase();
+	
+	orderDriver();
+	//RiskState currentState = START;
+	//GameEngine gm;
+	//gm.StartupPhase();
 
-	cout << "Hello";
+	//cout << "Hello";
 }

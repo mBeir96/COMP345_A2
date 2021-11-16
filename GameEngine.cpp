@@ -443,6 +443,7 @@ void GameEngine::AssignReinforcement() {
         for (int i = 0; i < theMap->theMap->size(); i++)
         {
             players.at(i % players.size())->setTerritory(&(theMap->theMap->at(i)));
+
         }
         //initializing play order
         random_shuffle(players.begin(), players.end());
@@ -481,7 +482,7 @@ void GameEngine::IssueOrders() {
     }
 
 }
-void GameEngine::exec() {
+void GameEngine::executeOrderPhase() {
     for each (Player * player in players)
     {
         for (int i = 0; i < player->orderList.size(); i++)
@@ -525,8 +526,11 @@ void GameEngine::ExecuteOrders() {
         state = changeState(6);
     }
     else if (a == "executeOrder") {
+
         exec();
         state = changeState(5);
+
+        executeOrderPhase();
     }
     else if (a == "new") {
         state = changeState(4);

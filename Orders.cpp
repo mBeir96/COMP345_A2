@@ -142,7 +142,8 @@ void DeployOrders::setTargetTerritory(Territory *target){
 
 const std::string DeployOrders::getName() const
 {
-    return *name;
+    return "Deploy";
+    //return *name;
 }
 
 int DeployOrders::getNumArmy()
@@ -177,6 +178,7 @@ void DeployOrders::execute()
     }
 
     //the selected number of armies is added to the number of armies on that territory.
+    this->validate(true);
     player->setReinforcementPool(player->getReinforcementPool() - numArmy);
     terr->army = terr->army + numArmy;
 
@@ -246,7 +248,8 @@ std::istream& operator>>(std::istream& in, AdvanceOrders& a)
 
 const std::string AdvanceOrders::getName() const
 {
-    return *name;
+    return "Advancing";
+    //return *name;
 }
 
 void AdvanceOrders::setSourceTerritory(Territory* sourceTerr)
@@ -256,7 +259,7 @@ void AdvanceOrders::setSourceTerritory(Territory* sourceTerr)
 
 void AdvanceOrders::setArmyUnits(int units)
 {
-    *(armyUnits) = units;
+    armyUnits = &units;
 }
 
 //checks if source and target are adjacent
@@ -275,7 +278,7 @@ bool AdvanceOrders::isAdjacent() {
 
 int AdvanceOrders::getCasualties(int units, bool attacking) {
     int rand;
-    int total;
+    int total = 0;
     int percentage;
 
     if (attacking)
@@ -309,14 +312,27 @@ const Territory AdvanceOrders::getTargetTerritory() const
     return *terr;
 }
 
+void AdvanceOrders::setSelfPlayers(Player* self)
+{
+    this->player = self;
+}
+
+void AdvanceOrders::setTargetTerritory(Territory* terr)
+{
+    this->terr = terr;
+}
+
 //en dernier
 void AdvanceOrders::execute()
 {
-    //invalid if not owner of source or adjacent
-    if (source->getTerritoryOwner() == player || !isAdjacent()) {
+    //invalid if not owner of source or not adjacent
+    if (source->getTerritoryOwner() != player || !isAdjacent() || player->hasTruce(terr->getTerritoryOwner())) {
         this->validate(false);
         return;
     }
+
+    //remove army from territory
+    source->setArmyAmount(source->army - *armyUnits);
 
     //add army units if player owns territory
     if (terr->getTerritoryOwner() == player)
@@ -326,20 +342,21 @@ void AdvanceOrders::execute()
         return;
     }
 
-    //attacking protion now
-    int playerAttacks = getCasualties(source->army, true);
+    this->validate(true);
+    //attacking portion now
+    int playerAttacks = getCasualties(*armyUnits, true);
     int enemyAttacks = getCasualties(terr->army, false);
 
-    //set army counts
 
+    //set army counts
     //set player army count
-    if (source->army - enemyAttacks <=0)
+    if (*armyUnits - enemyAttacks <=0)
     {
-        source->setArmyAmount(0);
+        *armyUnits = 0;
     }
     else
     {
-        source->setArmyAmount(source->army - enemyAttacks);
+        *armyUnits -= enemyAttacks;
     }
 
     //set enemy army count
@@ -354,10 +371,31 @@ void AdvanceOrders::execute()
 
     //transfer terr (target territory) to player
     if (terr->army == 0) {
-        
+        //search for territory
+        int index = 0;
+        for (int i = 0; i < terr->player->getTerritory().size(); i++)
+        {
+            if (terr == terr->player->getTerritory().at(i))
+            {
+                index = i;
+                break;
+            }
+        }
+
+        //remove from enemy 
+        //terr->player->getTerritory().erase(terr->player->getTerritory().begin() + index);
+        terr->player->removeTerritory(index);
+        //change ownership
+        terr->setTerritoryOwner(player);
+        //give player ownership
+        terr->setArmyAmount(*armyUnits);
+        player->setTerritory(terr);
+    }
+    else
+    {
+        source->army += *armyUnits;
     }
 
-    this->validate(true);
 
     LogObserver* lo = new LogObserver(this);
     Notify(this, "Advance Order");
@@ -429,7 +467,8 @@ void BombOrders::setTargetTerritory(Territory *target){
 
 const std::string BombOrders::getName() const
 {
-    return *name;
+    return "Bomb";
+    //return *name;
 }
 
 const Player BombOrders::getSelfPlayers() const
@@ -445,17 +484,21 @@ const Territory BombOrders::getTargetTerritory() const
 void BombOrders::execute()
 {
 
-    if(this->terr->getTerritoryOwner() == this->player)
+    if(this->terr->getTerritoryOwner() == this->player || player->hasTruce(this->terr->getTerritoryOwner()))
     {
         //If the target territory does not belong to the player that issued the order, the order is invalid.
         this->validate(false);
         return;
     }
 
-    this->terr->army = this->terr->army / 2;
+
 
     LogObserver* lo = new LogObserver(this);
     Notify(this, "Bomb Order");
+    this->validate(true);
+    this->terr->setArmyAmount(this->terr->army / 2);
+    
+
 }
 
 bool BombOrders::validate(bool valid)
@@ -517,7 +560,8 @@ std::istream& operator>>(std::istream& in, BlockadeOrders& b)
 
 const std::string BlockadeOrders::getName() const
 {
-    return *name;
+    return "Blockade";
+    //return *name;
 }
 
 const Player BlockadeOrders::getSelfPlayers() const
@@ -637,7 +681,8 @@ std::istream& operator>>(std::istream& in, AirliftOrders& a)
 
 const std::string AirliftOrders::getName() const
 {
-    return *name;
+    return "Airlift";
+    //return *name;
 }
 
 int AirliftOrders::getNumArmy()
@@ -670,7 +715,7 @@ void AirliftOrders::setSelfPlayers(Player *self){
 }
 
 void AirliftOrders::setTargetTerritory(Territory *target){
-    target = target;
+    this->target = target;
 }
 
 
@@ -684,8 +729,8 @@ void AirliftOrders::setSourceTerritory(Territory *target){
 void AirliftOrders::execute()
 {
 
-
-    if(this->source->getTerritoryOwner() != player && this->target->getTerritoryOwner() != player)
+    //invalid if source or target not owned by player
+    if(this->source->getTerritoryOwner() != player || this->target->getTerritoryOwner() != player)
     {
         //If the target territory belongs to an enemy player, the order is declared invalid.
         this->validate(false);
@@ -696,11 +741,14 @@ void AirliftOrders::execute()
     {
         // If both the source and target territories belong to the player that issue the airlift order, then the selected
         // number of armies is moved from the source to the target territory.
+        this->validate(true);
         source->army = source->army - numArmy;
-        target->army = numArmy;
+        target->army += numArmy;
         return;
     }
-
+    LogObserver* lo = new LogObserver(this);
+    Notify(this, "Airlift Order");
+    /*
     if(this->source->getTerritoryOwner() == player && this->target->getTerritoryOwner() != player)
     {
         // If the target territory does not belong to the player that issued the airlift order, the selected number of
@@ -711,8 +759,7 @@ void AirliftOrders::execute()
         delete ao;
         ao = nullptr;
     }
-    LogObserver* lo = new LogObserver(this);
-    Notify(this, "Airlift Order");
+    */
 }
 
 bool AirliftOrders::validate(bool valid)
@@ -774,22 +821,24 @@ std::istream& operator>>(std::istream& in, NegotiateOrders& n)
 
 const std::string NegotiateOrders::getName() const
 {
-    return *name;
+    return "Negotiation";
+    //return *name;
 }
 
 void NegotiateOrders::execute()
 {
     //if you negotiate yourself its invalid
-    if(terr->getTerritoryOwner() == player)
+    if(peacePlayer == player)
     {
         this->validate(false);
+        return;
     }
 
     //If the target is an enemy player, then the effect is that any attack that may be declared between territories
     //of the player issuing the negotiate order and the target player will result in an invalid order  
     //add truce to both players
-    player->addTruce(terr->getTerritoryOwner());
-    terr->getTerritoryOwner()->addTruce(player);
+    player->addTruce(peacePlayer);
+    peacePlayer->addTruce(player);
 
     this->validate(true);
     LogObserver* lo = new LogObserver(this);
@@ -800,6 +849,16 @@ bool NegotiateOrders::validate(bool valid)
 {
     std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
     return valid;
+}
+
+void NegotiateOrders::setSelfPlayers(Player* self)
+{
+    this->player = self;
+}
+
+void NegotiateOrders::setPeacePlayer(Player* target)
+{
+    this->peacePlayer = target;
 }
 
 

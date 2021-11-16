@@ -88,7 +88,6 @@ class AdvanceOrders : public Orders
         ~AdvanceOrders();
         bool validate(bool);
         void execute();
-        void execute(Player self, Player enemy, std::string source, std::string target, int numArmy, Territory edges);
         const std::string getName() const;
         void setSourceTerritory(Territory*);
         void setArmyUnits(int units);
@@ -96,6 +95,9 @@ class AdvanceOrders : public Orders
         int getCasualties(int army, bool isAttacking);
         const Player getSelfPlayers() const;
         const Territory getTargetTerritory() const;
+        void setSelfPlayers(Player* self);
+        void setTargetTerritory(Territory* terr);
+
 
     private:
         const std::string refName = "Advance Orders";
@@ -206,6 +208,8 @@ class NegotiateOrders : public Orders
         friend std::ostream& operator<<(std::ostream &out, const NegotiateOrders &n);
         ~NegotiateOrders();
         bool validate(bool);
+        void setSelfPlayers(Player* self);
+        void setPeacePlayer(Player* target);
         void execute();
         const std::string getName() const;
 
@@ -214,6 +218,7 @@ class NegotiateOrders : public Orders
         const std::string refName = "Negotiate Orders";
         const std::string* name; 
         Player* player;
+        Player* peacePlayer;
         Territory* terr; 
 };
 
