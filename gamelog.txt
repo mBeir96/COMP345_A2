@@ -7,3 +7,20 @@ Effect: Validated Map
 CHANGED TO STATE MAPVALIDATED
 Order: Bomb Order
 Order: Advance Order
+Order: Bomb Order
+Order: Advance Order
+Order: Negotiate Order
+Order: Blockade Order
+Order: Bomb Order
+Order: Advance Order
+Order: Negotiate Order
+Order: Blockade Order
+Order: Bomb Order
+Order: Advance Order
+Order: Negotiate Order
+Order: Blockade Order
+Order: Deploy Order
+Order: Bomb Order
+Order: Advance Order
+Order: Negotiate Order
+Order: Blockade Order

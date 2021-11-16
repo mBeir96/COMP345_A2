@@ -607,9 +607,15 @@ void BlockadeOrders::execute()
         }
     }
 
-    terr->army = terr->army * 2;
+    //double army
+    terr->setArmyAmount(terr->army * 2);
+    //change territory ownership
+    terr->setTerritoryOwner(neutralPlayer);
+    player->removeTerritory(index);
+    neutralPlayer->setTerritory(terr);
+
     //the territory will belong to an neutral player
-    for(int i = 0; i < (int) gm->players.size(); i++)
+    /*for (int i = 0; i < (int)gm->players.size(); i++)
     {
         if(gm->players.at(i)->getName() == "Neutral Player")
         {
@@ -622,7 +628,7 @@ void BlockadeOrders::execute()
             std::cout << "Create a Neutral Player!!!" << std::endl;
             gm->addPlayer();
         }
-    }
+    }*/
 
     
     

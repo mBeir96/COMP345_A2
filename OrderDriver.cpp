@@ -99,7 +99,7 @@ void orderDriver() {
 
 #pragma region Deploy test
 
-	/*
+	
 	cout << "Deploy Orders Test...\n\n";
 	
 	cout << "Attempting to Deploy to 6\n";
@@ -122,7 +122,6 @@ void orderDriver() {
 
 	cout << "\Current Terr2 army: " << t2->getArmyAmount() << "\n";
 	userPause();
-	*/
 #pragma endregion
 
 #pragma region Airlift test
@@ -284,6 +283,8 @@ void orderDriver() {
 #pragma endregion
 
 #pragma region Blockade Test
+	Player* neutPlayer = new Player();
+	neutPlayer->setName("NeutralPlayer");
 
 	cout << "\n\Blockade Orders Test...\n\n";
 
@@ -292,20 +293,23 @@ void orderDriver() {
 	BlockadeOrders* bloc1 = new BlockadeOrders();
 	bloc1->setSelfPlayers(p1);
 	bloc1->setTargetTerritory(t6);
+	bloc1->setNeutralPlayer(neutPlayer);
 	bloc1->execute();
 	userPause();
 
 	cout << "\Attempting to bomb Blockade Terr4 as Player1\n";
 	cout << "Previous Terr4 army: " << t4->getArmyAmount() << "\n";
+	cout << "Current Terr4 owner " << t4->player->getName() << "\n";
 
 	timePause();
 	BlockadeOrders* bloc2 = new BlockadeOrders();
 	bloc2->setSelfPlayers(p1);
-	bloc2->setTargetTerritory(t6);
+	bloc2->setTargetTerritory(t4);
+	bloc2->setNeutralPlayer(neutPlayer);
 	bloc2->execute();
-	userPause();
 
 	cout << "\Current Terr4 army: " << t4->getArmyAmount() << "\n";
+	cout << "Current Terr4 owner " << t4->player->getName() << "\n";
 	userPause();
 
 #pragma endregion
