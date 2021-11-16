@@ -283,6 +283,32 @@ void orderDriver() {
 
 #pragma endregion
 
+#pragma region Blockade Test
+
+	cout << "\n\Blockade Orders Test...\n\n";
+
+	cout << "Attempting to Blockade Terr6 as Player1\n";
+	timePause();
+	BlockadeOrders* bloc1 = new BlockadeOrders();
+	bloc1->setSelfPlayers(p1);
+	bloc1->setTargetTerritory(t6);
+	bloc1->execute();
+	userPause();
+
+	cout << "\Attempting to bomb Blockade Terr4 as Player1\n";
+	cout << "Previous Terr4 army: " << t4->getArmyAmount() << "\n";
+
+	timePause();
+	BlockadeOrders* bloc2 = new BlockadeOrders();
+	bloc2->setSelfPlayers(p1);
+	bloc2->setTargetTerritory(t6);
+	bloc2->execute();
+	userPause();
+
+	cout << "\Current Terr4 army: " << t4->getArmyAmount() << "\n";
+	userPause();
+
+#pragma endregion
 
 
 }
