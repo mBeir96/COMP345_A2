@@ -1,0 +1,9 @@
+
+Command: loadmap
+Effect: europass.map
+CHANGED TO STATE MAPLOADED
+Command: validatemap
+Effect: Validated Map
+CHANGED TO STATE MAPVALIDATED
+Order: Bomb Order
+Order: Advance Order

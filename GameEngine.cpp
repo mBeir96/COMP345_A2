@@ -526,11 +526,9 @@ void GameEngine::ExecuteOrders() {
         state = changeState(6);
     }
     else if (a == "executeOrder") {
-
-        exec();
+        executeOrderPhase();
         state = changeState(5);
 
-        executeOrderPhase();
     }
     else if (a == "new") {
         state = changeState(4);

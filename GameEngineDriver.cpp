@@ -20,6 +20,4 @@ int main() {
 	//RiskState currentState = START;
 	//GameEngine gm;
 	//gm.StartupPhase();
-
-	//cout << "Hello";
 }
