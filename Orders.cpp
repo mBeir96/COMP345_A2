@@ -74,6 +74,10 @@ const Territory Orders::getTargetTerritory() const
 
 //end of the orders class
 
+DeployOrders::DeployOrders()
+{
+}
+
 DeployOrders::DeployOrders(Player *player, Territory *territory, int numArmy)
 {
     player = new Player(*(player));
@@ -149,12 +153,12 @@ void DeployOrders::setNumArmy(int number)
     numArmy = number;
 }
 
-
+/*
 const std::string Orders::getName() const
 {
     return *name;
 }
-
+*/
 const Player DeployOrders::getSelfPlayers() const
 {
     return *player;
@@ -357,6 +361,10 @@ bool AdvanceOrders::validate(bool valid)
 //end of AdvanceOrders
 
 
+BombOrders::BombOrders()
+{
+}
+
 BombOrders::BombOrders(Player *player, Territory *territory)
 {
     player = new Player(*(player));
@@ -448,6 +456,10 @@ bool BombOrders::validate(bool valid)
 
 //end BombOrders
 
+BlockadeOrders::BlockadeOrders()
+{
+}
+
 BlockadeOrders::BlockadeOrders(Player *player, Territory *territory, GameEngine* gm)
 {
     player = new Player(*(player));
@@ -530,15 +542,15 @@ void BlockadeOrders::execute()
     //the territory will belong to an neutral player
     for(int i = 0; i < (int) gm->players.size(); i++)
     {
-        if(gm.players.at(i).getName() == "Neutral Player")
+        if(gm->players.at(i)->getName() == "Neutral Player")
         {
-            gm.players.at(i).setTerritory(terr);
+            gm->players.at(i)->setTerritory(*terr);
             break;
         }
-        if(i == (int) gm.players.size() - 2)
+        if(i == (int) gm->players.size() - 2)
         {
             //create a neutral player
-            gm.addPlayer();
+            gm->addPlayer();
         }
     }
     for(int i = 0; i < (int) player->getTerritory().size(); i++)
@@ -560,6 +572,10 @@ bool BlockadeOrders::validate(bool valid)
 }
 
 //end BlockadeOrders
+
+AirliftOrders::AirliftOrders()
+{
+}
 
 AirliftOrders::AirliftOrders(Player *player, Territory *source, Territory *target)
 {
@@ -680,7 +696,7 @@ void AirliftOrders::execute()
         // armies is attacking that territory (see “advance order”).
         //maybe put it on the hand of player?
         AdvanceOrders *ao = new AdvanceOrders();
-        ao->execute(player, source, target, numArmy);
+        //ao->execute(player, source, target, numArmy);
         delete ao;
         ao = nullptr;
     }
