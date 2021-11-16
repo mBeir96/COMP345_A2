@@ -7,6 +7,7 @@
 
 class Player;
 class GameEngine;
+class Territory;
 
 // this is the declaration
 

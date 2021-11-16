@@ -150,11 +150,6 @@ void DeployOrders::setNumArmy(int number)
 }
 
 
-const std::string DeployOrders::getName() const
-{
-    return *name;
-}
-
 const Player DeployOrders::getSelfPlayers() const
 {
     return *player;
