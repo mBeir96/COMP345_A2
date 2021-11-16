@@ -155,10 +155,10 @@ void Player::setReinforcementPool(int i) {
 	this->reinforcementPool = i;
 }
 
-void Player::setTerritory(Territory t)
+void Player::setTerritory(Territory *t)
 {
 
-	this->territory.push_back(&t);
+	this->territory.push_back(t);
 }
 
 void Player::setHand(Card* c)

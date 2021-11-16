@@ -41,7 +41,7 @@ public:
     int getReinforcementPool(); 
     void setReinforcementPool(int);
     void setOrder(Orders*);
-    void setTerritory(Territory);
+    void setTerritory(Territory*);
     void setName(string);
     void setHand(Card* c);
     

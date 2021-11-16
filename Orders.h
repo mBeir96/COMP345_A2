@@ -3,12 +3,10 @@
 #include <string>
 #include <iostream>
 #include "Player.h"
-#include "Map.h";
 #include "GameEngine.h"
 
 class Player;
-class Territory;
-class GameEngine;
+
 // this is the declaration
 
 class Orders 
@@ -39,7 +37,6 @@ class Orders
 class DeployOrders : public Orders
 {
     public:
-        DeployOrders();
         DeployOrders(Player* player, Territory* territory, int numArmy);
         DeployOrders(const DeployOrders& d);
         DeployOrders& operator=(const DeployOrders& d);
@@ -67,7 +64,6 @@ class DeployOrders : public Orders
 class AdvanceOrders : public Orders
 {
     public:
-        AdvanceOrders();
         AdvanceOrders(Player* player, Territory* territory);    
         AdvanceOrders(const AdvanceOrders& a);
         AdvanceOrders& operator=(const AdvanceOrders& a);
@@ -76,29 +72,21 @@ class AdvanceOrders : public Orders
         ~AdvanceOrders();
         bool validate(bool);
         void execute();
-        void execute(Player self, Player enemy, std::string source, std::string target, int numArmy, Territory edges);
         const std::string getName() const;
         void setSelfPlayers(Player *self);
         void setTargetTerritory(Territory* terr);
-        void setSourceTerritory(Territory*);
-        void setArmyUnits(int units);
-        bool isAdjacent();
-        int getCasualties(int army, bool isAttacking);
 
     private:
         const std::string refName = "Advance Orders";
         const std::string *name;
         Player* player;
         Territory* terr;
-        Territory* source;
-        int* armyUnits;
 
 };
 
 class BombOrders : public Orders
 {
     public:
-        BombOrders();
         BombOrders(Player* player, Territory* territory);
         BombOrders(const BombOrders& b);
         BombOrders& operator=(const BombOrders& b);
@@ -120,11 +108,10 @@ class BombOrders : public Orders
         Territory* terr;
 
 };
-class GameEngine;
+
 class BlockadeOrders : public Orders
 {
     public:
-        BlockadeOrders();
         BlockadeOrders(Player* player, Territory* territory, GameEngine *gm);
         BlockadeOrders(const BlockadeOrders& b);
         BlockadeOrders& operator=(const BlockadeOrders& b);
@@ -138,7 +125,7 @@ class BlockadeOrders : public Orders
         void setTargetTerritory(Territory* terr);
         const Player getSelfPlayers() const;
         const Territory getTargetTerritory() const;
-        GameEngine* gm;
+        GameEngine *gm;
 
     private:
         const std::string refName = "Blockade Orders";
@@ -151,7 +138,6 @@ class BlockadeOrders : public Orders
 class AirliftOrders : public Orders
 {
     public:
-        AirliftOrders();
         AirliftOrders(Player* player, Territory* source, Territory* target);
         AirliftOrders(const AirliftOrders& a);
         AirliftOrders& operator=(const AirliftOrders& a);
@@ -184,7 +170,6 @@ class AirliftOrders : public Orders
 class NegotiateOrders : public Orders
 {
     public:
-        NegotiateOrders();
         NegotiateOrders(Player* player, Territory* territory);
         NegotiateOrders(bool val);
         NegotiateOrders(const NegotiateOrders& n);
@@ -206,7 +191,7 @@ class NegotiateOrders : public Orders
 };
 
 
-class OrdersList//: public ILoggable
+class OrdersList
 {
     public:
         OrdersList();
