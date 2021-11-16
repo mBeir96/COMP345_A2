@@ -3,10 +3,12 @@
 #include "CommandProcessing.h"
 #include "Map.h"
 #include "Orders.h";
-#include "Player.h";
+#include "Player.h"
+#include <vector>
 #include <iostream>
 #include <string>
 #include <algorithm>
+
 enum RiskState {
 	START, MAPLOADED, MAPVALIDATED, PLAYERSADDED, ASSIGNMENTREIFORCEMENT, ISSUEORDERS, EXECUTEORDERS, WIN
 };
@@ -14,6 +16,7 @@ class Map;
 class MapLoader;
 class Territory;
 class Deck;
+class Player;
 
 class GameEngine {
 public:
@@ -42,6 +45,8 @@ public:
 	Map* theMap;
 	MapLoader* loader;
 	vector<Territory>* loadedMap;
+	vector<Player*> players;
+
 
 	FileCommandProcessorAdapter processor;
 	CommandProcessor* cp = new CommandProcessor();
@@ -50,7 +55,7 @@ public:
 	static int CommandCount;
 	ifstream inFile;
 
-	vector<Player*> players;
+
 
 	Deck* deck;
 
@@ -68,6 +73,8 @@ public:
 	void StartupPhase();
 	void play();
 private:
+	
+	void exec();
 	bool StartUp;
 	bool Play;
 

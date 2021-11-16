@@ -479,26 +479,8 @@ void GameEngine::IssueOrders() {
     }
 
 }
-void GameEngine::ExecuteOrders() {
-    
-    /*
-    cout << "Enter \"win\" to win,  Enter \"executeOrder\" to repeat executeOrder Enter \"new\"to go back to issue new order" << endl;
-    string a;
-    cin >> a;
-    if (a == "win") {
-
-        state = 7;
-    }
-    else if (a == "executeOrder") {
-        state = 6;
-    }
-    else if (a == "new") {
-        state = 5;
-        issueOrder();
-    }
-    */
-
-    for each (Player *player in players)
+void GameEngine::exec() {
+    for each (Player * player in players)
     {
         for (int i = 0; i < player->orderList.size(); i++)
         {
@@ -528,6 +510,29 @@ void GameEngine::ExecuteOrders() {
     }
 
     //order list should be empty
+}
+
+void GameEngine::ExecuteOrders() {
+    
+    
+    cout << "Enter \"win\" to win,  Enter \"executeOrder\" to repeat executeOrder Enter \"new\"to go back to issue new order" << endl;
+    string a;
+    cin >> a;
+    if (a == "win") {
+
+        state = 7;
+    }
+    else if (a == "executeOrder") {
+        exec();
+        state = 6;
+    }
+    else if (a == "new") {
+        state = 5;
+        issueOrder();
+    }
+    
+
+    
 }
 
 //Win state
