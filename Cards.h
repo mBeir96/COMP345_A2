@@ -31,6 +31,8 @@ class Card
 		
 		CardType GetCardType();
 		Orders* Play();
+	        void play(string type);
+		string GetType()
 	private:
 		CardType* cardType;
 };
@@ -48,6 +50,8 @@ class Deck
 		void AddCard(Card* card);
 		Card* Draw();
 		void fillDeck(Deck* d);
+	        void play(string type);
+		string GetType()
 	private:
 		std::vector<Card *>* cards;
 };
@@ -64,6 +68,8 @@ class Hand
 		void AddCard(Card* card);
 		void ShowCards();
 		Card * Draw(int position);
+	        void play(string type);
+		string GetType()
 
 		std::vector<Card*>* cards;
 };
