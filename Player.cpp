@@ -10,7 +10,7 @@ Player::Player()
 {
 	name = "default";
 	reinforcementPool = 0;
-	territory;
+	territory = *(new vector<Territory *>);
 	handCard = new Hand();
 	orderList;
 	playerTruces = *(new vector<Player*>);
@@ -161,6 +161,11 @@ void Player::setTerritory(Territory *t)
 {
 
 	this->territory.push_back(t);
+}
+
+void Player::removeTerritory(int i)
+{
+	this->territory.erase(this->territory.begin() + i);
 }
 
 void Player::setHand(Card* c)
