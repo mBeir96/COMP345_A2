@@ -28,6 +28,20 @@ public:
     bool operator == (const Player&);
     bool operator != (const Player&);
     ~Player(); //Destructor
+    
+    //atrributes
+    string name;
+    int id;
+    int reinforcementPool;
+    vector<Territory*> territory;
+    vector<Hand*> handCard;
+    vector<Orders*> orderList;
+    vector<Territory*> NeighbourT;
+    bool negotiate = false;
+    bool FinishedIssueOrder = false;
+    Player* enemy_no_attack;
+    GameEngine* Game;
+    vector<Player*> playerTruces;
 
     //Methods
     vector<Territory*> getTerritory();
@@ -48,24 +62,13 @@ public:
     
     void printOrder();
     void printHandcard();
-    bool playerContientBouns();
+    void Neighbour();
+    void Setis(int i)
     void addTruce(Player*);
     void removeAllTruces();
     bool hasTruce(Player*);
 
-private:
-    string name;
-    int reinforcementPool;
 
-    vector<Territory*> territory;
-    Hand* handCard;
-    vector<Orders*> orderList;
-    vector<Player*> playerTruces;
-
-    //friend classes
-    friend class Hand;
-    friend class GameEngine;
-    friend class Map;
 };
 
 
