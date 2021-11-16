@@ -440,7 +440,8 @@ void GameEngine::AssignReinforcement() {
         //making the player own the territory
         for (int i = 0; i < theMap->theMap->size(); i++)
         {
-            players.at(i % players.size())->setTerritory(theMap->theMap->at(i));
+            Territory* t = &theMap->theMap->at(i);
+            players.at(i % players.size())->setTerritory(t);
         }
         //initializing play order
         random_shuffle(players.begin(), players.end());
@@ -479,7 +480,7 @@ void GameEngine::IssueOrders() {
     }
 
 }
-void GameEngine::exec() {
+void GameEngine::executeOrderPhase() {
     for each (Player * player in players)
     {
         for (int i = 0; i < player->orderList.size(); i++)
@@ -523,7 +524,7 @@ void GameEngine::ExecuteOrders() {
         state = 7;
     }
     else if (a == "executeOrder") {
-        exec();
+        executeOrderPhase();
         state = 6;
     }
     else if (a == "new") {

@@ -7,6 +7,7 @@
 
 class Player;
 class GameEngine;
+class Territory;
 
 // this is the declaration
 
@@ -76,7 +77,6 @@ class AdvanceOrders : public Orders
         ~AdvanceOrders();
         bool validate(bool);
         void execute();
-        void execute(Player self, Player enemy, std::string source, std::string target, int numArmy, Territory edges);
         const std::string getName() const;
         void setSourceTerritory(Territory*);
         void setArmyUnits(int units);

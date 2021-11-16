@@ -2,6 +2,7 @@
 #include <time.h>
 #include <algorithm>  
 #include <assert.h>  
+#include <vector>;
 using namespace std;
 
 //Default constructor
@@ -12,6 +13,7 @@ Player::Player()
 	territory;
 	handCard = new Hand();
 	orderList;
+	playerTruces = *(new vector<Player*>);
 }
 
 //added constructor
