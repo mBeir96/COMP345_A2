@@ -188,13 +188,22 @@ Hand* Player::getCard()
 
 vector<Territory*> Player::toAttack()
 {
-	vector<Territory*> AttackList;
-
-	for (int i = 0; i < territory.size(); i++)
+	//check if they are neighbours
+	vector<Territory*> AttackList = this->NeighbourT;
+	//Order By least amount of armies to attack 
+	for (int i = 0; i < AttackList.size(); i++)
 	{
+		for (int j = 0; j < array.size() - 1; j++)
+		{
+			//Check swap Value
+			if (AttackList[j]->army > AttackList[j + 1]->army)
+				swap((AttackList[j]), AttackList[j + 1]);
+		}
+		
+
 		string temp = getName();
-		if (!temp.compare(territory[i]->getTerritoryOwner()->getName()) == 0)
-			AttackList.push_back(territory[i]);
+		if (!temp.compare(AttackList[i]->getTerritoryOwner()->getName()) == 0)
+			AttackList.push_back(AttackList[i]);
 
 	}
 	cout << "The list of territories that can be Attack by " << getName() << endl;
@@ -207,43 +216,51 @@ vector<Territory*> Player::toAttack()
 
 vector<Territory*> Player::toDefend()
 {
+	vector<Territory*> DefendList=this->territory;
+	
+	for (int i = 0; i < territory.size(); i++){
+		if (getName().compare(territory[i]->getTerritoryOwner()->getName()) == 0)
+			DefendList.push_back(territory[i]);
+		}
+	
+	for (int i = 0; i < DefendList.size(); i++)
 	{
-		vector<Territory*> DefendList;
-
-		for (int i = 0; i < territory.size(); i++)
+		//compare elemet to the next element, and swap if condition is true
+		for (int j = 0; j < DefendList.size() - 1; j++)
 		{
-			if (getName().compare(territory[i]->getTerritoryOwner()->getName()) == 0)
-
-				DefendList.push_back(territory[i]);
+			//Order By least amount of armies
+			//Check swap Value
+			if (DefendList[j]->army > DefendList[j + 1]->army)
+				swap((DefendList[j]), DefendList[j + 1]);
 		}
-
-		cout << "The list of territories that can be Defend by " << getName() << endl;
-		for (int i = 0; i < DefendList.size(); i++)
-		{
-			cout << "Index " << i << " " << (*DefendList[i]).getTname() << " " << (*DefendList[i]).getContinent() << endl;
-		}
-		return DefendList;
 	}
+	cout << "The list of territories that can be Defend by " << getName() << endl;
+	for (int i = 0; i < DefendList.size(); i++){
+		cout << "Index " << i << " " << (*DefendList[i]).getTname() << " " << (*DefendList[i]).getContinent() << endl;
+	}
+	return DefendList;
+	
 
 }
 
 
 void Player::issueOrder()
 {
-	//Display territories that can be attack or defend
+	//Returns list of enemy territories that are neighbors that we can attack
 	vector<Territory*> AttackList;
 	AttackList = toAttack();
+	//Returns list of  territories that belong to the player that we can defend
 	vector<Territory*> DefendList;
 	DefendList = toDefend();
 
+	bool IssueOrder_done = false;
+	
 	//Deploy order until no armies left	
 	while (getReinforcementPool() != 0)
 	{
 		int army = getReinforcementPool();
-
 		for (int i = 0; i < DefendList.size(); i++)
 		{
-
 			int temp = rand() % (army + 1);
 			cout << temp << endl;
 			temp += DefendList[i]->getArmyAmount();
@@ -262,40 +279,90 @@ void Player::issueOrder()
 
 	//Advance order Attack
 
-	int actionNumber1 = rand() % AttackList.size();
-	int Enemy = AttackList[actionNumber1]->getArmyAmount();
+	int move1 = rand() % AttackList.size();
+	int Enemy = AttackList[move1]->getArmyAmount();
 
-	int actionNumber2 = rand() % DefendList.size();
-	int Attack = DefendList[actionNumber2]->getArmyAmount();
+	int move2 = rand() % DefendList.size();
+	int AdvanceAttack = DefendList[move2]->getArmyAmount();
 
-	if (Enemy >= Attack)
+	if (Enemy >= AdvanceAttack)
 	{
-		Enemy = Enemy - Attack;
-		AttackList[actionNumber1]->setArmyAmount(Enemy);
-		DefendList[actionNumber2]->setArmyAmount(0);
+		Enemy = Enemy - AdvanceAttack;
+		AttackList[move1]->setArmyAmount(Enemy);
+		DefendList[move2]->setArmyAmount(0);
 	}
 	else
 	{
-		Attack = Attack - Enemy;
-		AttackList[actionNumber1]->setArmyAmount(Attack);
-		DefendList[actionNumber2]->setArmyAmount(0);
-		AttackList[actionNumber1]->setTerritoryOwner(AttackList[actionNumber1]->getTerritoryOwner());
+		AdvanceAttack = AdvanceAttack - Enemy;
+		AttackList[move1]->setArmyAmount(AdvanceAttack);
+		DefendList[move2]->setArmyAmount(0);
+		AttackList[move1]->setTerritoryOwner(getName());
 	}
 	//Advance order Defend
 
-	int actionNumber3 = rand() % AttackList.size();
-	int Defend1 = DefendList[actionNumber1]->getArmyAmount();
+	int move3 = rand() % AttackList.size();
+	int AdvanceDefend1 = DefendList[move1]->getArmyAmount();
 
-	int actionNumber4 = rand() % DefendList.size();
-	int Defend2 = DefendList[actionNumber2]->getArmyAmount();
+	int move4 = rand() % DefendList.size();
+	int AdvanceDefend2 = DefendList[move2]->getArmyAmount();
 
-	if (actionNumber3 != actionNumber4)
+	if (move3 != move4)
 	{
-		DefendList[actionNumber3]->setArmyAmount(0);
-		DefendList[actionNumber4]->setArmyAmount(Defend2 + Defend1);
+		DefendList[move3]->setArmyAmount(0);
+		DefendList[move4]->setArmyAmount(AdvanceDefend1 + AdvanceDefend2);
 	}
 
 	//Play card
+
+	//Verify for the Execution of a Special Order
+
+	vector<Card*> Hand = this->getHand()->ShowCards();
+	//Monitor if we have already pushed a  Card
+
+	//Play will remove the Card from the player Hand
+	string CardType;
+	if (handCard.size() != 0) {
+		for (Card* c : handCard) {
+
+			CardType = c->GetType();
+
+			if (CardType == "Bomb") {
+				//Plays the Card
+				c->play(CardType);
+				// This breaks out of the loop so we can push one Card at a time
+				break;
+			}
+
+			if (CardType == "Airlift") {
+				c->play(CardType);
+
+				// This breaks out of the loop so we can push one Card at a time
+				break;
+			}
+
+			if (CardType == "Diplomacy") {
+				c->play(CardType);
+
+				// This breaks out of the loop so we can push one Card at a time
+				break;
+			}
+
+			if (CardType == "Blockade") {
+				c->play(CardType);
+
+				// This breaks out of the loop so we can push one Card at a time
+				break;
+			}
+
+		}
+	}
+	else {
+		cout << "No cards in hand!" << endl;
+		
+	}
+
+	return;
+
 
 }
 

@@ -480,6 +480,62 @@ void GameEngine::IssueOrders() {
     }
 
 }
+
+// reinforcment Phase part 3.1
+void GameEngine::reinforcmentPhase()
+{
+    bool check = false;
+    int temp = 0;
+    double count = 0;
+
+    for (int i = 0; i < (players.size()); i++)
+    {   //check the player's terriotries
+        temp = players[i]->getReinforcementPool();
+        vector<Territory*> t1 = players[i]->toDefend();
+
+
+        //count the terriorties number
+
+        count = t1.size();
+        int s1 = round(count / 3);
+        cout << temp << endl;
+
+        if (check == true)
+        {
+            temp += 2 * s1;
+        }
+        else
+        {
+            temp = temp + s1;
+            cout << temp << endl;
+
+
+        }
+        temp = temp + 3;
+
+        cout << temp << endl;
+        players[i]->setReinforcementPool(temp);
+        check = false;
+        temp = 0;
+        count = 0;
+
+    }
+}
+
+// issueOrdersPhase part 3.2
+void GameEngine::issueOrdersPhase()
+{
+    for (int i = 0; i < (players.size()); i++)
+    {
+        players[i]->issueOrder();
+
+    }
+
+}
+
+
+
+
 void GameEngine::executeOrderPhase() {
     for each (Player * player in players)
     {
