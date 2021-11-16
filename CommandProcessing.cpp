@@ -1,6 +1,7 @@
 #include "CommandProcessing.h"
 #include "gameEngine.h"
 
+
 //Command class
 //default const
 Command::Command()
@@ -53,6 +54,18 @@ std::ostream& operator<<(std::ostream& out, const Command& t)
 void Command::saveEffect(CommandProcessor* cp, string effect)
 {
 	cp->commands.back()->effect = effect;
+	LogObserver* lo = new LogObserver(this);
+	Notify(this, effect);
+}
+
+
+
+void Command::stringToLog(string l)
+{
+	ofstream outFile;
+	outFile.open("gamelog.txt", std::ios_base::app);
+	outFile << "\nEffect: " + l;
+	outFile.close();
 }
 
 //CommandProcessor class
@@ -61,6 +74,7 @@ CommandProcessor::CommandProcessor()
 {
 	commands;
 }
+
 
 //copy const
 CommandProcessor::CommandProcessor(const CommandProcessor& old)
@@ -126,6 +140,8 @@ void CommandProcessor::saveCommand(string toSave)
 {
 	Command* command = new Command(toSave, "");
 	commands.push_back(command);
+	LogObserver* lo = new LogObserver(this);
+	Notify(this, toSave);
 }
 
 //validate
@@ -146,6 +162,16 @@ bool CommandProcessor::validate(int state, string command)
 		return true;
 	return false;
 }
+
+//stringToLog
+void CommandProcessor::stringToLog(string l)
+{
+	ofstream outFile;
+	outFile.open("gamelog.txt", std::ios_base::app);
+	outFile << "\nCommand: " + l;
+	outFile.close();
+}
+
 
 // FileCommandProcessorAdapter Class
 //default const

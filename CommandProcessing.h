@@ -1,4 +1,6 @@
 #pragma once
+
+#include "LoggingObserver.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -8,7 +10,12 @@
 using namespace std;
 
 class CommandProcessor;
-class Command
+
+class ILoggable;
+class Observer;
+
+
+class Command : public Subject, public ILoggable
 {
 public:
 	void saveEffect(CommandProcessor* cp, string effect);
@@ -21,10 +28,13 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const Command& t);
 	string typed;
 	string effect;
+
+	virtual void stringToLog(string l);
+
 };
 
 
-class CommandProcessor// : public ILoggable
+class CommandProcessor : public Subject, public ILoggable
 {
 public:
 	CommandProcessor();
@@ -36,6 +46,8 @@ public:
 	CommandProcessor& operator = (const CommandProcessor& t);
 	friend std::istream& operator>>(std::istream& in, CommandProcessor& t);
 	friend std::ostream& operator<<(std::ostream& out, const CommandProcessor& t);
+	virtual void stringToLog(string l);
+
 
 protected:
 	virtual string readCommand();

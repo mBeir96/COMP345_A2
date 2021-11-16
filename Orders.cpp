@@ -1,8 +1,7 @@
 #include <vector>
 #include "Orders.h"
 #include "Cards.h"
-#include "Map.h"
-#include "Player.h"
+
 
 class Player;
 class Territory;
@@ -67,8 +66,15 @@ const Territory Orders::getTargetTerritory() const
     return *terr;
 }
 
+//Subject methods
 
-
+void Orders::stringToLog(string l)
+{
+    ofstream outFile;
+    outFile.open("gamelog.txt", std::ios_base::app);
+    outFile << "\nOrder: " + l;
+    outFile.close();
+}
 
 //end of the orders class
 
@@ -174,6 +180,8 @@ void DeployOrders::execute()
     player->setReinforcementPool(player->getReinforcementPool() - numArmy);
     terr->army = terr->army + numArmy;
 
+    LogObserver* lo = new LogObserver(this);
+    Notify(this, "Deploy Order");
 
 }
 
@@ -351,6 +359,9 @@ void AdvanceOrders::execute()
 
     this->validate(true);
 
+    LogObserver* lo = new LogObserver(this);
+    Notify(this, "Advance Order");
+
 }
 
 bool AdvanceOrders::validate(bool valid)
@@ -442,7 +453,9 @@ void BombOrders::execute()
     }
 
     this->terr->army = this->terr->army / 2;
-    
+
+    LogObserver* lo = new LogObserver(this);
+    Notify(this, "Bomb Order");
 }
 
 bool BombOrders::validate(bool valid)
@@ -560,7 +573,9 @@ void BlockadeOrders::execute()
             break;
         }
     }
-
+    
+    LogObserver* lo = new LogObserver(this);
+    Notify(this, "Blockade Order");
     
 }
 
@@ -696,6 +711,8 @@ void AirliftOrders::execute()
         delete ao;
         ao = nullptr;
     }
+    LogObserver* lo = new LogObserver(this);
+    Notify(this, "Airlift Order");
 }
 
 bool AirliftOrders::validate(bool valid)
@@ -775,6 +792,8 @@ void NegotiateOrders::execute()
     terr->getTerritoryOwner()->addTruce(player);
 
     this->validate(true);
+    LogObserver* lo = new LogObserver(this);
+    Notify(this, "Negotiate Order");
 }
 
 bool NegotiateOrders::validate(bool valid)
@@ -836,6 +855,10 @@ void OrdersList::put(Orders* o)
 }
 
 
+void OrdersList::stringToLog(string l)
+{
+
+}
 
 
 

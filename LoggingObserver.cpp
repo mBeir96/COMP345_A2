@@ -6,77 +6,131 @@ using namespace std;
 //method in Observer 
 Observer::Observer()
 {
-  cout << "Welcome to Observer class  " << endl;
+    
 }
 Observer::~Observer()
 {
-    cout << "The object is destroy..." << endl;
-}
-Observer::Observer(int len) {
-   cout << "Normal constructor allocating ptr (Observer)" << endl;
    
-   // allocate memory for the pointer;
-   ptr = new int;
-   *ptr = len;
-}
-Observer::Observer(const Observer &obj) {
-   cout << "Copy constructor allocating ptr. (observer)" << endl;
-   ptr = new int;
-   *ptr = *obj.ptr; // copy the value
-}
- 
-//method in Subject 
-Subject::Subject(){
-  cout << "Welcome to Subject class  " << endl;
 }
 
+Observer::Observer(const Observer& obj) {
+    
+}
+
+std::ostream& operator<<(std::ostream& out, const Observer& o)
+{
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Observer& o)
+{
+    return in;
+}
+
+
+//method in Subject 
+Subject::Subject() {
+    _observers = new list<Observer*>;
+}
+std::ostream& operator<<(std::ostream& out, const Subject& s)
+{
+    out << s._observers;
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Subject& t)
+{
+    return in;
+}
 
 Subject::~Subject()
 {
-    cout << "The object is destroy..." << endl;
-}
-Subject::Subject(int len) {
-   cout << "Normal constructor allocating ptr (Subject)" << endl;
-   
-   // allocate memory for the pointer;
-   ptr = new int;
-   *ptr = len;
-}
-Subject::Subject(const Subject &obj) {
-   cout << "Copy constructor allocating ptr. (SUbject)" << endl;
-   ptr = new int;
-   *ptr = *obj.ptr; // copy the value
+    delete _observers;
+    _observers = NULL;
 }
 
+Subject::Subject(const Subject& obj)
+{
+    _observers = obj._observers;
+}
+void Subject::Attach(Observer* o) {
+    _observers->push_back(o);
+};
+void Subject::Detach(Observer* o) {
+    _observers->remove(o);
+};
+void Subject::Notify(ILoggable* s, string l) {
+   
+    _observers->back()->Update(s, l);
+};
+
+
 //method in ILoggable 
-ILoggable::ILoggable(){
-  cout << "Welcome to ILoggable class  " << endl;
+ILoggable::ILoggable() {
+    
 }
 
 
 ILoggable::~ILoggable()
 {
-    cout << "The object is destroy..." << endl;
-}
-ILoggable::ILoggable(int len) {
-   cout << "Normal constructor allocating ptr (ILoggable)" << endl;
-   
-   // allocate memory for the pointer;
-   ptr = new int;
-   *ptr = len;
-}
-ILoggable::ILoggable(const ILoggable &obj) {
-   cout << "Copy constructor allocating ptr. (ILoggable)" << endl;
-   ptr = new int;
-   *ptr = *obj.ptr; // copy the value
+    
 }
 
-void ILoggable::stringToLog(){
-  cout <<"string"<<endl;
+ILoggable::ILoggable(const ILoggable& obj) {
+   
+    
 }
-void ILoggable::update(){
-  //stringToLog(string c, string r);
- 
+std::ostream& operator<<(std::ostream& out, const ILoggable& i)
+{
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, ILoggable& i)
+{
+    return in;
+}
+//LogObserver Class
+LogObserver::LogObserver()
+{
+
+}
+
+LogObserver::LogObserver(const LogObserver& old)
+{
+    _subject = old._subject;
+}
+
+LogObserver::~LogObserver()
+{
+    _subject->Detach(this);
+}
+
+LogObserver::LogObserver(Subject* s)
+{
+    _subject = s;
+    _subject->Attach(this);
+
+}
+
+std::ostream& operator<<(std::ostream& out, const LogObserver& l)
+{
+    l._subject;
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, LogObserver& l)
+{
+    return in;
+}
+
+void LogObserver::Update(ILoggable* s, string l)
+{
+    stringToLog(s, l);
+}
+
+void LogObserver::stringToLog(ILoggable* s, string l)
+{
+    s->stringToLog(l);
 }
 
 

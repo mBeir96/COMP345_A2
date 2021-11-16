@@ -2,16 +2,20 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "LoggingObserver.h"
 #include "Player.h"
 #include "GameEngine.h"
+#include "Map.h"
+
 
 class Player;
 class GameEngine;
 class Territory;
 
+
 // this is the declaration
 
-class Orders 
+class Orders : public Subject, public ILoggable
 {
     public:
         //Orders();
@@ -27,6 +31,13 @@ class Orders
         virtual void setTargetTerritory(Territory* terr);
         virtual const Player getSelfPlayers() const;
         virtual const Territory getTargetTerritory() const;
+
+
+
+        virtual void stringToLog(string l);
+        
+
+
 
     private:
         const std::string refName = "";
@@ -207,7 +218,7 @@ class NegotiateOrders : public Orders
 };
 
 
-class OrdersList
+class OrdersList : public Subject, public ILoggable
 {
     public:
         OrdersList();
@@ -220,6 +231,10 @@ class OrdersList
         void move(int firstIndex, int secondIndex);
         void put(Orders* o);
         std::vector<Orders *>  listOrders;
+
+
+        virtual void stringToLog(string l);
+
 
     private:
     

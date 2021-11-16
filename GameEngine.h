@@ -1,24 +1,32 @@
 #pragma once
-#include "GameEngine.h"
-#include "CommandProcessing.h"
 #include "Map.h"
 #include "Orders.h";
 #include "Player.h"
+#include "CommandProcessing.h"
+
 #include <vector>
 #include <iostream>
 #include <string>
 #include <algorithm>
 
-enum RiskState {
-	START, MAPLOADED, MAPVALIDATED, PLAYERSADDED, ASSIGNMENTREIFORCEMENT, ISSUEORDERS, EXECUTEORDERS, WIN
-};
+class CommandProcessor;
+class FileLineReader;
+
 class Map;
 class MapLoader;
 class Territory;
 class Deck;
 class Player;
 
-class GameEngine {
+
+
+enum RiskState {
+	START, MAPLOADED, MAPVALIDATED, PLAYERSADDED, ASSIGNMENTREIFORCEMENT, ISSUEORDERS, EXECUTEORDERS, WIN
+};
+
+
+class GameEngine : public Subject, public ILoggable
+{
 public:
 	GameEngine();
 	GameEngine(bool, bool);
@@ -39,7 +47,7 @@ public:
 	void setStartUp(bool);
 	void setPlay(bool);
 	void currentState();
-	void changeState();
+	int changeState(int state);
 
 	//
 	Map* theMap;
@@ -55,6 +63,8 @@ public:
 	static int CommandCount;
 	ifstream inFile;
 
+
+	virtual void stringToLog(string l);
 
 
 	Deck* deck;

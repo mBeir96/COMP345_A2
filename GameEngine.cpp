@@ -1,6 +1,8 @@
+#pragma once
 #include "GameEngine.h"
-#include <iostream>
-#include <string>
+#include "CommandProcessing.h"
+#include "Cards.h"
+
 using namespace std;
 
 //constructors and stuff
@@ -124,7 +126,7 @@ void GameEngine::Start() {
                 theMap->theMap = loader->readMap(file_name);
                 }
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, file_name);
-            state = 1;
+            state = changeState(0);
         }
         
     }
@@ -150,7 +152,7 @@ void GameEngine::Start() {
                 theMap->theMap = loader->readMap(file);
             }
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, file);
-            state = 1;
+            state = changeState(0);
         }
         
     }
@@ -175,7 +177,7 @@ void GameEngine::MapLoaded() {
         {
             CommandCount++;
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, "Returned to Start");
-            state = 1;
+            state = changeState(0);
             Start();
         }
         //validates map
@@ -185,13 +187,13 @@ void GameEngine::MapLoaded() {
             if (theMap->validate())
             {
                 processor.commands.at(CommandCount - 1)->saveEffect(&processor, "Validated Map");
-                state = 2;
+                state = changeState(1);
             }  
             else
             {
                 processor.commands.at(CommandCount - 1)->saveEffect(&processor, "Invalid Map: Returned to Start");
                 cout << "Invalid Map. Please load a new one";
-                state = 1;
+                state = changeState(0);
                 Start();
             }
             
@@ -228,7 +230,7 @@ void GameEngine::MapLoaded() {
         {
             CommandCount++;
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, "Returned to Start");
-            state = 1;
+            state = changeState(0);
             Start();
         }
         //validate map
@@ -238,13 +240,13 @@ void GameEngine::MapLoaded() {
             if (theMap->validate())
             {
                 processor.commands.at(CommandCount - 1)->saveEffect(&processor, "Validated Map");
-                state = 2;
+                state = changeState(1);
             }
             else
             {
                 processor.commands.at(CommandCount - 1)->saveEffect(&processor, "Invalid Map: Returned to Start");
                 cout << "Invalid Map. Please load a new one";
-                state = 1;
+                state = changeState(0);
                 Start();
             }
 
@@ -274,7 +276,7 @@ void GameEngine::MapValidated() {
             CommandCount++;
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, "added player " + a);
             cout << "\nPlayer " << players.size() << " added.";
-            state = 3;
+            state = changeState(2);
         }
     }
     //if they want to use file
@@ -312,7 +314,7 @@ void GameEngine::MapValidated() {
             CommandCount++;
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, "added player " + a);
             cout << "\nPlayer " << players.size() << " added.";
-            state = 3;
+            state = changeState(2);
         }
     }
 }
@@ -339,12 +341,12 @@ void GameEngine::PlayersAdded() {
                 CommandCount++;
                 processor.commands.at(CommandCount - 1)->saveEffect(&processor, "added player " + a);
                 cout << "\nPlayer " << players.size() << " added.";
-                state = 3;
+                state = changeState(2);
             }
             else
             {
                 cout << "Maximum amount of players achieved, moving to state \"AssignReinforcement\"";
-                state = 4;
+                state = changeState(3);
             }
                 
             
@@ -354,12 +356,12 @@ void GameEngine::PlayersAdded() {
         {
             if (players.size() >= 2)
             {
-                state = 4;
+                state = changeState(3);
             }
             else
             {
                 cout << "Only one player. Please add at least another before going to next state. ";
-                state = 3;
+                state = changeState(2);
             }
             
         }
@@ -401,12 +403,12 @@ void GameEngine::PlayersAdded() {
                 //saveeffect
                 processor.commands.at(CommandCount - 1)->saveEffect(&processor, "added player " + a);
                 cout << "\nPlayer " << players.size() << " added.";
-                state = 3;
+                state = changeState(2);
             }
             else
             {
                 cout << "Maximum amount of players achieved, movinf to state \"AssignReinforcement\"";
-                state = 4;
+                state = changeState(3);
             }
 
 
@@ -416,12 +418,12 @@ void GameEngine::PlayersAdded() {
         {
             if (players.size() >= 2)
             {
-                state = 4;
+                state = changeState(3);
             }
             else
             {
                 cout << "Only one player. Please add at least another before going to next state. ";
-                state = 3;
+                state = changeState(2);
             }
 
         }
@@ -460,7 +462,7 @@ void GameEngine::AssignReinforcement() {
             cout << players.at(i)->getName() << ": ";
             players.at(i)->handCard->ShowCards();
         }
-        state = 5;
+        state = changeState(4);
         //calling play function
         play();
     }
@@ -472,10 +474,10 @@ void GameEngine::IssueOrders() {
     cin >> a;
     if (a == "issueorder") {
         cout << "Issue Order" << endl;
-        state = 5;
+        state = changeState(4);
     }
     else if (a == "endgame") {
-        state = 6;
+        state = changeState(5);
     }
 
 }
@@ -520,14 +522,14 @@ void GameEngine::ExecuteOrders() {
     cin >> a;
     if (a == "win") {
 
-        state = 7;
+        state = changeState(6);
     }
     else if (a == "executeOrder") {
         exec();
-        state = 6;
+        state = changeState(5);
     }
     else if (a == "new") {
-        state = 5;
+        state = changeState(4);
         issueOrder();
     }
     
@@ -553,7 +555,7 @@ void GameEngine::Win() {
         {
             CommandCount++;
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, "Back to Start");
-            state = 0;
+            state = changeState(-1);
             Start();
         }
         //quit prints the commands and effects used during the game and exits the game
@@ -569,7 +571,7 @@ void GameEngine::Win() {
             cin >> a;
             if (a == "yes")
             {
-                state = 8;
+                state = changeState(7);
             }
             
         }
@@ -612,7 +614,41 @@ void GameEngine::play()
 }
 
 
+int GameEngine::changeState(int state) {
 
+    LogObserver* lo = new LogObserver(this);
+    string name;
+    state = state + 1;
+    switch (state)
+    {
+        case 0:
+            name = "START";
+            break;
+        case 1:
+            name = "MAPLOADED";
+            break;
+        case 2:
+            name = "MAPVALIDATED";
+            break;
+        case 3:
+            name = "PLAYERSADDED";
+            break;
+        case 4:
+            name = "ASSIGNREINFORCEMENT";
+            break;
+        case 5:
+            name = "ISSUEORDERS";
+            break;
+        case 6:
+            name = "EXECUTEORDERS";
+            break;
+        case 7:
+            name = "WIN";
+            break;
+    }
+    Notify(this, "CHANGED TO STATE " + name);
+    return state;
+}
 
 
 bool GameEngine::getStartUp() {
@@ -632,9 +668,7 @@ void GameEngine::currentState() {
 
 }
 
-void GameEngine::changeState() {
 
-}
 
 
 void GameEngine::loadMap() {
@@ -657,4 +691,13 @@ void GameEngine::endExecuteOrder() {
 }
 void GameEngine::win() {
     //add code here later 
+}
+
+
+void GameEngine::stringToLog(string l)
+{
+    ofstream outFile;
+    outFile.open("gamelog.txt", std::ios_base::app);
+    outFile << "\n" + l;
+    outFile.close();
 }
