@@ -11,17 +11,18 @@ class Observer
 public:
 	Observer();
 	~Observer();
-	Observer(int len);
 	Observer(const Observer& obj);
+	friend std::istream& operator>>(std::istream& in, const Observer& o);
+	friend std::ostream& operator<<(std::ostream& out, const Observer& o);
 	virtual void Update(ILoggable* s, string l) = 0;
-private:
-	int* ptr;
+
 };
 class Subject {
 public:
 	Subject();
 	~Subject();
-	Subject(int len);
+	friend std::istream& operator>>(std::istream& in, const Subject& s);
+	friend std::ostream& operator<<(std::ostream& out, const Subject& s);
 	Subject(const Subject& obj);
 	virtual void Attach(Observer* o);
 	virtual void Detach(Observer* o);
@@ -29,19 +30,17 @@ public:
 
 private:
 	list<Observer*>* _observers;
-	int* ptr;
+
 };
 
 class ILoggable {
 public:
 	ILoggable();
 	~ILoggable();
-	ILoggable(int len);
 	ILoggable(const ILoggable& obj);
+	friend std::istream& operator>>(std::istream& in, const ILoggable& i);
+	friend std::ostream& operator<<(std::ostream& out, const ILoggable& i);
 	virtual void stringToLog(string l) = 0;
-
-private:
-	int* ptr;
 
 };
 
@@ -51,6 +50,9 @@ public:
 	LogObserver();
 	LogObserver(Subject* s);
 	LogObserver(const LogObserver& old);
+	~LogObserver();
+	friend std::istream& operator>>(std::istream& in, const LogObserver& l);
+	friend std::ostream& operator<<(std::ostream& out, const LogObserver& l);
 	void Update(ILoggable* s, string l);
 	void stringToLog(ILoggable* s, string l);
 private:
