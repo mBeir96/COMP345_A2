@@ -49,6 +49,9 @@ public:
     void removeAllTruces();
     bool hasTruce(Player*);
 
+    void Neighbour();
+    vector<Territory*> NeighbourT;
+
 private:
     string name;
     int reinforcementPool;
@@ -57,6 +60,11 @@ private:
     Hand* handCard;
     vector<Orders*> orderList;
     vector<Player*> playerTruces;
+
+    bool negotiate = false;
+    bool FinishedIssueOrder = false;
+    Player* enemy_no_attack;
+    GameEngine* Game;
 
     //friend classes
     friend class Hand;

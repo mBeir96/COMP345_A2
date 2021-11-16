@@ -48,6 +48,10 @@ public:
 	void setPlay(bool);
 	void currentState();
 	int changeState(int state);
+	void reinforcmentPhase(); // reinforcment phase part 3.1
+	void IssueOrders();
+	void issueOrdersPhase();
+	void ExecuteOrders();
 
 	//
 	Map* theMap;
