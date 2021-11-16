@@ -74,8 +74,9 @@ public:
 	void play();
 private:
 	
-	void exec();
+	void executeOrderPhase();
 	bool StartUp;
 	bool Play;
 
 };
+

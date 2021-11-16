@@ -136,7 +136,8 @@ void DeployOrders::setTargetTerritory(Territory *target){
 
 const std::string DeployOrders::getName() const
 {
-    return *name;
+    return "Deploy";
+    //return *name;
 }
 
 int DeployOrders::getNumArmy()
@@ -171,6 +172,7 @@ void DeployOrders::execute()
     }
 
     //the selected number of armies is added to the number of armies on that territory.
+    this->validate(true);
     player->setReinforcementPool(player->getReinforcementPool() - numArmy);
     terr->army = terr->army + numArmy;
 
@@ -238,7 +240,8 @@ std::istream& operator>>(std::istream& in, AdvanceOrders& a)
 
 const std::string AdvanceOrders::getName() const
 {
-    return *name;
+    return "Advancing";
+    //return *name;
 }
 
 void AdvanceOrders::setSourceTerritory(Territory* sourceTerr)
@@ -313,12 +316,14 @@ void AdvanceOrders::execute()
     //add army units if player owns territory
     if (terr->getTerritoryOwner() == player)
     {
+        source->setArmyAmount(source->army - *armyUnits);
         terr->setArmyAmount(terr->getArmyAmount() + *(armyUnits));
         this->validate(true);
         return;
     }
 
-    //attacking protion now
+    this->validate(true);
+    //attacking portion now
     int playerAttacks = getCasualties(source->army, true);
     int enemyAttacks = getCasualties(terr->army, false);
 
@@ -346,10 +351,25 @@ void AdvanceOrders::execute()
 
     //transfer terr (target territory) to player
     if (terr->army == 0) {
-        
+        //search for territory
+        int index = 0;
+        for (int i = 0; i < terr->player->getTerritory().size(); i++)
+        {
+            if (terr == terr->player->getTerritory().at(i))
+            {
+                index = i;
+                break;
+            }
+        }
+
+        //remove from enemy 
+        terr->player->getTerritory().erase(terr->player->getTerritory().begin() + index);
+        //change ownership
+        terr->setTerritoryOwner(player);
+        //give player ownership
+        player->getTerritory().push_back(terr);
     }
 
-    this->validate(true);
 
 }
 
@@ -418,7 +438,8 @@ void BombOrders::setTargetTerritory(Territory *target){
 
 const std::string BombOrders::getName() const
 {
-    return *name;
+    return "Bomb";
+    //return *name;
 }
 
 const Player BombOrders::getSelfPlayers() const
@@ -441,7 +462,7 @@ void BombOrders::execute()
         return;
     }
 
-    this->terr->army = this->terr->army / 2;
+    this->terr->setArmyAmount(this->terr->army / 2);
     
 }
 
@@ -504,7 +525,8 @@ std::istream& operator>>(std::istream& in, BlockadeOrders& b)
 
 const std::string BlockadeOrders::getName() const
 {
-    return *name;
+    return "Blockade";
+    //return *name;
 }
 
 const Player BlockadeOrders::getSelfPlayers() const
@@ -622,7 +644,8 @@ std::istream& operator>>(std::istream& in, AirliftOrders& a)
 
 const std::string AirliftOrders::getName() const
 {
-    return *name;
+    return "Airlift";
+    //return *name;
 }
 
 int AirliftOrders::getNumArmy()
@@ -655,7 +678,7 @@ void AirliftOrders::setSelfPlayers(Player *self){
 }
 
 void AirliftOrders::setTargetTerritory(Territory *target){
-    target = target;
+    this->target = target;
 }
 
 
@@ -669,8 +692,8 @@ void AirliftOrders::setSourceTerritory(Territory *target){
 void AirliftOrders::execute()
 {
 
-
-    if(this->source->getTerritoryOwner() != player && this->target->getTerritoryOwner() != player)
+    //invalid if source or target not owned by player
+    if(this->source->getTerritoryOwner() != player || this->target->getTerritoryOwner() != player)
     {
         //If the target territory belongs to an enemy player, the order is declared invalid.
         this->validate(false);
@@ -681,11 +704,13 @@ void AirliftOrders::execute()
     {
         // If both the source and target territories belong to the player that issue the airlift order, then the selected
         // number of armies is moved from the source to the target territory.
+        this->validate(true);
         source->army = source->army - numArmy;
-        target->army = numArmy;
+        target->army += numArmy;
         return;
     }
 
+    /*
     if(this->source->getTerritoryOwner() == player && this->target->getTerritoryOwner() != player)
     {
         // If the target territory does not belong to the player that issued the airlift order, the selected number of
@@ -696,6 +721,7 @@ void AirliftOrders::execute()
         delete ao;
         ao = nullptr;
     }
+    */
 }
 
 bool AirliftOrders::validate(bool valid)
@@ -757,7 +783,8 @@ std::istream& operator>>(std::istream& in, NegotiateOrders& n)
 
 const std::string NegotiateOrders::getName() const
 {
-    return *name;
+    return "Negotiation";
+    //return *name;
 }
 
 void NegotiateOrders::execute()
