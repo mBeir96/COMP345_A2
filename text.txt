@@ -1,6 +1,1 @@
-loadmap europass.map
-validatemap
-addplayer Steve
-addplayer Joe
-addplayer Mama
-gamestart
+tournament -M europass.map google.map -P Agressive Neutral Cheater Benevolent -G 3 -D 15

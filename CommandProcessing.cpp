@@ -150,6 +150,8 @@ bool CommandProcessor::validate(int state, string command)
 	// checking if each command is in the right state
 	if (command == "loadmap" && (state == 0 || state == 1))
 		return true;
+	if (command == "tournament" && state == 0)
+		return true;
 	if (command == "validatemap" && state == 1)
 		return true;
 	if (command == "addplayer" && (state == 2 || state == 3))

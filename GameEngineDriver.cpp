@@ -16,8 +16,8 @@ using namespace std;
 
 int main() {
 	
-	orderDriver();
-	//RiskState currentState = START;
-	//GameEngine gm;
-	//gm.StartupPhase();
+	//orderDriver();
+	RiskState currentState = START;
+	GameEngine gm;
+	gm.StartupPhase();
 }

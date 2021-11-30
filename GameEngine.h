@@ -49,6 +49,9 @@ public:
 	void currentState();
 	int changeState(int state);
 
+	//Tournament mode
+	void tournament(string b);
+
 	//
 	Map* theMap;
 	MapLoader* loader;

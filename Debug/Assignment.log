@@ -4,19 +4,10 @@ C:\Users\phili\source\repos\COMP345\Cards.h(2,10): warning C4067: unexpected tok
 C:\Users\phili\source\repos\COMP345\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\phili\source\repos\COMP345\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\phili\source\repos\COMP345\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(443,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(450,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(455,27): warning C4018: '<': signed/unsigned mismatch
 C:\Users\phili\source\repos\COMP345\GameEngine.cpp(460,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(489,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(569,31): warning C4018: '<': signed/unsigned mismatch
-  Orders.cpp
-C:\Users\phili\source\repos\COMP345\GameEngine.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Orders.cpp(265,23): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-C:\Users\phili\source\repos\COMP345\Orders.cpp(295): warning C4700: uninitialized local variable 'total' used
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(468,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(473,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(478,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(505,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\phili\source\repos\COMP345\GameEngine.cpp(586,31): warning C4018: '<': signed/unsigned mismatch
   Assignment.vcxproj -> C:\Users\phili\source\repos\COMP345\Debug\Assignment.exe

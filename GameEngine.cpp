@@ -99,6 +99,7 @@ void GameEngine::Start() {
     cout << "Please enter a command using the console (by typing -console) or a file (-file filename)" << endl;
 
     string a;
+    string b;
     string command;
     cin >> a;
 
@@ -107,7 +108,8 @@ void GameEngine::Start() {
     {
         processor.cp = cp;
         //loadmap when they command loadmap
-        if (processor.getCommand(state) == "loadmap")
+        b = processor.getCommand(state);
+        if (b == "loadmap")
         {
             CommandCount++;
             string file_name;
@@ -117,32 +119,40 @@ void GameEngine::Start() {
 
             if (!inFile)
             {
-            	cerr << "unable to open input file: " << file_name << " ending program!\n";
+                cerr << "unable to open input file: " << file_name << " ending program!\n";
             }
 
             loadedMap = loader->readMap(file_name);
             if (loadedMap != NULL)
-                {
+            {
                 theMap->theMap = loader->readMap(file_name);
-                }
+            }
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, file_name);
             state = changeState(0);
+        }
+        //Tournament Mode
+        else if (b == "tournament")
+        {
+            CommandCount++;
+            tournament(a);
+            state = changeState(7);
         }
         
     }
     //if they want to use a file
     else if (a == "-file")
     {
-        cin >> a;
+        cin >> b;
         processor.flr = flr;
-        inFile.open(a.c_str());
+        inFile.open(b.c_str());
 
         if (!inFile)
         {
-            cerr << "unable to open input file: " << a << "\n";
+            cerr << "unable to open input file: " << b << "\n";
         }
 
-        if (processor.getCommand(state, &inFile) != "")
+        command = processor.getCommand(state, &inFile);
+        if (command == "loadmap")
         {
             CommandCount++;
             string file = processor.readCommand(&inFile);
@@ -153,6 +163,13 @@ void GameEngine::Start() {
             }
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, file);
             state = changeState(0);
+        }
+        //Tournament Mode
+        else if (command == "tournament")
+        {
+            CommandCount++;
+            tournament(a);
+            state = changeState(7);
         }
         
     }
@@ -702,4 +719,225 @@ void GameEngine::stringToLog(string l)
     outFile.open("gamelog.txt", std::ios_base::app);
     outFile << "\n" + l;
     outFile.close();
+}
+
+void GameEngine::tournament(string b)
+{
+    processor.commands.at(CommandCount - 1)->saveEffect(&processor, "Tournamnent Started");
+    vector<string> maps;
+    vector<string> players;
+    int nbOfGames = 0;
+    int nbOfTurns = 0;
+    //If they inputted tournament from console
+    if (b == "-console")
+    {
+        string next;
+        cin >> next;
+
+        
+
+        //getting the Maps
+        if (next == "-M")
+        {
+            while (next != "-P")
+            {
+                cin >> next;
+                maps.push_back(next);
+            }
+            if (maps.empty())
+            {
+                cout << "\ninvalid tournament command: missing map files";
+            }
+        }
+        else
+        {
+            cout << "\ninvalid tournament command: missing -M";
+        }
+
+        // getting the players
+        if (next == "-P")
+        {
+            while (next != "-G")
+            {
+                cin >> next;
+                players.push_back(next);
+            }
+            if (players.empty())
+            {
+                cout << "\ninvalid tournament command: missingplayer types";
+            }
+        }
+        else
+        {
+            cout << "\ninvalid tournament command: missing -P";
+        }
+
+        //getting the number of games
+        if (next == "-G")
+        {
+            cin >> next;
+            if (isdigit(next.at(0)) && stoi(next) <= 5 && stoi(next) > 0)
+            {
+                nbOfGames = stoi(next);
+            }
+            else
+            {
+                cout << "\ninvalid number of games: must be between 1 and 5";
+            }
+        }
+        else
+        {
+            cout << "\ninvalid tournament command: missing -G";
+        }
+
+        //getting to the number of turns
+        while (next != "-D")
+        {
+            cin >> next;
+        }
+
+        // getting the number of turns
+        if (next == "-D")
+        {
+            cin >> next;
+            if (isdigit(next.at(0)) && stoi(next) <= 50 && stoi(next) > 10)
+            {
+                nbOfTurns = stoi(next);
+            }
+            else
+            {
+                cout << "\ninvalid number of turns: must be between 10 and 50";
+            }
+        }
+        else
+        {
+            cout << "\ninvalid tournament command: missing -D";
+        }
+    }
+
+    //If they inputted tournament from a text file
+    if (b == "-file")
+    {
+        string next;
+        string cha;
+        while (cha != " ")
+        {
+            next += cha;
+            cha = inFile.get();
+        }
+        
+
+        //getting the Maps
+        if (next == "-M")
+        {
+            next = "";
+            while (next != "-P")
+            {
+                next = "";
+                while (cha != " ")
+                {
+                    next += cha;
+                    cha = inFile.get();
+                }
+                maps.push_back(next);
+                cha = inFile.get();
+            }
+            if (maps.empty())
+            {
+                cout << "\ninvalid tournament command: missing map files";
+            }
+        }
+        else
+        {
+            cout << "\ninvalid tournament command: missing -M";
+        }
+
+        // getting the players
+        if (next == "-P")
+        {
+            next = "";
+            while (next != "-G")
+            {
+                next = "";
+                while (cha != " ")
+                {
+                    next += cha;
+                    cha = inFile.get();
+                }
+                players.push_back(next);
+                cha = inFile.get();
+            }
+            if (players.empty())
+            {
+                cout << "\ninvalid tournament command: missingplayer types";
+            }
+        }
+        else
+        {
+            cout << "\ninvalid tournament command: missing -P";
+        }
+
+        //getting the number of games
+        if (next == "-G")
+        {
+            stringstream ss;
+            ss << cha;
+            int num = 0;
+            ss >> num;
+
+            if (isdigit(cha.at(0)) && num <= 5 && num > 0)
+            {
+                nbOfGames = num;
+            }
+            else
+            {
+                cout << "\ninvalid number of games: must be between 1 and 5";
+            }
+        }
+        else
+        {
+            cout << "\ninvalid tournament command: missing -G";
+        }
+
+        //getting to the number of turns
+        next = "";
+        cha = "";
+        while (next != "-D")
+        {
+            while (cha != " ")
+            {
+                next += cha;
+                cha = inFile.get();   
+            }
+            cha = inFile.get();
+        }
+
+        // getting the number of turns
+        if (next == "-D")
+        {
+            stringstream ss;
+            ss << cha;
+            int num = 0;
+            ss >> num;
+
+            if (isdigit(cha.at(0)) && num <= 5 && num > 0)
+            {
+                nbOfTurns = (num * 10);
+
+                cha = inFile.get();
+                nbOfTurns += stoi(cha);
+            }
+            else
+            {
+                cout << "\ninvalid number of turns: must be between 10 and 50";
+            }
+        }
+        else
+        {
+            cout << "\ninvalid tournament command: missing -D";
+        }
+    }
+
+    cout << "\n" << nbOfGames << "\n" << nbOfTurns << "\n";
+    system("pause");
 }
