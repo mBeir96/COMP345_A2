@@ -725,9 +725,11 @@ void GameEngine::tournament(string b)
 {
     processor.commands.at(CommandCount - 1)->saveEffect(&processor, "Tournamnent Started");
     vector<string> maps;
-    vector<string> players;
+    vector<string> playersType;
+    vector<Player*> players;
     int nbOfGames = 0;
     int nbOfTurns = 0;
+
     //If they inputted tournament from console
     if (b == "-console")
     {
@@ -739,6 +741,7 @@ void GameEngine::tournament(string b)
         //getting the Maps
         if (next == "-M")
         {
+
             while (next != "-P")
             {
                 cin >> next;
@@ -760,7 +763,7 @@ void GameEngine::tournament(string b)
             while (next != "-G")
             {
                 cin >> next;
-                players.push_back(next);
+                playersType.push_back(next);
             }
             if (players.empty())
             {
@@ -864,7 +867,7 @@ void GameEngine::tournament(string b)
                     next += cha;
                     cha = inFile.get();
                 }
-                players.push_back(next);
+                playersType.push_back(next);
                 cha = inFile.get();
             }
             if (players.empty())
@@ -936,6 +939,73 @@ void GameEngine::tournament(string b)
         {
             cout << "\ninvalid tournament command: missing -D";
         }
+    }
+
+    if(!maps.empty() && !playersType.empty() && !players.empty() && nbOfGames != 0 && nbOfTurns != 0)
+    {
+        for(int i = 0; i < (int) players.size(); i++)
+        {
+            players.push_back(new Player("Player " + to_string(i + 1) + " (" + playersType.at(i) + ")"));
+        }
+
+        for(int i = 0; i < nbOfGames; i++)
+        {
+
+            for(int j = 0; j < (int) maps.size(); j++)
+            {
+                loadedMap = loader->readMap(maps.at(j));
+                if (loadedMap != NULL)
+                {
+                    theMap->theMap = loader->readMap(maps.at(j));
+                }
+
+                //dividing the territories to the players 
+                //making the player own the territory
+                for (int i = 0; i < theMap->theMap->size(); i++)
+                {
+                    players.at(i % players.size())->setTerritory(&(theMap->theMap->at(i)));
+
+                }
+                //initializing play order
+                random_shuffle(players.begin(), players.end());
+                //giving every player 50 initial armies to their reinforcement pool
+                for (int i = 0; i < players.size(); i++)
+                {
+                    players.at(i)->setReinforcementPool(50);
+                }
+                //giving every player 2 draws
+                for (int i = 0; i < players.size(); i++)
+                {
+                    players.at(i)->setHand(deck->Draw());
+                    players.at(i)->setHand(deck->Draw());
+                }
+                for (int i = 0; i < players.size(); i++)
+                {
+                    cout << players.at(i)->getName() << ": ";
+                    players.at(i)->handCard->ShowCards();
+                }
+
+
+                for(int k = 0; k < nbOfTurns; k++)
+                {
+                    //part1
+
+                    cout << "Tournament mode:" << endl;
+                    cout << "M: ";
+                    for(int c=0; c < (int) maps.size(); c++){
+                        cout << maps.at(c);
+                    }
+                    cout << "\nP: ";
+                    for(int b=0; b < (int) players.size(); b++){
+                         cout << players.at(b)->getName();
+                    }
+                    cout << "\nG: " << nbOfGames << endl;
+                    cout << "D: " << nbOfTurns << endl;
+                }
+            }
+        }
+    }else{
+        cout << "Something is wrong!!!" << endl;
     }
 
     cout << "\n" << nbOfGames << "\n" << nbOfTurns << "\n";
