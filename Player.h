@@ -39,6 +39,7 @@ public:
     void setOrder(Orders*);
     void setTerritory(Territory*);
     void removeTerritory(int i);
+    void removeAllTerritories();
     void setName(string);
     void setHand(Card* c);
     

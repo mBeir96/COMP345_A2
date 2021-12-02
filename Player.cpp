@@ -172,6 +172,15 @@ void Player::removeTerritory(int i)
 	this->territory.erase(this->territory.begin() + i);
 }
 
+void Player::removeAllTerritories()
+{
+	int end = this->territory.size();
+	for (int i = 0; i < end; i++)
+	{
+		this->territory.pop_back();
+	}
+}
+
 void Player::setHand(Card* c)
 {
 	this->handCard->AddCard(c);

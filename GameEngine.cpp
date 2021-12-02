@@ -125,7 +125,7 @@ void GameEngine::Start() {
             loadedMap = loader->readMap(file_name);
             if (loadedMap != NULL)
             {
-                theMap->theMap = loader->readMap(file_name);
+                theMap->theMap = loadedMap;
             }
             processor.commands.at(CommandCount - 1)->saveEffect(&processor, file_name);
             state = changeState(0);
@@ -727,6 +727,7 @@ void GameEngine::tournament(string b)
     vector<string> maps;
     vector<string> playersType;
     vector<Player*> players;
+    vector<string> winners;
     int nbOfGames = 0;
     int nbOfTurns = 0;
 
@@ -745,7 +746,10 @@ void GameEngine::tournament(string b)
             while (next != "-P")
             {
                 cin >> next;
-                maps.push_back(next);
+                if (next != "" && next != "-P")
+                {
+                    maps.push_back(next);
+                }
             }
             if (maps.empty())
             {
@@ -763,11 +767,14 @@ void GameEngine::tournament(string b)
             while (next != "-G")
             {
                 cin >> next;
-                playersType.push_back(next);
+                if (next != "" && next != "-G")
+                {
+                    playersType.push_back(next);
+                }
             }
-            if (players.empty())
+            if (playersType.empty())
             {
-                cout << "\ninvalid tournament command: missingplayer types";
+                cout << "\ninvalid tournament command: missing player types";
             }
         }
         else
@@ -842,7 +849,11 @@ void GameEngine::tournament(string b)
                     next += cha;
                     cha = inFile.get();
                 }
-                maps.push_back(next);
+                if (next != "" && next != "-P")
+                {
+                    maps.push_back(next);
+                }
+                
                 cha = inFile.get();
             }
             if (maps.empty())
@@ -867,12 +878,16 @@ void GameEngine::tournament(string b)
                     next += cha;
                     cha = inFile.get();
                 }
-                playersType.push_back(next);
+                if (next != "" && next != "-G")
+                {
+                    playersType.push_back(next);
+                }
+                
                 cha = inFile.get();
             }
-            if (players.empty())
+            if (playersType.empty())
             {
-                cout << "\ninvalid tournament command: missingplayer types";
+                cout << "\ninvalid tournament command: missing player types";
             }
         }
         else
@@ -939,75 +954,132 @@ void GameEngine::tournament(string b)
         {
             cout << "\ninvalid tournament command: missing -D";
         }
-    }
+    } 
 
-    if(!maps.empty() && !playersType.empty() && !players.empty() && nbOfGames != 0 && nbOfTurns != 0)
-    {
-        for(int i = 0; i < (int) players.size(); i++)
+    for (int i = 0; i < playersType.size(); i++)
         {
             players.push_back(new Player("Player " + to_string(i + 1) + " (" + playersType.at(i) + ")"));
         }
 
+    cout << "Tournament mode:" << endl;
+    cout << "M: ";
+    for (int c = 0; c < (int)maps.size(); c++) {
+        cout << maps.at(c) << ", ";
+    }
+    cout << "\nP: ";
+    for (int b = 0; b < (int)players.size(); b++) {
+        cout << players.at(b)->getName() << ", ";
+    }
+    cout << "\nG: " << nbOfGames << endl;
+    cout << "D: " << nbOfTurns << endl;
+
+    if(!maps.empty() && !playersType.empty() && !players.empty() && nbOfGames != 0 && nbOfTurns != 0)
+    {
+
+
         for(int i = 0; i < nbOfGames; i++)
         {
-
+            
             for(int j = 0; j < (int) maps.size(); j++)
             {
+                // removing territories from the players
+                for (int l = 0; l < players.size(); l++)
+                {
+                    players.at(l)->removeAllTerritories();
+
+                }
+
                 loadedMap = loader->readMap(maps.at(j));
                 if (loadedMap != NULL)
                 {
-                    theMap->theMap = loader->readMap(maps.at(j));
+                    theMap->theMap = loadedMap;
                 }
 
                 //dividing the territories to the players 
                 //making the player own the territory
-                for (int i = 0; i < theMap->theMap->size(); i++)
+                for (int l = 0; l < theMap->theMap->size(); l++)
                 {
-                    players.at(i % players.size())->setTerritory(&(theMap->theMap->at(i)));
+                    players.at(l % players.size())->setTerritory(&(theMap->theMap->at(l)));
 
                 }
                 //initializing play order
                 random_shuffle(players.begin(), players.end());
                 //giving every player 50 initial armies to their reinforcement pool
-                for (int i = 0; i < players.size(); i++)
+                for (int l = 0; l < players.size(); l++)
                 {
-                    players.at(i)->setReinforcementPool(50);
+                    players.at(l)->setReinforcementPool(50);
                 }
                 //giving every player 2 draws
-                for (int i = 0; i < players.size(); i++)
+                for (int l = 0; l < players.size(); l++)
                 {
-                    players.at(i)->setHand(deck->Draw());
-                    players.at(i)->setHand(deck->Draw());
-                }
-                for (int i = 0; i < players.size(); i++)
-                {
-                    cout << players.at(i)->getName() << ": ";
-                    players.at(i)->handCard->ShowCards();
+                    players.at(l)->setHand(deck->Draw());
+                    players.at(l)->setHand(deck->Draw());
                 }
 
-
-                for(int k = 0; k < nbOfTurns; k++)
+                int count = 0;
+                bool won = false;
+                while (!won && count < nbOfTurns)
                 {
                     //part1
+                    //each player's turn
+                    for (int l = 0; l < players.size(); l++)
+                    {
+                        /*players.at(l)->issueOrder();*/
+                    }
+                    //checking if someone won
+                    for (int l = 0; l < players.size(); l++)
+                    {
+                        if (players.at(l)->getTerritory().size() == theMap->theMap->size())
+                        {
+                            winners.push_back(players.at(l)->getName());
+                            won = true;
+                        }
+                    }
+                    count++;
+                }
 
-                    cout << "Tournament mode:" << endl;
-                    cout << "M: ";
-                    for(int c=0; c < (int) maps.size(); c++){
-                        cout << maps.at(c);
-                    }
-                    cout << "\nP: ";
-                    for(int b=0; b < (int) players.size(); b++){
-                         cout << players.at(b)->getName();
-                    }
-                    cout << "\nG: " << nbOfGames << endl;
-                    cout << "D: " << nbOfTurns << endl;
+                if (winners.size() == j + i)
+                {
+                    winners.push_back("draw");
                 }
             }
         }
-    }else{
+
+
+    
+    }
+    else
+    {
         cout << "Something is wrong!!!" << endl;
     }
+    cout <<endl;
+    for (int r = 0; r < maps.size() + 1; r++) {
 
-    cout << "\n" << nbOfGames << "\n" << nbOfTurns << "\n";
+
+        for (int c = 0; c < nbOfGames + 1; c++) {
+
+            if (r == 0 && c == 0) {
+                cout << "\t\t";
+
+            }
+            else if (r == 0 && c != 0) {
+                cout << "Game " << c << "\t\t\t";
+
+            }
+            else if (r != 0 && c == 0) {
+                cout << maps[r - 1] << "\t";
+            }
+            else if (r != 0 && c != 0) {
+                cout << winners.at((r + c) - 2) << "\t\t\t";
+            }
+
+
+            //cout<< maps[c]<<endl;
+
+        }
+        cout << endl;
+
+
+    }
     system("pause");
 }

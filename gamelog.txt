@@ -88,3 +88,170 @@ Effect: Tournamnent Started
 Command: tournament
 Effect: Tournamnent Started
 CHANGED TO STATE 
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+CHANGED TO STATE 
+Command: tournament
+Effect: Tournamnent Started
+CHANGED TO STATE 
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+CHANGED TO STATE 
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+CHANGED TO STATE 
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+CHANGED TO STATE 
+Command: loadmap
+Effect: europass.map
+CHANGED TO STATE MAPLOADED
+Command: validatemap
+Effect: Validated Map
+CHANGED TO STATE MAPVALIDATED
+Command: addplayer
+Effect: added player Joe
+CHANGED TO STATE PLAYERSADDED
+Command: addplayer
+Effect: added player Mama
+CHANGED TO STATE PLAYERSADDED
+Command: gamestart
+CHANGED TO STATE ASSIGNREINFORCEMENT
+CHANGED TO STATE ISSUEORDERS
+CHANGED TO STATE EXECUTEORDERS
+CHANGED TO STATE WIN
+Command: quit
+Effect: Ending game
+CHANGED TO STATE 
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+CHANGED TO STATE 
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+CHANGED TO STATE 
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+Command: tournament
+Effect: Tournamnent Started
+CHANGED TO STATE 
+Command: tournament
+Effect: Tournamnent Started
+CHANGED TO STATE 
