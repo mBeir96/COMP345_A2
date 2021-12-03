@@ -43,6 +43,24 @@ class BenevolentPlayerStrategy : public PlayerStrategy {
 	void toDenfend() = 0;
 };
 
+class NeutralPlayerStrategey : public PlayerStrategy {
+	//create method that will change strategy in the isuueing orders phase
+	virtual int changeStrategy(string, int);
+	//implement issueOrder(), toAttack(), toDefend() in different ConcreteStrategy 
+	virtual void issueOrder(string);
+	virtual void toAttack();
+	virtual void toDenfend();
+};
+
+class CheaterPlayerStrategey : public PlayerStrategy {
+	//create method that will change strategy in the isuueing orders phase
+	virtual int changeStrategy(string, int);
+	//implement issueOrder(), toAttack(), toDefend() in different ConcreteStrategy 
+	virtual void issueOrder(string);
+	virtual void toAttack();
+	virtual void toDenfend();
+};
+
 
 
 

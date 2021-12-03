@@ -92,3 +92,47 @@ void BenevolentPlayerStrategy::toDenfend()
 {
 	cout << "BenevolentPlayerStrategy: toDenfend() -> move armies to weaker countries. " << endl;
 }
+
+
+#pragma region Neutral Player Strategy
+
+
+int NeutralPlayerStrategey::changeStrategy(string, int)
+{
+	return 0;
+}
+
+void NeutralPlayerStrategey::issueOrder(string)
+{
+}
+
+void NeutralPlayerStrategey::toAttack()
+{
+}
+
+void NeutralPlayerStrategey::toDenfend()
+{
+}
+
+#pragma endregion
+
+#pragma region Cheater Player Strategy
+
+int CheaterPlayerStrategey::changeStrategy(string, int)
+{
+	return 0;
+}
+
+void CheaterPlayerStrategey::issueOrder(string)
+{
+}
+
+void CheaterPlayerStrategey::toAttack()
+{
+}
+
+void CheaterPlayerStrategey::toDenfend()
+{
+}
+
+#pragma endregion
