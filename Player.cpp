@@ -382,7 +382,7 @@ void Player::setPlayerStrategy(PlayerType type)
 		strategy = new NeutralPlayerStrategy(this);
 		break;
 	case Cheater:
-		strategy = new CheaterPlayerStrategey(this);
+		strategy = new CheaterPlayerStrategy(this);
 		break;
 	default:
 		break;

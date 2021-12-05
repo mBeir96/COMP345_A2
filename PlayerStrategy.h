@@ -46,11 +46,14 @@ public:
 
 class AggressivePlayerStrategy : public PlayerStrategy {
 public:
+	AggressivePlayerStrategy(Player* player);
 	int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() 
 	void issueOrder(string);
 	vector<Territory*> toAttack();
 	vector<Territory*> toDefend();
+private:
+	Player* player;
 };
 
 class BenevolentPlayerStrategy : public PlayerStrategy {
@@ -70,13 +73,16 @@ public:
 	virtual void issueOrder(string);
 	virtual vector<Territory*> toAttack();
 	virtual vector<Territory*> toDefend();
+	~NeutralPlayerStrategy();
 private:
 	Player* player;
+	int* territoryCount;
+	int* armyCount;
 };
 
-class CheaterPlayerStrategey : public PlayerStrategy {
+class CheaterPlayerStrategy : public PlayerStrategy {
 public:
-	CheaterPlayerStrategey(Player* player);
+	CheaterPlayerStrategy(Player* player);
 	//create method that will change strategy in the isuueing orders phase
 	virtual int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() in different ConcreteStrategy 
@@ -86,7 +92,3 @@ public:
 private:
 	Player* player;
 };
-
-
-
-
