@@ -2,7 +2,7 @@
 #include "Cards.h"
 #include "GameEngine.h"
 #include "Orders.h"
-
+#include "PlayerStrategy.h";
 #include <time.h>
 #include <algorithm>  
 #include <assert.h>  
@@ -195,13 +195,14 @@ vector<Territory*> Player::getTerritory()
 
 Hand* Player::getCard()
 {
-
 	return handCard;
 }
 
 vector<Territory*> Player::toAttack()
 {
-	vector<Territory*> AttackList;
+	return strategy->toAttack();
+
+	/*vector<Territory*> AttackList;
 
 	for (int i = 0; i < territory.size(); i++)
 	{
@@ -215,30 +216,31 @@ vector<Territory*> Player::toAttack()
 	{
 		cout << "Index " << i << " " << (*AttackList[i]).getTname() << " " << (*AttackList[i]).getContinent() << endl;
 	}
-	return AttackList;
+	return AttackList;*/
 }
 
 vector<Territory*> Player::toDefend()
 {
+	return strategy->toDefend();
+
+	/*vector<Territory*> DefendList;
+
+	for (int i = 0; i < territory.size(); i++)
 	{
-		vector<Territory*> DefendList;
+		if (getName().compare(territory[i]->getTerritoryOwner()->getName()) == 0)
 
-		for (int i = 0; i < territory.size(); i++)
-		{
-			if (getName().compare(territory[i]->getTerritoryOwner()->getName()) == 0)
-
-				DefendList.push_back(territory[i]);
-		}
-
-		cout << "The list of territories that can be Defend by " << getName() << endl;
-		for (int i = 0; i < DefendList.size(); i++)
-		{
-			cout << "Index " << i << " " << (*DefendList[i]).getTname() << " " << (*DefendList[i]).getContinent() << endl;
-		}
-		return DefendList;
+			DefendList.push_back(territory[i]);
 	}
 
+	cout << "The list of territories that can be Defend by " << getName() << endl;
+	for (int i = 0; i < DefendList.size(); i++)
+	{
+		cout << "Index " << i << " " << (*DefendList[i]).getTname() << " " << (*DefendList[i]).getContinent() << endl;
+	}
+	return DefendList;*/
 }
+
+
 
 
 void Player::issueOrder()
@@ -363,6 +365,28 @@ bool Player::hasTruce(Player* player)
 		}
 	}
 	return false;
+}
+
+void Player::setPlayerStrategy(PlayerType type)
+{
+	switch (type)
+	{
+	case Human:
+		//strategy = new HumanPlayerStrategy();
+		break;
+	case Aggressive:
+		break;
+	case Benevolent:
+		break;
+	case Neutral:
+		strategy = new NeutralPlayerStrategy(this);
+		break;
+	case Cheater:
+		strategy = new CheaterPlayerStrategey(this);
+		break;
+	default:
+		break;
+	}
 }
 
 
