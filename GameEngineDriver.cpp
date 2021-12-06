@@ -16,9 +16,9 @@ using namespace std;
 }*/
 
 int main() {
-	PlayerStrategyDriverMain();
+	//PlayerStrategyDriverMain();
 	//orderDriver();
 	//RiskState currentState = START;
-	//GameEngine gm;
-	//gm.StartupPhase();
+	GameEngine gm;
+	gm.StartupPhase();
 }

@@ -6,3 +6,4 @@ void ShowTerritoryArmy(Territory*);
 void ShowTerritoryOwner(Territory *);
 void UserPauseStrat();
 void executePlayerOrders(Player* player);
+

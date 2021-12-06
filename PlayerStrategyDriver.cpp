@@ -267,11 +267,11 @@ void ShowTerritoryOwner(Territory* t) {
 void ShowTerritoryArmy(Territory* t) {
 	cout << t->getTname() << " Army :" << t->army << "\n";
 }
-
-void executePlayerOrders(Player* player) {
-	for (int i = 0; i < player->getOrderList().size(); i++)
-	{
-		player->getOrderList().at(i)->execute();
-	}
-}
-	
+//
+//void executePlayerOrders(Player* player) {
+//	for (int i = 0; i < player->getOrderList().size(); i++)
+//	{
+//		player->getOrderList().at(i)->execute();
+//	}
+//}
+//	

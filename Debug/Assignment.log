@@ -1,21 +1,8 @@
-﻿  GameEngine.cpp
+﻿  PlayerStrategyDriver.cpp
+C:\Users\phili\source\repos\COMP345\PlayerStrategyDriver.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\phili\source\repos\COMP345\Player.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\phili\source\repos\COMP345\PlayerStrategyDriver.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\phili\source\repos\COMP345\PlayerStrategyDriver.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\phili\source\repos\COMP345\PlayerStrategyDriver.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\phili\source\repos\COMP345\GameEngine.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(460,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(468,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(473,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(478,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(505,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(586,31): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(959,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(986,35): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(1000,35): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(1008,35): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(1013,35): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(1025,39): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(1030,39): warning C4018: '<': signed/unsigned mismatch
-C:\Users\phili\source\repos\COMP345\GameEngine.cpp(1056,23): warning C4018: '<': signed/unsigned mismatch
   Assignment.vcxproj -> C:\Users\phili\source\repos\COMP345\Debug\Assignment.exe

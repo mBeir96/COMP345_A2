@@ -28,6 +28,7 @@ Player::Player(string s)
 	handCard = new Hand();
 	orderList;
 	territory;
+	strategy = NULL;
 }
 
 
@@ -140,7 +141,7 @@ Player::~Player()
 			order = NULL;
 		}
 	}
-	delete strategy;
+	//delete strategy;
 
 }
 

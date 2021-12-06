@@ -182,7 +182,7 @@ vector<Territory*> AggressivePlayerStrategy::toAttack()
 {
 	vector<Territory*> attackList;
 	int strongArmy = 0;
-	Territory* strongTerritory = 0;
+	Territory* strongTerritory = new Territory();
 
 	for (int i = 0; i < player->getTerritory().size(); i++) {
 		if (player->getTerritory().at(i)->getArmyAmount() > strongArmy) {

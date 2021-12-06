@@ -93,3 +93,4 @@ private:
 
 };
 
+void executePlayerOrders(Player* player);

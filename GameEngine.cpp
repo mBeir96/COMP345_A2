@@ -958,7 +958,25 @@ void GameEngine::tournament(string b)
 
     for (int i = 0; i < playersType.size(); i++)
         {
+            //setting player name
             players.push_back(new Player("Player " + to_string(i + 1) + " (" + playersType.at(i) + ")"));
+            // establishing player type
+            if (playersType.at(i) == "Cheater")
+            {
+                players.at(i)->setPlayerStrategy(Cheater);
+            }
+            else if (playersType.at(i) == "Aggressive")
+            {
+                players.at(i)->setPlayerStrategy(Aggressive);
+            }
+            else if (playersType.at(i) == "Benevolent")
+            {
+                players.at(i)->setPlayerStrategy(Benevolent);
+            }
+            else if (playersType.at(i) == "Neutral")
+            {
+                players.at(i)->setPlayerStrategy(Neutral);
+            }
         }
 
     cout << "Tournament mode:" << endl;
@@ -999,6 +1017,7 @@ void GameEngine::tournament(string b)
                 //making the player own the territory
                 for (int l = 0; l < theMap->theMap->size(); l++)
                 {
+                    theMap->theMap->at(i).setTerritoryOwner(players.at(i));
                     players.at(l % players.size())->setTerritory(&(theMap->theMap->at(l)));
 
                 }
@@ -1024,7 +1043,8 @@ void GameEngine::tournament(string b)
                     //each player's turn
                     for (int l = 0; l < players.size(); l++)
                     {
-                        /*players.at(l)->issueOrder();*/
+                        players.at(l)->issueOrder();
+                        executePlayerOrders(players.at(l));
                     }
                     //checking if someone won
                     for (int l = 0; l < players.size(); l++)
@@ -1082,4 +1102,10 @@ void GameEngine::tournament(string b)
 
     }
     system("pause");
+}
+void executePlayerOrders(Player* player) {
+    for (int i = 0; i < player->getOrderList().size(); i++)
+    {
+        player->getOrderList().at(i)->execute();
+    }
 }
