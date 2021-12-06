@@ -2,7 +2,7 @@
 #include "Cards.h"
 #include "GameEngine.h"
 #include "Orders.h"
-
+#include "PlayerStrategy.h";
 #include <time.h>
 #include <algorithm>  
 #include <assert.h>  
@@ -140,7 +140,7 @@ Player::~Player()
 			order = NULL;
 		}
 	}
-	
+	delete strategy;
 
 }
 
@@ -195,121 +195,22 @@ vector<Territory*> Player::getTerritory()
 
 Hand* Player::getCard()
 {
-
 	return handCard;
 }
 
 vector<Territory*> Player::toAttack()
 {
-	vector<Territory*> AttackList;
-
-	for (int i = 0; i < territory.size(); i++)
-	{
-		string temp = getName();
-		if (!temp.compare(territory[i]->getTerritoryOwner()->getName()) == 0)
-			AttackList.push_back(territory[i]);
-
-	}
-	cout << "The list of territories that can be Attack by " << getName() << endl;
-	for (int i = 0; i < AttackList.size(); i++)
-	{
-		cout << "Index " << i << " " << (*AttackList[i]).getTname() << " " << (*AttackList[i]).getContinent() << endl;
-	}
-	return AttackList;
+	return strategy->toAttack();
 }
 
 vector<Territory*> Player::toDefend()
 {
-	{
-		vector<Territory*> DefendList;
-
-		for (int i = 0; i < territory.size(); i++)
-		{
-			if (getName().compare(territory[i]->getTerritoryOwner()->getName()) == 0)
-
-				DefendList.push_back(territory[i]);
-		}
-
-		cout << "The list of territories that can be Defend by " << getName() << endl;
-		for (int i = 0; i < DefendList.size(); i++)
-		{
-			cout << "Index " << i << " " << (*DefendList[i]).getTname() << " " << (*DefendList[i]).getContinent() << endl;
-		}
-		return DefendList;
-	}
-
+	return strategy->toDefend();
 }
-
 
 void Player::issueOrder()
 {
-	//Display territories that can be attack or defend
-	vector<Territory*> AttackList;
-	AttackList = toAttack();
-	vector<Territory*> DefendList;
-	DefendList = toDefend();
-
-	//Deploy order until no armies left	
-	while (getReinforcementPool() != 0)
-	{
-		int army = getReinforcementPool();
-
-		for (int i = 0; i < DefendList.size(); i++)
-		{
-
-			int temp = rand() % (army + 1);
-			cout << temp << endl;
-			temp += DefendList[i]->getArmyAmount();
-			DefendList[i]->setArmyAmount(temp);
-			army = temp - army;
-			setReinforcementPool(army);
-			if (army == 1)
-			{
-				temp = 1;
-				temp += DefendList[i]->getArmyAmount();
-				DefendList[i]->setArmyAmount(temp);
-				setReinforcementPool(0);
-			}
-		}
-	}
-
-	//Advance order Attack
-
-	int actionNumber1 = rand() % AttackList.size();
-	int Enemy = AttackList[actionNumber1]->getArmyAmount();
-
-	int actionNumber2 = rand() % DefendList.size();
-	int Attack = DefendList[actionNumber2]->getArmyAmount();
-
-	if (Enemy >= Attack)
-	{
-		Enemy = Enemy - Attack;
-		AttackList[actionNumber1]->setArmyAmount(Enemy);
-		DefendList[actionNumber2]->setArmyAmount(0);
-	}
-	else
-	{
-		Attack = Attack - Enemy;
-		AttackList[actionNumber1]->setArmyAmount(Attack);
-		DefendList[actionNumber2]->setArmyAmount(0);
-		AttackList[actionNumber1]->setTerritoryOwner(AttackList[actionNumber1]->getTerritoryOwner());
-	}
-	//Advance order Defend
-
-	int actionNumber3 = rand() % AttackList.size();
-	int Defend1 = DefendList[actionNumber1]->getArmyAmount();
-
-	int actionNumber4 = rand() % DefendList.size();
-	int Defend2 = DefendList[actionNumber2]->getArmyAmount();
-
-	if (actionNumber3 != actionNumber4)
-	{
-		DefendList[actionNumber3]->setArmyAmount(0);
-		DefendList[actionNumber4]->setArmyAmount(Defend2 + Defend1);
-	}
-
-	//Play card
-
+	strategy->issueOrder();
 }
 
 vector<Orders*> Player::getOrderList()
@@ -363,6 +264,40 @@ bool Player::hasTruce(Player* player)
 		}
 	}
 	return false;
+}
+
+void Player::setPlayerStrategy(PlayerType type)
+{
+	switch (type)
+	{
+	case Human:
+		strategy = new HumanPlayerStrategy(this);
+		break;
+	case Aggressive:
+		strategy = new AggressivePlayerStrategy(this);
+		break;
+	case Benevolent:
+		strategy = new BenevolentPlayerStrategy(this);
+		break;
+	case Neutral:
+		strategy = new NeutralPlayerStrategy(this);
+		break;
+	case Cheater:
+		strategy = new CheaterPlayerStrategy(this);
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::printStrategy()
+{
+	strategy->PrintStrategy();
+}
+
+void Player::removePlayerStrategy()
+{
+	delete strategy;
 }
 
 

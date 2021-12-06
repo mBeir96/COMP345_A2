@@ -9,13 +9,6 @@
 
 using namespace std;
 
-/*gameEngine::gameEngine() {
-	this->StartUp = true;
-	this-> Play = false;
-}*/
-
-
-
 void orderDriver() {
 
 #pragma region Initialization

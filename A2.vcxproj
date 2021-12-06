@@ -108,6 +108,7 @@
     <ClCompile Include="Orders.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStrategy.cpp" />
+    <ClCompile Include="PlayerStrategyDriver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cards.h" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Orders.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStrategy.h" />
+    <ClInclude Include="PlayerStrategyDriver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

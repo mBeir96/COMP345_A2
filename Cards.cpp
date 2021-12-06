@@ -250,7 +250,7 @@ std::istream& operator>>(std::istream& in, Hand& h)
 
 Hand::~Hand()
 {
-	if (cards != NULL)
+	if (this->cards != nullptr)
 	{
 		while (!cards->empty()) {
 			delete(cards->front());
