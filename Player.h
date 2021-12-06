@@ -32,7 +32,6 @@ public:
     vector<Territory*> toAttack();
     vector<Territory*> toDefend();
     vector<Orders*> getOrderList();
-    vector<Territory*> getNeighbourTerritories(Territory*);
     Hand* getCard();
     void issueOrder();
 

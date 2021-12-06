@@ -94,7 +94,7 @@ vector<Territory*> HumanPlayerStrategy::toAttack()
 {
 	cout << "HumanPlayerStrategy: toAttack() " << endl;
 	vector<Territory*> attackList;
-	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
+	/*for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
 		for (auto element1 = (player->getNeighbourTerritories(*element).begin()); element1 != player->getNeighbourTerritories(*(element)).end(); element1++) {
 			if ((*element1)->getTerritoryOwner() != player) {
 				attackList.push_back(*element1);
@@ -102,7 +102,7 @@ vector<Territory*> HumanPlayerStrategy::toAttack()
 			}
 		}
 	}
-
+	*/
 	return attackList;
 }
 
@@ -149,27 +149,29 @@ void AggressivePlayerStrategy::issueOrder()
 {
 	int strongArmy = 0;
 	Territory* strongTerritory = 0;
-	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
-		if ((*element)->army > strongArmy) {
-			strongArmy = (*element)->army;
-			strongTerritory = (*element);
+	for (int i = 0; i < player->getTerritory().size(); i++) {
+		if (player->getTerritory().at(i)->getArmyAmount() >= strongArmy) {
+			strongArmy = player->getTerritory().at(i)->getArmyAmount();
+			strongTerritory = player->getTerritory().at(i);
 		}
 	}
 
 	DeployOrders* newDeploy = new DeployOrders(player, strongTerritory, player->getReinforcementPool()); //will deploy onto the strongest territory
+	player->setOrder(newDeploy);
 	vector<Territory*> attackList = toAttack();
 	Territory* terr;
 
-	while (strongTerritory->army > 1) {
+	while (strongTerritory->army >= 1) {
 
-		for (auto element = attackList.begin(); element != attackList.end(); element++) {
-			terr = *element;
+		for (int i = 0; i < attackList.size() && strongTerritory->army >= 1; i++) {
+			terr = attackList.at(i);
 			AdvanceOrders* newAdvance = new AdvanceOrders();
 			newAdvance->setSelfPlayers(player);
-			newAdvance->setArmyUnits(strongTerritory->army);
+			newAdvance->setArmyUnits(1);
 			newAdvance->setSourceTerritory(strongTerritory);
 			newAdvance->setTargetTerritory(terr);
 			player->setOrder(newAdvance);
+			strongTerritory->setArmyAmount(strongTerritory->getArmyAmount() - 1);
 		}
 	}
 
@@ -178,21 +180,20 @@ void AggressivePlayerStrategy::issueOrder()
 
 vector<Territory*> AggressivePlayerStrategy::toAttack()
 {
-	cout << "AggressivePlayerStrategy: toAttack() " << endl;
 	vector<Territory*> attackList;
 	int strongArmy = 0;
 	Territory* strongTerritory = 0;
 
-	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
-		if ((*element)->army > strongArmy) {
-			strongArmy = (*element)->army;
-			strongTerritory = (*element);
+	for (int i = 0; i < player->getTerritory().size(); i++) {
+		if (player->getTerritory().at(i)->getArmyAmount() > strongArmy) {
+			strongArmy = player->getTerritory().at(i)->getArmyAmount();
+			strongTerritory = player->getTerritory().at(i);
 		}
 	}
 
-	for (auto element = player->getNeighbourTerritories(strongTerritory).begin(); element != player->getNeighbourTerritories(strongTerritory).end(); element++) {
-		if ((*element)->getTerritoryOwner() != player) {
-			attackList.push_back(*element);
+	for (int i = 0; i < strongTerritory->edges.size(); i++) {
+		if (strongTerritory->edges.at(i)->getTerritoryOwner() != player) {
+			attackList.push_back(strongTerritory->edges.at(i));
 		}
 	}
 
@@ -287,11 +288,16 @@ void BenevolentPlayerStrategy::PrintStrategy()
 //sets player
 NeutralPlayerStrategy::NeutralPlayerStrategy(Player* player) {
 	this->player = player;
+	int terrCount = 0;
+	int armyAmount = 0;
 	for (int i = 0; i < player->getTerritory().size(); i++)
 	{
-		*territoryCount += 1;
-		*armyCount += player->getTerritory().at(i)->army;
+		terrCount += 1;
+		armyAmount += player->getTerritory().at(i)->army;
 	}
+
+	territoryCount = terrCount;
+	armyCount = armyAmount;
 }
 
 int NeutralPlayerStrategy::changeStrategy(string, int)
@@ -310,7 +316,7 @@ void NeutralPlayerStrategy::issueOrder()
 	}
 
 	//if army is attacked
-	if (territoryAmount != *territoryCount || armyAmount != *armyCount) {
+	if (territoryAmount < territoryCount || armyAmount < armyCount) {
 		
 		//change player strategy
 		player->setPlayerStrategy(Aggressive);
@@ -318,6 +324,10 @@ void NeutralPlayerStrategy::issueOrder()
 
 		//not sure if this is allowed, remove if necessary
 		this->~NeutralPlayerStrategy();
+	}
+	else {
+		territoryCount = territoryAmount;
+		armyCount = armyAmount;
 	}
 }
 
@@ -342,8 +352,7 @@ void NeutralPlayerStrategy::PrintStrategy()
 
 NeutralPlayerStrategy::~NeutralPlayerStrategy()
 {
-	delete(territoryCount);
-	delete(armyCount);
+
 }
 
 #pragma endregion

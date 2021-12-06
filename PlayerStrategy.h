@@ -58,6 +58,7 @@ public:
 	~AggressivePlayerStrategy();
 	AggressivePlayerStrategy(const AggressivePlayerStrategy& p); //Copy constructor
 	AggressivePlayerStrategy& operator = (const AggressivePlayerStrategy&); //added;
+	vector<Territory*> getTerritoryNeighbor(Territory*);
 	int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() 
 	void issueOrder();
@@ -99,8 +100,8 @@ public:
 	~NeutralPlayerStrategy();
 private:
 	Player* player;
-	int* territoryCount;
-	int* armyCount;
+	int territoryCount;
+	int armyCount;
 };
 
 class CheaterPlayerStrategy : public PlayerStrategy {

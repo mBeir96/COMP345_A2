@@ -259,7 +259,7 @@ void AdvanceOrders::setSourceTerritory(Territory* sourceTerr)
 
 void AdvanceOrders::setArmyUnits(int units)
 {
-    armyUnits = &units;
+    armyUnits = units;
 }
 
 //checks if source and target are adjacent
@@ -332,31 +332,31 @@ void AdvanceOrders::execute()
     }
 
     //remove army from territory
-    source->setArmyAmount(source->army - *armyUnits);
+    source->setArmyAmount(source->army - armyUnits);
 
     //add army units if player owns territory
     if (terr->getTerritoryOwner() == player)
     {
-        terr->setArmyAmount(terr->getArmyAmount() + *(armyUnits));
+        terr->setArmyAmount(terr->getArmyAmount() + armyUnits);
         this->validate(true);
         return;
     }
 
     this->validate(true);
     //attacking portion now
-    int playerAttacks = getCasualties(*armyUnits, true);
+    int playerAttacks = getCasualties(armyUnits, true);
     int enemyAttacks = getCasualties(terr->army, false);
 
 
     //set army counts
     //set player army count
-    if (*armyUnits - enemyAttacks <=0)
+    if (armyUnits - enemyAttacks <=0)
     {
-        *armyUnits = 0;
+        armyUnits = 0;
     }
     else
     {
-        *armyUnits -= enemyAttacks;
+        armyUnits -= enemyAttacks;
     }
 
     //set enemy army count
@@ -388,12 +388,12 @@ void AdvanceOrders::execute()
         //change ownership
         terr->setTerritoryOwner(player);
         //give player ownership
-        terr->setArmyAmount(*armyUnits);
+        terr->setArmyAmount(armyUnits);
         player->setTerritory(terr);
     }
     else
     {
-        source->army += *armyUnits;
+        source->army += armyUnits;
     }
 
 

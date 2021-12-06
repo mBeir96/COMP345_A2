@@ -114,6 +114,96 @@ void PlayerStrategyDriverMain() {
 
 #pragma endregion
 
+#pragma region Aggressive
+	cout << "Aggressive Player testing\n\n";
+	Player* aggressiveplayer = new Player();
+	aggressiveplayer->setName("Aggressive Player");
+	aggressiveplayer->setPlayerStrategy(Aggressive);
+
+	t1->setTerritoryOwner(aggressiveplayer);
+	t2->setTerritoryOwner(aggressiveplayer);
+	t3->setTerritoryOwner(none);
+	t4->setTerritoryOwner(none);
+
+	t1->setArmyAmount(1);
+	t2->setArmyAmount(0);
+	t3->setArmyAmount(0);
+	t4->setArmyAmount(0);
+
+	aggressiveplayer->setTerritory(t1);
+	aggressiveplayer->setTerritory(t2);
+	none->setTerritory(t3);
+	none->setTerritory(t4);
+
+	ShowTerritoryOwner(t1);
+	ShowTerritoryOwner(t2);
+	ShowTerritoryOwner(t3);
+	ShowTerritoryOwner(t4);
+
+	aggressiveplayer->setReinforcementPool(10);
+	aggressiveplayer->issueOrder();
+	executePlayerOrders(aggressiveplayer);
+
+	cout << "\nTerritory after one turn after one turn\n\n";
+	ShowTerritoryOwner(t1);
+	ShowTerritoryOwner(t2);
+	ShowTerritoryOwner(t3);
+	ShowTerritoryOwner(t4);
+	UserPauseStrat();
+
+#pragma endregion
+
+#pragma region Neutral
+	cout << "NeutralPlayer Player testing\n\n";
+	Player* neutralPlayer = new Player();
+	neutralPlayer->setName("Neutral Player");
+	neutralPlayer->setPlayerStrategy(Neutral);
+
+	t1->setTerritoryOwner(neutralPlayer);
+	t2->setTerritoryOwner(neutralPlayer);
+	t3->setTerritoryOwner(none);
+	t4->setTerritoryOwner(none);
+
+	t1->setArmyAmount(2);
+	t2->setArmyAmount(0);
+	t3->setArmyAmount(0);
+	t4->setArmyAmount(0);
+
+	neutralPlayer->setTerritory(t1);
+	neutralPlayer->setTerritory(t2);
+	none->setTerritory(t3);
+	none->setTerritory(t4);
+
+	ShowTerritoryOwner(t1);
+	ShowTerritoryOwner(t2);
+	ShowTerritoryOwner(t3);
+	ShowTerritoryOwner(t4);
+
+	neutralPlayer->setReinforcementPool(10);
+	neutralPlayer->issueOrder();
+	executePlayerOrders(neutralPlayer);
+
+	cout << "\nTerritory after one turn after one turn\n\n";
+	ShowTerritoryOwner(t1);
+	ShowTerritoryOwner(t2);
+	ShowTerritoryOwner(t3);
+	ShowTerritoryOwner(t4);
+
+	t1->setArmyAmount(1);
+
+	cout << "\nTerritory after neutralPlayer is attacked turn after one turn\n\n";
+	neutralPlayer->setReinforcementPool(10);
+	neutralPlayer->issueOrder();
+	executePlayerOrders(neutralPlayer);
+
+	ShowTerritoryOwner(t1);
+	ShowTerritoryOwner(t2);
+	ShowTerritoryOwner(t3);
+	ShowTerritoryOwner(t4);
+
+	UserPauseStrat();
+#pragma endregion
+
 
 #pragma region 2
 

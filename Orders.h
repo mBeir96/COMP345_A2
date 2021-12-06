@@ -99,7 +99,7 @@ class AdvanceOrders : public Orders
         Player* player;
         Territory* terr;
         Territory* source;
-        int* armyUnits;
+        int armyUnits;
 
 };
 
