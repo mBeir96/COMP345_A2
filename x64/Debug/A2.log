@@ -1,6 +1,8 @@
-﻿  PlayerStrategyDriver.cpp
-D:\Github\COMP345_A2\PlayerStrategyDriver.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+﻿  Orders.cpp
 D:\Github\COMP345_A2\Player.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\PlayerStrategyDriver.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\PlayerStrategyDriver.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\GameEngine.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\Cards.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   A2.vcxproj -> D:\Github\COMP345_A2\x64\Debug\A2.exe

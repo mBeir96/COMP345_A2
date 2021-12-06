@@ -2,6 +2,7 @@
 #include "Map.h";
 
 void PlayerStrategyDriverMain();
+void ShowTerritoryArmy(Territory*);
 void ShowTerritoryOwner(Territory *);
 void UserPauseStrat();
-//void timePause();
+void executePlayerOrders(Player* player);

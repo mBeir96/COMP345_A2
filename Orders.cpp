@@ -189,7 +189,7 @@ void DeployOrders::execute()
 
 bool DeployOrders::validate(bool valid)
 {
-    std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
+    //std::cout << this->getName() << ((valid) ? " is valid." : " is not valid.") << std::endl;
     return valid;
 }
 

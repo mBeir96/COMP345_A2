@@ -232,45 +232,43 @@ int BenevolentPlayerStrategy::changeStrategy(string order, int numArmy)
 
 void BenevolentPlayerStrategy::issueOrder()
 {
-	cout << "BenevolentPlayerStrategy: issueOrder() -> " << endl;
 
 	vector<Territory*> defendList = toDefend();
+	DeployOrders* o;
 	while (player->getReinforcementPool() > 0) {
-		for (auto element = defendList.begin(); element != defendList.end(); element++) {
-			(*element)->army += 1;
+		for (int i = 0; i < defendList.size(); i++) {
+			o = new DeployOrders();
+			o->setSelfPlayers(player);
+			o->setNumArmy(1);
+			o->setTargetTerritory(defendList.at(i));
+			player->setOrder(o);
 			player->setReinforcementPool(player->getReinforcementPool() - 1);
 		}
 	}
-	cout << "Benevolent player has protected its weakest territory " << endl;
 
 }
 
 vector<Territory*> BenevolentPlayerStrategy::toAttack()
 {
-
 	vector<Territory*> AttackList;
 	return AttackList;
-	cout << "BenevolentPlayerStrategy : never attacks" << endl;
-	cout << "Benevolent Player does not attack" << endl;
-
 }
 
 vector<Territory*> BenevolentPlayerStrategy::toDefend()
 {
-	cout << "BenevolentPlayerStrategy: toDenfend()  " << endl;
-
 	vector<Territory*> defendList;
 	Territory* begin = *player->getTerritory().begin();
 	int lowCount = begin->army;
 
-	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
-		if ((*element)->army < lowCount) {
-			lowCount = (*element)->army;
+	for (int i = 0; i < player->getTerritory().size(); i++) {
+		if (player->getTerritory().at(i)->getArmyAmount() < lowCount) {
+			lowCount = player->getTerritory().at(i)->getArmyAmount();
 		}
 	}
-	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
-		if ((*element)->army== lowCount) {
-			defendList.push_back(*element);
+	for (int i = 0; i < player->getTerritory().size(); i++) {
+		
+		if (player->getTerritory().at(i)->getArmyAmount() == lowCount) {
+			defendList.push_back(player->getTerritory().at(i));
 		}
 	}
 

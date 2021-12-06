@@ -2,6 +2,8 @@
 #include "Map.h";
 #include "Player.h"
 #include "PlayerStrategy.h";
+#include "Orders.h";
+
 enum PlayerType;
 using namespace std;
 
@@ -9,14 +11,7 @@ void PlayerStrategyDriverMain() {
 	
 #pragma region 1
 
-#pragma region Cheater
-	cout << "Cheater Player testing\n\n";
-	Player* cheaterPlayer = new Player();
-	Player* none = new Player();
-	cheaterPlayer->setName("Cheater");
-	none->setName("None");
-
-	cheaterPlayer->setPlayerStrategy(Cheater);
+#pragma region Simple Map
 
 	Territory* t1 = new Territory();
 	Territory* t2 = new Territory();
@@ -36,6 +31,17 @@ void PlayerStrategyDriverMain() {
 	t3->edges.push_back(t4);
 	t4->edges.push_back(t3);
 	t4->edges.push_back(t1);
+
+#pragma endregion
+
+#pragma region Cheater
+	cout << "Cheater Player testing\n\n";
+	Player* cheaterPlayer = new Player();
+	Player* none = new Player();
+	cheaterPlayer->setName("Cheater");
+	none->setName("None");
+
+	cheaterPlayer->setPlayerStrategy(Cheater);
 
 	t1->setTerritoryOwner(cheaterPlayer);
 	t2->setTerritoryOwner(none);
@@ -65,6 +71,49 @@ void PlayerStrategyDriverMain() {
 
 
 #pragma endregion
+
+#pragma region Benevolent
+	cout << "Benevolent Player testing\n\n";
+	Player* peacePlayer = new Player();
+	peacePlayer->setName("Peace");
+	none->setName("None");
+
+	peacePlayer->setPlayerStrategy(Benevolent);
+
+	t1->setTerritoryOwner(peacePlayer);
+	t2->setTerritoryOwner(peacePlayer);
+	t3->setTerritoryOwner(peacePlayer);
+	t4->setTerritoryOwner(peacePlayer);
+
+	t1->setArmyAmount(1);
+	t2->setArmyAmount(0);
+	t3->setArmyAmount(0);
+	t4->setArmyAmount(4);
+
+	peacePlayer->setTerritory(t1);
+	peacePlayer->setTerritory(t2);
+	peacePlayer->setTerritory(t3);
+	peacePlayer->setTerritory(t4);
+
+	ShowTerritoryArmy(t1);
+	ShowTerritoryArmy(t2);
+	ShowTerritoryArmy(t3);
+	ShowTerritoryArmy(t4);
+
+	peacePlayer->setReinforcementPool(10);
+	peacePlayer->issueOrder();
+	executePlayerOrders(peacePlayer);
+
+	cout << "\nTerritory after one turn after one turn\n\n";
+	ShowTerritoryArmy(t1);
+	ShowTerritoryArmy(t2);
+	ShowTerritoryArmy(t3);
+	ShowTerritoryArmy(t4);
+	UserPauseStrat();
+
+
+#pragma endregion
+
 
 #pragma region 2
 
@@ -118,9 +167,21 @@ void UserPauseStrat() {
 	int x;
 	cout << "\nEnter any number to proceed to testing Player Strategy testing\n";
 	cin >> x;
+	
 }
 
 void ShowTerritoryOwner(Territory* t) {
 	cout << t->getTname() << " Owner :" << t->getTerritoryOwner()->getName() << "\n";
 }
 
+void ShowTerritoryArmy(Territory* t) {
+	cout << t->getTname() << " Army :" << t->army << "\n";
+}
+
+void executePlayerOrders(Player* player) {
+	for (int i = 0; i < player->getOrderList().size(); i++)
+	{
+		player->getOrderList().at(i)->execute();
+	}
+}
+	
