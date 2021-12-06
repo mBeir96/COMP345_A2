@@ -245,9 +245,10 @@ vector<Territory*> Player::toDefend()
 
 void Player::issueOrder()
 {
+	strategy->issueOrder();
 	//
 	//Display territories that can be attack or defend
-	vector<Territory*> AttackList;
+	/*vector<Territory*> AttackList;
 	AttackList = toAttack();
 	vector<Territory*> DefendList;
 	DefendList = toDefend();
@@ -312,7 +313,7 @@ void Player::issueOrder()
 	}
 
 	//Play card
-
+	*/
 }
 
 vector<Orders*> Player::getOrderList()
@@ -381,7 +382,7 @@ void Player::setPlayerStrategy(PlayerType type)
 		strategy = new HumanPlayerStrategy(this);
 		break;
 	case Aggressive:
-		strategy = new HumanPlayerStrategy(this);
+		strategy = new AggressivePlayerStrategy(this);
 		break;
 	case Benevolent:
 		strategy = new BenevolentPlayerStrategy(this);

@@ -1,14 +1,6 @@
-﻿  GameEngineDriver.cpp
+﻿  PlayerStrategyDriver.cpp
+D:\Github\COMP345_A2\PlayerStrategyDriver.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Player.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngine.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngineDriver.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngineDriver.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngineDriver.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\GameEngineDriver.cpp(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  PlayerStrategyDriver.cpp
 D:\Github\COMP345_A2\PlayerStrategyDriver.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\Github\COMP345_A2\Player.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\PlayerStrategyDriver.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Generating Code...
-D:\Github\COMP345_A2\PlayerStrategyDriver.cpp(24): warning C4700: uninitialized local variable 't' used
   A2.vcxproj -> D:\Github\COMP345_A2\x64\Debug\A2.exe

@@ -28,7 +28,7 @@ public:
 	//create method that will change strategy in the isuueing orders phase
 	virtual int changeStrategy(string, int) = 0;
 	//implement issueOrder(), toAttack(), toDefend() in different ConcreteStrategy 
-	virtual void issueOrder(string) = 0;
+	virtual void issueOrder() = 0;
 	virtual vector<Territory*> toAttack() = 0;
 	virtual vector<Territory*> toDefend() = 0;
 	virtual void PrintStrategy() = 0;
@@ -44,7 +44,7 @@ public:
 	HumanPlayerStrategy& operator = (const HumanPlayerStrategy&); //added;
 	int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() 
-	void issueOrder(string) ;
+	void issueOrder() ;
 	vector<Territory*> toAttack() ;
 	vector<Territory*> toDefend();
 	void PrintStrategy();
@@ -60,7 +60,7 @@ public:
 	AggressivePlayerStrategy& operator = (const AggressivePlayerStrategy&); //added;
 	int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() 
-	void issueOrder(string) ;
+	void issueOrder();
 	vector<Territory*> toAttack();
 	vector<Territory*> toDefend();
 	void PrintStrategy();
@@ -77,7 +77,7 @@ public:
 	BenevolentPlayerStrategy& operator = (const BenevolentPlayerStrategy&); //added
 	int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() 
-	void issueOrder(string) ;
+	void issueOrder() ;
 	vector<Territory*> toAttack();
 	vector<Territory*> toDefend();
 	void PrintStrategy();
@@ -92,7 +92,7 @@ public:
 	//create method that will change strategy in the isuueing orders phase
 	virtual int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() in different ConcreteStrategy 
-	virtual void issueOrder(string);
+	virtual void issueOrder();
 	virtual vector<Territory*> toAttack();
 	virtual vector<Territory*> toDefend();
 	void PrintStrategy();
@@ -109,7 +109,7 @@ public:
 	//create method that will change strategy in the isuueing orders phase
 	virtual int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() in different ConcreteStrategy 
-	virtual void issueOrder(string);
+	virtual void issueOrder();
 	virtual vector<Territory*> toAttack();
 	virtual vector<Territory*> toDefend();
 	void PrintStrategy();

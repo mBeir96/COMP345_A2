@@ -22,7 +22,7 @@ int HumanPlayerStrategy::changeStrategy(string order, int armies)
 	int input;
 	cin >> input;
 	if (input == 1) {
-		issueOrder(order);
+		issueOrder();
 		return armies - 1;
 	}
 	else if (input == 2) {
@@ -38,10 +38,8 @@ int HumanPlayerStrategy::changeStrategy(string order, int armies)
 	}
 }
 
-void HumanPlayerStrategy::issueOrder(string order)
+void HumanPlayerStrategy::issueOrder()
 {
-	cout << "HumanPlayerStrategy: issueOrder() -> " << order << endl;
-
 	int input = 0;
 
 	cout << "Which order are you issuing?" << endl;
@@ -138,7 +136,7 @@ int AggressivePlayerStrategy::changeStrategy(string order, int armies)
 {
 	cout << "AggressivePlayerStrategy: changeStrategy() " << endl;
 
-	issueOrder(order);
+	issueOrder();
 
 	toAttack();
 
@@ -147,9 +145,8 @@ int AggressivePlayerStrategy::changeStrategy(string order, int armies)
 	return 0;
 }
 
-void AggressivePlayerStrategy::issueOrder(string order)
+void AggressivePlayerStrategy::issueOrder()
 {
-	cout << "AggressivePlayerStrategy: issueOrder() -> " << order << " -> reinforces its strongest country. " << endl;
 	int strongArmy = 0;
 	Territory* strongTerritory = 0;
 	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
@@ -178,8 +175,6 @@ void AggressivePlayerStrategy::issueOrder(string order)
 
 	cout << "\nAggressive player deployed/Advanced all its armies and reinforcements until it no longer can." << endl;
 }
-
-
 
 vector<Territory*> AggressivePlayerStrategy::toAttack()
 {
@@ -228,14 +223,14 @@ BenevolentPlayerStrategy::BenevolentPlayerStrategy(Player* p) {
 int BenevolentPlayerStrategy::changeStrategy(string order, int numArmy)
 {
 	cout << "BenevolentPlayerStrategy: changeStrategy() " << endl;
-	issueOrder(order);
+	issueOrder();
 	toDefend();
 
 	return 0;
 	
 }
 
-void BenevolentPlayerStrategy::issueOrder(string order)
+void BenevolentPlayerStrategy::issueOrder()
 {
 	cout << "BenevolentPlayerStrategy: issueOrder() -> " << endl;
 
@@ -306,7 +301,7 @@ int NeutralPlayerStrategy::changeStrategy(string, int)
 	return 0;
 }
 
-void NeutralPlayerStrategy::issueOrder(string)
+void NeutralPlayerStrategy::issueOrder()
 {
 	int territoryAmount = 0;
 	int armyAmount = 0;
@@ -368,7 +363,7 @@ int CheaterPlayerStrategy::changeStrategy(string, int)
 }
 
 //takes all adjacent territory
-void CheaterPlayerStrategy::issueOrder(string)
+void CheaterPlayerStrategy::issueOrder()
 {
 	vector<Territory*> AttackList = this->toAttack();
 	Territory* terr;

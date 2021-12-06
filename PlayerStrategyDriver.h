@@ -1,5 +1,7 @@
 #pragma once
+#include "Map.h";
 
 void PlayerStrategyDriverMain();
-void userPauseStrat();
+void ShowTerritoryOwner(Territory *);
+void UserPauseStrat();
 //void timePause();
