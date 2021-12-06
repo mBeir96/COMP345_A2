@@ -140,7 +140,7 @@ Player::~Player()
 			order = NULL;
 		}
 	}
-	
+	delete strategy;
 
 }
 
@@ -321,6 +321,11 @@ vector<Orders*> Player::getOrderList()
 	return orderList;
 }
 
+vector<Territory*> Player::getNeighbourTerritories(Territory*)
+{
+	return vector<Territory*>();
+}
+
 void Player::setOrder(Orders* a)
 {
 	orderList.push_back(a);
@@ -373,11 +378,13 @@ void Player::setPlayerStrategy(PlayerType type)
 	switch (type)
 	{
 	case Human:
-		//strategy = new HumanPlayerStrategy();
+		strategy = new HumanPlayerStrategy(this);
 		break;
 	case Aggressive:
+		strategy = new HumanPlayerStrategy(this);
 		break;
 	case Benevolent:
+		strategy = new BenevolentPlayerStrategy(this);
 		break;
 	case Neutral:
 		strategy = new NeutralPlayerStrategy(this);
@@ -388,6 +395,16 @@ void Player::setPlayerStrategy(PlayerType type)
 	default:
 		break;
 	}
+}
+
+void Player::printStrategy()
+{
+	strategy->PrintStrategy();
+}
+
+void Player::removePlayerStrategy()
+{
+	delete strategy;
 }
 
 

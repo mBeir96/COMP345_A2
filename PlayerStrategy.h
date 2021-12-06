@@ -24,44 +24,66 @@ enum PlayerType
 class PlayerStrategy
 {
 public:
+	PlayerStrategy& operator = (const PlayerStrategy&); //added;
 	//create method that will change strategy in the isuueing orders phase
 	virtual int changeStrategy(string, int) = 0;
 	//implement issueOrder(), toAttack(), toDefend() in different ConcreteStrategy 
 	virtual void issueOrder(string) = 0;
 	virtual vector<Territory*> toAttack() = 0;
 	virtual vector<Territory*> toDefend() = 0;
-	
+	virtual void PrintStrategy() = 0;
 
 };
 
 //ConcreteStrategy classes
-class HumanPlayerStrategy: public PlayerStrategy {
+class HumanPlayerStrategy : virtual public PlayerStrategy {
 public:
+	HumanPlayerStrategy(Player*);
+	~HumanPlayerStrategy();
+	HumanPlayerStrategy(const HumanPlayerStrategy& p); //Copy constructor
+	HumanPlayerStrategy& operator = (const HumanPlayerStrategy&); //added;
 	int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() 
-	void issueOrder(string);
-	vector<Territory*> toAttack();
+	void issueOrder(string) ;
+	vector<Territory*> toAttack() ;
 	vector<Territory*> toDefend();
-};
-
-class AggressivePlayerStrategy : public PlayerStrategy {
-public:
-	AggressivePlayerStrategy(Player* player);
-	int changeStrategy(string, int);
-	//implement issueOrder(), toAttack(), toDefend() 
-	void issueOrder(string);
-	vector<Territory*> toAttack();
-	vector<Territory*> toDefend();
+	void PrintStrategy();
 private:
 	Player* player;
 };
 
-class BenevolentPlayerStrategy : public PlayerStrategy {
+class AggressivePlayerStrategy : virtual public PlayerStrategy {
+public:
+	AggressivePlayerStrategy(Player* p);
+	~AggressivePlayerStrategy();
+	AggressivePlayerStrategy(const AggressivePlayerStrategy& p); //Copy constructor
+	AggressivePlayerStrategy& operator = (const AggressivePlayerStrategy&); //added;
 	int changeStrategy(string, int);
 	//implement issueOrder(), toAttack(), toDefend() 
-	void issueOrder(string);
+	void issueOrder(string) ;
 	vector<Territory*> toAttack();
 	vector<Territory*> toDefend();
+	void PrintStrategy();
+
+private:
+	Player* player;
+};
+
+class BenevolentPlayerStrategy : virtual public PlayerStrategy {
+public:
+	BenevolentPlayerStrategy(Player*);
+	~BenevolentPlayerStrategy();
+	BenevolentPlayerStrategy(const BenevolentPlayerStrategy& p); //Copy constructor
+	BenevolentPlayerStrategy& operator = (const BenevolentPlayerStrategy&); //added
+	int changeStrategy(string, int);
+	//implement issueOrder(), toAttack(), toDefend() 
+	void issueOrder(string) ;
+	vector<Territory*> toAttack();
+	vector<Territory*> toDefend();
+	void PrintStrategy();
+
+private:
+	Player* player;
 };
 
 class NeutralPlayerStrategy : public PlayerStrategy {
@@ -73,6 +95,7 @@ public:
 	virtual void issueOrder(string);
 	virtual vector<Territory*> toAttack();
 	virtual vector<Territory*> toDefend();
+	void PrintStrategy();
 	~NeutralPlayerStrategy();
 private:
 	Player* player;
@@ -89,6 +112,7 @@ public:
 	virtual void issueOrder(string);
 	virtual vector<Territory*> toAttack();
 	virtual vector<Territory*> toDefend();
+	void PrintStrategy();
 private:
 	Player* player;
 };

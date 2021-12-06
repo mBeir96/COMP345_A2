@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include "OrderDriver.h";
+#include "PlayerStrategyDriver.h"
 using namespace std;
 
 
@@ -15,9 +16,9 @@ using namespace std;
 }*/
 
 int main() {
-	
+	PlayerStrategyDriverMain();
 	//orderDriver();
-	RiskState currentState = START;
-	GameEngine gm;
-	gm.StartupPhase();
+	//RiskState currentState = START;
+	//GameEngine gm;
+	//gm.StartupPhase();
 }

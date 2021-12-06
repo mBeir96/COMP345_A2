@@ -32,6 +32,7 @@ public:
     vector<Territory*> toAttack();
     vector<Territory*> toDefend();
     vector<Orders*> getOrderList();
+    vector<Territory*> getNeighbourTerritories(Territory*);
     Hand* getCard();
     void issueOrder();
 
@@ -52,6 +53,8 @@ public:
     void removeAllTruces();
     bool hasTruce(Player*);
     void setPlayerStrategy(PlayerType type);
+    void printStrategy();
+    void removePlayerStrategy();
 
 private:
     string name;

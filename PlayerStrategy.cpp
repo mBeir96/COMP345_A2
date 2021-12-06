@@ -1,7 +1,19 @@
 #include "PlayerStrategy.h"
+#include "Orders.h"
+#include "Map.h"
+#include "Player.h"
 #include <vector>;
 using namespace std;
+class Orders;
+class Player;
+class Territory;
 
+#pragma region Human Player Strategy
+
+HumanPlayerStrategy::HumanPlayerStrategy(Player* p) {
+	this->player = p;
+
+}
 
 int HumanPlayerStrategy::changeStrategy(string order, int armies)
 {
@@ -29,90 +41,253 @@ int HumanPlayerStrategy::changeStrategy(string order, int armies)
 void HumanPlayerStrategy::issueOrder(string order)
 {
 	cout << "HumanPlayerStrategy: issueOrder() -> " << order << endl;
+
+	int input = 0;
+
+	cout << "Which order are you issuing?" << endl;
+	cout << "1. Deploy" << endl;
+	cout << "2. Advance" << endl;
+	cout << "3. Airlift" << endl;
+	cout << "4. Bomb" << endl;
+	cout << "5. Blockade" << endl;
+	cout << "6. Negotiate" << endl;
+
+	//fix problem with orders
+	cin >> input;
+	switch (input) {
+	case (1): {
+		DeployOrders* order1 = new DeployOrders();
+		cout << "player will" << order1 << endl;
+		player->setOrder(order1);
+	}
+	case (2): {
+		AdvanceOrders* order1 = new AdvanceOrders();
+		cout << "player will" << order1<< endl;
+		player->setOrder(order1);
+	}
+	case (3): {
+		BombOrders* order1 = new BombOrders();
+		cout << "player will" << order1 << endl;
+		player->setOrder(order1);
+	}
+	case (4): {
+		BlockadeOrders* order1 = new BlockadeOrders();
+		cout << "player will" << order1<< endl;
+		player->setOrder(order1);
+	}
+	case (5): {
+		AirliftOrders* order1 = new AirliftOrders();
+		cout << "player will" << order1 << endl;
+		player->setOrder(order1);
+	}
+	case (6): {
+		NegotiateOrders* order1 = new NegotiateOrders();
+		cout << "player will" << order1<< endl;
+		player->setOrder(order1);
+	}
+	default: {
+		cout << "Please Enter a valid order number!" << endl;
+	}
+	}
+
 }
 
 vector<Territory*> HumanPlayerStrategy::toAttack()
 {
-	vector<Territory*> DefendList;
-	return DefendList;
 	cout << "HumanPlayerStrategy: toAttack() " << endl;
+	vector<Territory*> attackList;
+	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
+		for (auto element1 = (player->getNeighbourTerritories(*element).begin()); element1 != player->getNeighbourTerritories(*(element)).end(); element1++) {
+			if ((*element1)->getTerritoryOwner() != player) {
+				attackList.push_back(*element1);
+				(*element1)->getTerritoryOwner()->getTerritory().erase(element1);
+			}
+		}
+	}
+
+	return attackList;
 }
 
 vector<Territory*> HumanPlayerStrategy::toDefend()
 {
-	vector<Territory*> DefendList;
-	return DefendList;
-	cout << "HumanPlayerStrategy: toAttack() " << endl;
-	vector<Territory*> t;
-	//return t;
+	cout << "HumanPlayerStrategy: toDefend() " << endl;
+
+	vector<Territory*> defendList;
+
+	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
+		defendList.push_back(*element);
+	}
+
+	return defendList;
 }
 
-AggressivePlayerStrategy::AggressivePlayerStrategy(Player* player)
+void HumanPlayerStrategy::PrintStrategy()
 {
-	this->player = player;
+	std::cout << "Human Player Strategy\n";
+}
+
+#pragma endregion
+
+#pragma region Aggressive Player Strategy
+
+AggressivePlayerStrategy::AggressivePlayerStrategy(Player* p) {
+	this->player = p;
 }
 
 int AggressivePlayerStrategy::changeStrategy(string order, int armies)
 {
-	cout << "AggressivePlayerStrategy: makeDecision() " << endl;
-	
+	cout << "AggressivePlayerStrategy: changeStrategy() " << endl;
+
 	issueOrder(order);
-	
+
 	toAttack();
 
 	toDefend();
-	return armies - 5;
+
+	return 0;
 }
 
 void AggressivePlayerStrategy::issueOrder(string order)
 {
 	cout << "AggressivePlayerStrategy: issueOrder() -> " << order << " -> reinforces its strongest country. " << endl;
+	int strongArmy = 0;
+	Territory* strongTerritory = 0;
+	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
+		if ((*element)->army > strongArmy) {
+			strongArmy = (*element)->army;
+			strongTerritory = (*element);
+		}
+	}
+
+	DeployOrders* newDeploy = new DeployOrders(player, strongTerritory, player->getReinforcementPool()); //will deploy onto the strongest territory
+	vector<Territory*> attackList = toAttack();
+	Territory* terr;
+
+	while (strongTerritory->army > 1) {
+
+		for (auto element = attackList.begin(); element != attackList.end(); element++) {
+			terr = *element;
+			AdvanceOrders* newAdvance = new AdvanceOrders();
+			newAdvance->setSelfPlayers(player);
+			newAdvance->setArmyUnits(strongTerritory->army);
+			newAdvance->setSourceTerritory(strongTerritory);
+			newAdvance->setTargetTerritory(terr);
+			player->setOrder(newAdvance);
+		}
+	}
+
+	cout << "\nAggressive player deployed/Advanced all its armies and reinforcements until it no longer can." << endl;
 }
+
+
 
 vector<Territory*> AggressivePlayerStrategy::toAttack()
 {
-	vector<Territory*> DefendList;
-	return DefendList;
 	cout << "AggressivePlayerStrategy: toAttack() " << endl;
+	vector<Territory*> attackList;
+	int strongArmy = 0;
+	Territory* strongTerritory = 0;
+
+	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
+		if ((*element)->army > strongArmy) {
+			strongArmy = (*element)->army;
+			strongTerritory = (*element);
+		}
+	}
+
+	for (auto element = player->getNeighbourTerritories(strongTerritory).begin(); element != player->getNeighbourTerritories(strongTerritory).end(); element++) {
+		if ((*element)->getTerritoryOwner() != player) {
+			attackList.push_back(*element);
+		}
+	}
+
+	return attackList;
 }
 
 vector<Territory*> AggressivePlayerStrategy::toDefend()
 {
 	vector<Territory*> DefendList;
 	return DefendList;
-	cout << "AggressivePlayerStrategy: toDenfend() -> maximize aggregation of forces in the country" << endl;
+	cout << "AggressivePlayerStrategy: toDenfend() " << endl;
+	cout << "Aggressive Player can not defend!" << endl;
+}
+
+void AggressivePlayerStrategy::PrintStrategy()
+{
+	std::cout << "Aggressive Player Strategy\n";
+}
+
+#pragma endregion
+
+#pragma region Benevolent Player Strategy
+
+BenevolentPlayerStrategy::BenevolentPlayerStrategy(Player* p) {
+	this->player = p;
 }
 
 int BenevolentPlayerStrategy::changeStrategy(string order, int numArmy)
 {
-	cout << "BenevolentPlayerStrategy: makeDecision() " << endl;
-	//focus on protecting its weak country
+	cout << "BenevolentPlayerStrategy: changeStrategy() " << endl;
 	issueOrder(order);
-	//never attacks, toDefend
 	toDefend();
-	return numArmy - 1;
+
+	return 0;
+	
 }
 
 void BenevolentPlayerStrategy::issueOrder(string order)
 {
-	cout << "BenevolentPlayerStrategy: issueOrder() -> " << order << " -> reinforces its weakest country. " << endl;
+	cout << "BenevolentPlayerStrategy: issueOrder() -> " << endl;
+
+	vector<Territory*> defendList = toDefend();
+	while (player->getReinforcementPool() > 0) {
+		for (auto element = defendList.begin(); element != defendList.end(); element++) {
+			(*element)->army += 1;
+			player->setReinforcementPool(player->getReinforcementPool() - 1);
+		}
+	}
+	cout << "Benevolent player has protected its weakest territory " << endl;
+
 }
 
 vector<Territory*> BenevolentPlayerStrategy::toAttack()
 {
-	vector<Territory*> DefendList;
-	return DefendList;
+
+	vector<Territory*> AttackList;
+	return AttackList;
 	cout << "BenevolentPlayerStrategy : never attacks" << endl;
+	cout << "Benevolent Player does not attack" << endl;
+
 }
 
 vector<Territory*> BenevolentPlayerStrategy::toDefend()
 {
-	
-	vector<Territory*> DefendList;
-	return DefendList; 
-	cout << "BenevolentPlayerStrategy: toDenfend() -> move armies to weaker countries. " << endl;
+	cout << "BenevolentPlayerStrategy: toDenfend()  " << endl;
+
+	vector<Territory*> defendList;
+	Territory* begin = *player->getTerritory().begin();
+	int lowCount = begin->army;
+
+	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
+		if ((*element)->army < lowCount) {
+			lowCount = (*element)->army;
+		}
+	}
+	for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
+		if ((*element)->army== lowCount) {
+			defendList.push_back(*element);
+		}
+	}
+
+	return defendList;
 }
 
+void BenevolentPlayerStrategy::PrintStrategy()
+{
+	std::cout << "Benevolent Player Strategy\n";
+}
+
+#pragma endregion
 
 #pragma region Neutral Player Strategy
 
@@ -165,6 +340,11 @@ vector<Territory*> NeutralPlayerStrategy::toDefend()
 {
 	vector<Territory*> DefendList;
 	return DefendList;
+}
+
+void NeutralPlayerStrategy::PrintStrategy()
+{
+	std::cout << "Neutral Player Strategy\n";
 }
 
 NeutralPlayerStrategy::~NeutralPlayerStrategy()
@@ -223,10 +403,13 @@ vector<Territory*> CheaterPlayerStrategy::toAttack()
 
 	for (int i = 0; i < territory.size(); i++)
 	{
-		string temp = player->getName();
-		if (!temp.compare(territory[i]->getTerritoryOwner()->getName()) == 0)
-			AttackList.push_back(territory[i]);
-
+		for (int j = 0; j < territory.at(i)->edges.size(); j++)
+		{
+			if (territory.at(i)->edges.at(j)->getTerritoryOwner() != player)
+			{
+				AttackList.push_back(territory.at(i)->edges.at(j));
+			}
+		}
 	}
 	return AttackList;
 }
@@ -236,6 +419,11 @@ vector<Territory*> CheaterPlayerStrategy::toDefend()
 {
 	vector<Territory*> DefendList;
 	return DefendList;
+}
+
+void CheaterPlayerStrategy::PrintStrategy()
+{
+	std::cout << "Cheater Player Strategy\n";
 }
 
 #pragma endregion
