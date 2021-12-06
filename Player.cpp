@@ -245,6 +245,7 @@ vector<Territory*> Player::toDefend()
 
 void Player::issueOrder()
 {
+	//
 	//Display territories that can be attack or defend
 	vector<Territory*> AttackList;
 	AttackList = toAttack();
