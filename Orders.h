@@ -31,14 +31,8 @@ class Orders : public Subject, public ILoggable
         virtual void setTargetTerritory(Territory* terr);
         virtual const Player getSelfPlayers() const;
         virtual const Territory getTargetTerritory() const;
-
-
-
         virtual void stringToLog(string l);
-        
-
-
-
+       
     private:
         const std::string refName = "";
         const std::string* name;

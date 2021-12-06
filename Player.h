@@ -1,6 +1,6 @@
 #pragma once
 #include "Map.h"
-
+#include "PlayerStrategy.h";
 #include <string>
 #include <vector>
 #include <iostream>
@@ -10,6 +10,8 @@ class Hand;
 class Orders;
 class Territory;
 class Card;
+class PlayerStrategy;
+enum PlayerType;
 //all class need to have an assignment operator, and stream insertion operator.
 class Player {
 
@@ -49,11 +51,12 @@ public:
     void addTruce(Player*);
     void removeAllTruces();
     bool hasTruce(Player*);
+    void setPlayerStrategy(PlayerType type);
 
 private:
     string name;
     int reinforcementPool;
-
+    PlayerStrategy* strategy;
     vector<Territory*> territory;
     Hand* handCard;
     vector<Orders*> orderList;
