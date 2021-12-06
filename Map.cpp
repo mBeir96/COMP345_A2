@@ -440,7 +440,6 @@ vector<Territory>* MapLoader::readMap(string file_name)
 		cout << "File had an invalid [borders] section. Please check the formatting and try again";
 		return NULL;
 	}
-	inFile.close();
 	return territories;
 }
 

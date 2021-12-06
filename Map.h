@@ -27,6 +27,7 @@ public:
 	Player *player; //replace with actual player
 	int value;
 	int army;
+	Player* owner;// add for part 1 of A3
 	vector<Territory*> edges;
 
 	//accessors for private values

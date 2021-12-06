@@ -30,6 +30,7 @@ public:
     vector<Territory*> toAttack();
     vector<Territory*> toDefend();
     vector<Orders*> getOrderList();
+    vector<Territory*> getNeighbourTerritories(Territory*);
     Hand* getCard();
     void issueOrder();
 
@@ -39,7 +40,6 @@ public:
     void setOrder(Orders*);
     void setTerritory(Territory*);
     void removeTerritory(int i);
-    void removeAllTerritories();
     void setName(string);
     void setHand(Card* c);
     
@@ -49,12 +49,16 @@ public:
     void addTruce(Player*);
     void removeAllTruces();
     bool hasTruce(Player*);
+    vector<Territory*> territory;
+    int reinforcementPool;
+
+    void setStrategy(PlayerStrategy* P);
 
 private:
     string name;
-    int reinforcementPool;
+    //int reinforcementPool;
 
-    vector<Territory*> territory;
+   // vector<Territory*> territory;
     Hand* handCard;
     vector<Orders*> orderList;
     vector<Player*> playerTruces;

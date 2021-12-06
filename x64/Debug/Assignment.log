@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (A2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  PlayerStrategy.cpp
+C:\Users\Admin\source\COMP345_A2\PlayerStrategy.cpp(25): warning C4715: 'HumanPlayerStrategy::changeStrategy': not all control paths return a value
+  Assignment.vcxproj -> C:\Users\Admin\source\COMP345_A2\x64\Debug\Assignment.exe

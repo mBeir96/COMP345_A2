@@ -82,6 +82,7 @@ class AdvanceOrders : public Orders
         AdvanceOrders();
         AdvanceOrders(Player* player, Territory* territory);    
         AdvanceOrders(const AdvanceOrders& a);
+        AdvanceOrders(Player* player, Territory* territory, Territory* terri, int numArmy); // constructor to show how the aggressive player deploys or advances armies on its strongest territory
         AdvanceOrders& operator=(const AdvanceOrders& a);
         friend std::ostream& operator<<(std::ostream &out, const AdvanceOrders &a);
         friend std::istream& operator>>(std::istream& in, AdvanceOrders& a);
