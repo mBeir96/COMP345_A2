@@ -47,8 +47,17 @@ public:
 	void issueOrder() ;
 	vector<Territory*> toAttack() ;
 	vector<Territory*> toDefend();
-	void PrintStrategy();
+	
 private:
+	void PrintStrategy();
+	void Deploy();
+	void Advance();
+	void Airlift();
+	void Bomb();
+	void Blockade();
+	void Negotiate();
+	int ChooseValidRegion(int max);
+	int GetArmyNumber(int army);
 	Player* player;
 };
 
