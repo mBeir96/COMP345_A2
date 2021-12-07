@@ -12,6 +12,8 @@ void PlayerStrategyDriverMain() {
 #pragma region 1
 
 #pragma region Simple Map
+	Player* none = new Player();
+	none->setName("None");
 
 	Territory* t1 = new Territory();
 	Territory* t2 = new Territory();
@@ -32,12 +34,19 @@ void PlayerStrategyDriverMain() {
 	t4->edges.push_back(t3);
 	t4->edges.push_back(t1);
 
+	vector<Territory*>map;
+	map.push_back(t1);
+	map.push_back(t2);
+	map.push_back(t3);
+	map.push_back(t4);
+
+
 #pragma endregion
+
 
 #pragma region Cheater
 	cout << "Cheater Player testing\n\n";
 	Player* cheaterPlayer = new Player();
-	Player* none = new Player();
 	cheaterPlayer->setName("Cheater");
 	none->setName("None");
 
@@ -247,6 +256,59 @@ void PlayerStrategyDriverMain() {
 #pragma endregion
 
 #pragma region 3
+
+	cout << "Human Player testing\n\n";
+	Player* humanPlayer = new Player();
+	humanPlayer->setName("Human Player");
+	humanPlayer->setPlayerStrategy(Human);
+
+	Player* neutralPlayer2 = new Player();
+	neutralPlayer2->setName("Neutral Player");
+	neutralPlayer2->setPlayerStrategy(Neutral);
+
+	humanPlayer->setNeutralPlayer(neutralPlayer2);
+	humanPlayer->setMap(map);
+
+	t1->setTerritoryOwner(humanPlayer);
+	t2->setTerritoryOwner(humanPlayer);
+	t3->setTerritoryOwner(none);
+	t4->setTerritoryOwner(none);
+
+	t1->setArmyAmount(2);
+	t2->setArmyAmount(1);
+	t3->setArmyAmount(5);
+	t4->setArmyAmount(0);
+
+	humanPlayer->setTerritory(t1);
+	humanPlayer->setTerritory(t2);
+	none->setTerritory(t3);
+	none->setTerritory(t4);
+
+	ShowTerritoryOwner(t1);
+	ShowTerritoryOwner(t2);
+	ShowTerritoryOwner(t3);
+	ShowTerritoryOwner(t4);
+
+	ShowTerritoryArmy(t1);
+	ShowTerritoryArmy(t2);
+	ShowTerritoryArmy(t3);
+	ShowTerritoryArmy(t4);
+
+
+	humanPlayer->setReinforcementPool(10);
+	humanPlayer->issueOrder();
+	executePlayerOrders(humanPlayer);
+
+	ShowTerritoryOwner(t1);
+	ShowTerritoryOwner(t2);
+	ShowTerritoryOwner(t3);
+	ShowTerritoryOwner(t4);
+
+	ShowTerritoryArmy(t1);
+	ShowTerritoryArmy(t2);
+	ShowTerritoryArmy(t3);
+	ShowTerritoryArmy(t4);
+	UserPauseStrat();
 
 
 #pragma endregion

@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Player.h"
 #include <vector>;
+#include <set>;
 using namespace std;
 class Orders;
 class Player;
@@ -40,69 +41,54 @@ int HumanPlayerStrategy::changeStrategy(string order, int armies)
 
 void HumanPlayerStrategy::issueOrder()
 {
+	const int EXITNUMBER = 7;
 	int input = 0;
 
-	cout << "Which order are you issuing?" << endl;
-	cout << "1. Deploy" << endl;
-	cout << "2. Advance" << endl;
-	cout << "3. Airlift" << endl;
-	cout << "4. Bomb" << endl;
-	cout << "5. Blockade" << endl;
-	cout << "6. Negotiate" << endl;
+	while (input != EXITNUMBER) {
+		cout << "Which order are you issuing?" << endl;
+		cout << "1. Deploy" << endl;
+		cout << "2. Advance" << endl;
+		cout << "3. Airlift" << endl;
+		cout << "4. Bomb" << endl;
+		cout << "5. Blockade" << endl;
+		cout << "6. Negotiate" << endl;
+		cout << EXITNUMBER << ". Exit" << endl;
 
-	//fix problem with orders
-	cin >> input;
-	switch (input) {
-	case (1): {
-		DeployOrders* order1 = new DeployOrders();
-		cout << "player will" << order1 << endl;
-		player->setOrder(order1);
+		//fix problem with orders
+		cin >> input;
+		switch (input) {
+		case (1): 
+			Deploy();
+			break;
+		case (2): 
+			Advance();
+			break;
+		case (3): 
+			Airlift();
+			break;
+		case (4): 
+			Bomb();
+			break;
+		case (5): 
+			Blockade();
+			break;
+		case (6): 
+			Negotiate();
+			break;
+		case (EXITNUMBER): 
+			cout << "Exiting" << endl;
+			break;
+		default: 
+			cout << "Please Enter a valid order number!" << endl;
+			break;
+		}
 	}
-	case (2): {
-		AdvanceOrders* order1 = new AdvanceOrders();
-		cout << "player will" << order1<< endl;
-		player->setOrder(order1);
-	}
-	case (3): {
-		BombOrders* order1 = new BombOrders();
-		cout << "player will" << order1 << endl;
-		player->setOrder(order1);
-	}
-	case (4): {
-		BlockadeOrders* order1 = new BlockadeOrders();
-		cout << "player will" << order1<< endl;
-		player->setOrder(order1);
-	}
-	case (5): {
-		AirliftOrders* order1 = new AirliftOrders();
-		cout << "player will" << order1 << endl;
-		player->setOrder(order1);
-	}
-	case (6): {
-		NegotiateOrders* order1 = new NegotiateOrders();
-		cout << "player will" << order1<< endl;
-		player->setOrder(order1);
-	}
-	default: {
-		cout << "Please Enter a valid order number!" << endl;
-	}
-	}
-
 }
 
 vector<Territory*> HumanPlayerStrategy::toAttack()
 {
 	cout << "HumanPlayerStrategy: toAttack() " << endl;
 	vector<Territory*> attackList;
-	/*for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
-		for (auto element1 = (player->getNeighbourTerritories(*element).begin()); element1 != player->getNeighbourTerritories(*(element)).end(); element1++) {
-			if ((*element1)->getTerritoryOwner() != player) {
-				attackList.push_back(*element1);
-				(*element1)->getTerritoryOwner()->getTerritory().erase(element1);
-			}
-		}
-	}
-	*/
 	return attackList;
 }
 
@@ -123,6 +109,200 @@ void HumanPlayerStrategy::PrintStrategy()
 {
 	std::cout << "Human Player Strategy\n";
 }
+
+#pragma region Helper Functions
+
+void HumanPlayerStrategy::Deploy()
+{
+
+	//show necessary information
+	ShowTerritory();
+	cout << "Available Reinforcement: " << player->getReinforcementPool() << endl;
+
+	//get region and reinforcement
+	int region = ChooseValidOption(player->getTerritory().size());
+	int rein = GetArmyNumber(player->getReinforcementPool());
+	player->setReinforcementPool(player->getReinforcementPool() - rein);
+
+	//make order
+	DeployOrders* deployOrder = new DeployOrders();
+	deployOrder->setSelfPlayers(player);
+	deployOrder->setTargetTerritory(player->getTerritory().at(region));
+	deployOrder->setNumArmy(rein);
+
+	player->setOrder(deployOrder);
+}
+
+void HumanPlayerStrategy::Advance()
+{
+	//get source territory
+	ShowTerritory();
+	int source = ChooseValidOption(player->getTerritory().size());
+	
+	//get target territory
+	cout << "These are the target Territories" << endl;
+	for (int i = 0; i < player->getTerritory().at(source)->edges.size(); i++)
+	{
+		cout << i << ". " << player->getTerritory().at(source)->edges.at(i)->getTname() << " (" << player->getTerritory().at(source)->edges.at(i)->getArmyAmount() << ")";
+		if (player->getTerritory().at(source)->edges.at(i)->getTerritoryOwner() != player)
+		{
+			cout << " (enemy)";
+		}
+		cout << endl;
+	}
+	int target = ChooseValidOption(player->getTerritory().size());
+
+	//get army amount
+	cout << "Source armount is " << player->getTerritory().at(source)->getArmyAmount() << endl;
+	int army = GetArmyNumber(player->getTerritory().at(source)->getArmyAmount());
+
+	//make advance orders
+	AdvanceOrders* advanceOrder = new AdvanceOrders();
+	advanceOrder->setSelfPlayers(player);
+	advanceOrder->setSourceTerritory(player->getTerritory().at(source));
+	advanceOrder->setTargetTerritory(player->getTerritory().at(source)->edges.at(target));
+	advanceOrder->setArmyUnits(army);
+
+	player->setOrder(advanceOrder);
+}
+
+void HumanPlayerStrategy::Airlift()
+{
+	ShowTerritory();
+
+	int source = ChooseValidOption(player->getTerritory().size());
+	
+	cout << "Choose another region to Airlift towards" <<endl;
+	int target = ChooseValidOption(player->getTerritory().size());
+
+	cout << "Choose army amount to source" << endl;
+	cout << "Available army: " << player->getTerritory().at(source)->getArmyAmount() << endl;
+	int army = GetArmyNumber(player->getTerritory().at(source)->getArmyAmount());
+
+	AirliftOrders* airliftOrder = new AirliftOrders();
+	airliftOrder->setSelfPlayers(player);
+	airliftOrder->setSourceTerritory(player->getTerritory().at(source));
+	airliftOrder->setTargetTerritory(player->getTerritory().at(target));
+	airliftOrder->setNumArmy(army);
+
+	player->setOrder(airliftOrder);
+}
+
+void HumanPlayerStrategy::Bomb()
+{
+	//get enemy territory
+	vector<Territory*> enemyTerritory = GetEnemyTerritory();
+
+	//choose enemy territory
+	cout << "These are enemy Territory Territories" << endl;
+	for (int i = 0; i < enemyTerritory.size(); i++)
+	{
+		cout << i << ". " << enemyTerritory.at(i)->getTname() << " (" << enemyTerritory.at(i)->getArmyAmount() << ")";
+		cout << endl;
+	}
+	int territory = ChooseValidOption(enemyTerritory.size());
+
+	//make bomb orders
+	BombOrders* bombOrders = new BombOrders();
+	bombOrders->setSelfPlayers(player);
+	bombOrders->setTargetTerritory(enemyTerritory.at(territory));
+
+	player->setOrder(bombOrders);
+}
+
+void HumanPlayerStrategy::Blockade()
+{
+	ShowTerritory();
+	int region = ChooseValidOption(player->getTerritory().size());
+
+	BlockadeOrders* blockadeOrders = new BlockadeOrders();
+	blockadeOrders->setSelfPlayers(player);
+	blockadeOrders->setNeutralPlayer(player->getNeutralPlayer());
+	blockadeOrders->setTargetTerritory(player->getTerritory().at(region));
+
+	player->setOrder(blockadeOrders);
+}
+
+void HumanPlayerStrategy::Negotiate()
+{
+	set<Player*> playersTemp = GetPlayers();
+	vector<Player*> players = vector<Player*>(playersTemp.begin(), playersTemp.end());
+
+	cout << "These are the valid player options" << endl;
+	for (int i = 0; i < players.size(); i++)
+	{
+		next(players.begin(), i);
+		cout << i << ". " << players.at(i)->getName() << endl;
+	}
+
+	int chosenPlayer = ChooseValidOption(players.size());
+
+	NegotiateOrders* negotiateOrders = new NegotiateOrders();
+	negotiateOrders->setSelfPlayers(player);
+	negotiateOrders->setPeacePlayer(players.at(chosenPlayer));
+
+	player->setOrder(negotiateOrders);
+}
+
+int HumanPlayerStrategy::ChooseValidOption(int max)
+{
+	int region = -1;
+	while (region >= max || region < 0) {
+		cout << "choose a valid option: ";
+		cin >> region;
+	}
+
+	return region;
+}
+
+int HumanPlayerStrategy::GetArmyNumber(int army)
+{
+	int rein = -1;
+	while (rein > army || rein < 0) {
+		cout << "choose a valid amount: ";
+		cin >> rein;
+		cout << endl;
+	}
+
+	return rein;
+}
+
+void HumanPlayerStrategy::ShowTerritory()
+{
+	cout << "These are the available to Choose from" << endl;
+	for (int i = 0; i < player->getTerritory().size(); i++)
+	{
+		cout << i << ". " << player->getTerritory().at(i)->getTname() << " (" << player->getTerritory().at(i)->getArmyAmount() << ")" << endl;
+	}
+}
+
+vector<Territory*> HumanPlayerStrategy::GetEnemyTerritory()
+{
+	vector<Territory*> nonPlayerTerritory;
+	
+	for each (Territory* territory in player->getMap())
+	{
+		if (territory->getTerritoryOwner() != player) {
+			nonPlayerTerritory.push_back(territory);
+		}
+	}
+	
+	return nonPlayerTerritory;
+}
+
+set<Player*> HumanPlayerStrategy::GetPlayers()
+{
+	set<Player*> players;
+	for each (Territory* terr in player->getMap())
+	{
+		if (terr->getTerritoryOwner() != player) {
+			players.insert(terr->getTerritoryOwner());
+		}
+	}
+	return players;
+}
+
+#pragma endregion
 
 #pragma endregion
 

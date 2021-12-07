@@ -5,6 +5,7 @@
 #include <vector>
 #include "Player.h"
 #include "Map.h"
+#include <set>
 using namespace std;
 
 class Territory;
@@ -47,8 +48,20 @@ public:
 	void issueOrder() ;
 	vector<Territory*> toAttack() ;
 	vector<Territory*> toDefend();
-	void PrintStrategy();
+	
 private:
+	void PrintStrategy();
+	void Deploy();
+	void Advance();
+	void Airlift();
+	void Bomb();
+	void Blockade();
+	void Negotiate();
+	int ChooseValidOption(int max);
+	int GetArmyNumber(int army);
+	void ShowTerritory();
+	vector<Territory*> GetEnemyTerritory();
+	set<Player*> GetPlayers();
 	Player* player;
 };
 
