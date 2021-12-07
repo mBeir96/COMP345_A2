@@ -175,7 +175,7 @@ void AggressivePlayerStrategy::issueOrder()
 		}
 	}
 
-	cout << "\nAggressive player deployed/Advanced all its armies and reinforcements until it no longer can." << endl;
+	//cout << "\nAggressive player deployed/Advanced all its armies and reinforcements until it no longer can." << endl;
 }
 
 vector<Territory*> AggressivePlayerStrategy::toAttack()
@@ -258,7 +258,7 @@ vector<Territory*> BenevolentPlayerStrategy::toAttack()
 vector<Territory*> BenevolentPlayerStrategy::toDefend()
 {
 	vector<Territory*> defendList;
-	Territory* begin = *player->getTerritory().begin();
+	Territory* begin = *player->territory.begin();
 	int lowCount = begin->army;
 
 	for (int i = 0; i < player->getTerritory().size(); i++) {
@@ -372,6 +372,7 @@ int CheaterPlayerStrategy::changeStrategy(string, int)
 //takes all adjacent territory
 void CheaterPlayerStrategy::issueOrder()
 {
+	player->territory.at(0);
 	vector<Territory*> AttackList = this->toAttack();
 	Territory* terr;
 	for (int i = 0; i < AttackList.size(); i++)

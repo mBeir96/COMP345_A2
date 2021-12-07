@@ -179,9 +179,9 @@ bool Map::validate()
 		return false;
 	}
 	//showing that theMap is a connected graph
-	cout << "\nThe following is the relations between each country: \n";
+	//cout << "\nThe following is the relations between each country: \n";
 	
-	for (int i = 0; i < theMap->size(); i++)
+	/*for (int i = 0; i < theMap->size(); i++)
 	{
 		cout << theMap->at(i).country << " (";
 		for (int j = 0; j < theMap->at(i).edges.size(); j++)
@@ -189,12 +189,12 @@ bool Map::validate()
 			cout << theMap->at(i).edges.at(j)->country << ", ";
 		}
 		cout << ")\n";
-	}
-	system("pause");
+	}*/
+	//system("pause");
 	//showing that the contienets are a subgraph
-	cout << "\nThe following is to prove the continental subgraph: \n";
+	//cout << "\nThe following is to prove the continental subgraph: \n";
 	
-	for (int j = 0; j < theMap->size(); j++)
+	/*for (int j = 0; j < theMap->size(); j++)
 	{
 		for (int k = 0; k < theMap->at(j).edges.size(); k++)
 		if (theMap->at(j).continent != theMap->at(j).edges.at(k)->continent)
@@ -202,16 +202,16 @@ bool Map::validate()
 			cout << "Can access " << theMap->at(j).continent << " from " << theMap->at(j).edges.at(k)->continent <<
 				" by " << theMap->at(j).country << " and " << theMap->at(j).edges.at(k)->country << "\n";
 		}
-	}
-	system("pause");
+	}*/
+	//system("pause");
 	//showing that the countries belong to one and only one continent
-	cout << "\nThe following is to prove that every country belongs to one and only one continent\n";
+	//cout << "\nThe following is to prove that every country belongs to one and only one continent\n";
 
-	for (int i = 0; i < theMap->size(); i++)
+	/*for (int i = 0; i < theMap->size(); i++)
 	{
 		cout << theMap->at(i).country << " belongs to " << theMap->at(i).continent << "\n";
 	}
-	
+	*/
 	return true;
 }
 

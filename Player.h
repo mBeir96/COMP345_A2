@@ -54,12 +54,13 @@ public:
     void setPlayerStrategy(PlayerType type);
     void printStrategy();
     void removePlayerStrategy();
+    vector<Territory*> territory;
 
 private:
     string name;
     int reinforcementPool;
     PlayerStrategy* strategy;
-    vector<Territory*> territory;
+    
     Hand* handCard;
     vector<Orders*> orderList;
     vector<Player*> playerTruces;

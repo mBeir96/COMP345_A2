@@ -1,1 +1,1 @@
-tournament -M europass.map google.map -P Aggressive Neutral Benevolent -G 3 -D 50
+tournament -M europass.map google.map -P Neutral Aggressive Benevolent Cheater -G 3 -D 10

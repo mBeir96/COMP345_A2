@@ -1012,22 +1012,30 @@ void GameEngine::tournament(string b)
                 {
                     theMap->theMap = loadedMap;
                 }
+                if (!theMap->validate())
+                {
+                    cout << "invalid map inputted";
+                }
+                //initializing play order
+                random_shuffle(players.begin(), players.end());
 
                 //dividing the territories to the players 
                 //making the player own the territory
                 for (int l = 0; l < theMap->theMap->size(); l++)
                 {
-                    theMap->theMap->at(i).setTerritoryOwner(players.at(i));
-                    players.at(l % players.size())->setTerritory(&(theMap->theMap->at(l)));
-
+                    theMap->theMap->at(l).setTerritoryOwner(players.at(l % players.size()));    
                 }
-                //initializing play order
-                random_shuffle(players.begin(), players.end());
+                for (int l = 0; l < theMap->theMap->size(); l++)
+                {
+                    players.at(l % players.size())->setTerritory(&(theMap->theMap->at(l)));
+                }
+                Territory* test = players.at(0)->getTerritory().at(0);
                 //giving every player 50 initial armies to their reinforcement pool
                 for (int l = 0; l < players.size(); l++)
                 {
                     players.at(l)->setReinforcementPool(50);
                 }
+                
                 //giving every player 2 draws
                 for (int l = 0; l < players.size(); l++)
                 {
@@ -1035,26 +1043,33 @@ void GameEngine::tournament(string b)
                     players.at(l)->setHand(deck->Draw());
                 }
 
+                
                 int count = 0;
                 bool won = false;
                 while (!won && count < nbOfTurns)
                 {
                     //part1
                     //each player's turn
+                    
                     for (int l = 0; l < players.size(); l++)
                     {
-                        players.at(l)->issueOrder();
+                        if (players.at(l)->getTerritory().size() != 0)
+                        {
+                            players.at(l)->issueOrder();
+                        }
+                        
+
                         executePlayerOrders(players.at(l));
-                    }
-                    //checking if someone won
-                    for (int l = 0; l < players.size(); l++)
-                    {
+                        //checking if someone won
                         if (players.at(l)->getTerritory().size() == theMap->theMap->size())
                         {
                             winners.push_back(players.at(l)->getName());
                             won = true;
+                            break;
                         }
                     }
+                    
+
                     count++;
                 }
 
@@ -1090,7 +1105,7 @@ void GameEngine::tournament(string b)
                 cout << maps[r - 1] << "\t";
             }
             else if (r != 0 && c != 0) {
-                cout << winners.at((r + c) - 2) << "\t\t\t";
+                cout << winners.at((r + c) - 2) << "\t";
             }
 
 
