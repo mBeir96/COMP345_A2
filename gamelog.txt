@@ -632,3 +632,16 @@ Order: Bomb Order
 Order: Negotiate Order
 Order: Negotiate Order
 Order: Blockade Order
+Order: Deploy Order
+Order: Deploy Order
+Order: Deploy Order
+Order: Deploy Order
+Order: Deploy Order
+Order: Deploy Order
+Order: Deploy Order
+Order: Deploy Order
+Order: Deploy Order
+Order: Deploy Order
+Order: Advance Order
+Order: Advance Order
+Order: Blockade Order

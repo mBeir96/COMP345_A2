@@ -43,7 +43,7 @@ void PlayerStrategyDriverMain() {
 
 #pragma endregion
 
-	/*
+
 #pragma region Cheater
 	cout << "Cheater Player testing\n\n";
 	Player* cheaterPlayer = new Player();
@@ -254,7 +254,6 @@ void PlayerStrategyDriverMain() {
 		cin >> input;
 	}
 #pragma endregion
-*/
 
 #pragma region 3
 
