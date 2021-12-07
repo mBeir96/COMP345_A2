@@ -629,3 +629,5 @@ Order: Advance Order
 Order: Advance Order
 Order: Advance Order
 Order: Bomb Order
+Order: Negotiate Order
+Order: Negotiate Order

@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Player.h"
 #include <vector>;
+#include <set>;
 using namespace std;
 class Orders;
 class Player;
@@ -88,15 +89,6 @@ vector<Territory*> HumanPlayerStrategy::toAttack()
 {
 	cout << "HumanPlayerStrategy: toAttack() " << endl;
 	vector<Territory*> attackList;
-	/*for (auto element = player->getTerritory().begin(); element != player->getTerritory().end(); element++) {
-		for (auto element1 = (player->getNeighbourTerritories(*element).begin()); element1 != player->getNeighbourTerritories(*(element)).end(); element1++) {
-			if ((*element1)->getTerritoryOwner() != player) {
-				attackList.push_back(*element1);
-				(*element1)->getTerritoryOwner()->getTerritory().erase(element1);
-			}
-		}
-	}
-	*/
 	return attackList;
 }
 
@@ -128,7 +120,7 @@ void HumanPlayerStrategy::Deploy()
 	cout << "Available Reinforcement: " << player->getReinforcementPool() << endl;
 
 	//get region and reinforcement
-	int region = ChooseValidRegion(player->getTerritory().size());
+	int region = ChooseValidOption(player->getTerritory().size());
 	int rein = GetArmyNumber(player->getReinforcementPool());
 	player->setReinforcementPool(player->getReinforcementPool() - rein);
 
@@ -145,7 +137,7 @@ void HumanPlayerStrategy::Advance()
 {
 	//get source territory
 	ShowTerritory();
-	int source = ChooseValidRegion(player->getTerritory().size());
+	int source = ChooseValidOption(player->getTerritory().size());
 	
 	//get target territory
 	cout << "These are the target Territories" << endl;
@@ -158,7 +150,7 @@ void HumanPlayerStrategy::Advance()
 		}
 		cout << endl;
 	}
-	int target = ChooseValidRegion(player->getTerritory().size());
+	int target = ChooseValidOption(player->getTerritory().size());
 
 	//get army amount
 	cout << "Source armount is " << player->getTerritory().at(source)->getArmyAmount() << endl;
@@ -178,10 +170,10 @@ void HumanPlayerStrategy::Airlift()
 {
 	ShowTerritory();
 
-	int source = ChooseValidRegion(player->getTerritory().size());
+	int source = ChooseValidOption(player->getTerritory().size());
 	
 	cout << "Choose another region to Airlift towards" <<endl;
-	int target = ChooseValidRegion(player->getTerritory().size());
+	int target = ChooseValidOption(player->getTerritory().size());
 
 	cout << "Choose army amount to source" << endl;
 	cout << "Available army: " << player->getTerritory().at(source)->getArmyAmount() << endl;
@@ -199,7 +191,7 @@ void HumanPlayerStrategy::Airlift()
 void HumanPlayerStrategy::Bomb()
 {
 	//get enemy territory
-	vector<Territory*> enemyTerritory = GetNonPlayerTerritory();
+	vector<Territory*> enemyTerritory = GetEnemyTerritory();
 
 	//choose enemy territory
 	cout << "These are enemy Territory Territories" << endl;
@@ -208,7 +200,7 @@ void HumanPlayerStrategy::Bomb()
 		cout << i << ". " << enemyTerritory.at(i)->getTname() << " (" << enemyTerritory.at(i)->getArmyAmount() << ")";
 		cout << endl;
 	}
-	int territory = ChooseValidRegion(enemyTerritory.size());
+	int territory = ChooseValidOption(enemyTerritory.size());
 
 	//make bomb orders
 	BombOrders* bombOrders = new BombOrders();
@@ -224,13 +216,30 @@ void HumanPlayerStrategy::Blockade()
 
 void HumanPlayerStrategy::Negotiate()
 {
+	set<Player*> playersTemp = GetPlayers();
+	vector<Player*> players = vector<Player*>(playersTemp.begin(), playersTemp.end());
+
+	cout << "These are the valid player options" << endl;
+	for (int i = 0; i < players.size(); i++)
+	{
+		next(players.begin(), i);
+		cout << i << ". " << players.at(i)->getName() << endl;
+	}
+
+	int chosenPlayer = ChooseValidOption(players.size());
+
+	NegotiateOrders* negotiateOrders = new NegotiateOrders();
+	negotiateOrders->setSelfPlayers(player);
+	negotiateOrders->setPeacePlayer(players.at(chosenPlayer));
+
+	player->setOrder(negotiateOrders);
 }
 
-int HumanPlayerStrategy::ChooseValidRegion(int max)
+int HumanPlayerStrategy::ChooseValidOption(int max)
 {
 	int region = -1;
 	while (region >= max || region < 0) {
-		cout << "choose a valid region: ";
+		cout << "choose a valid option: ";
 		cin >> region;
 	}
 
@@ -258,7 +267,7 @@ void HumanPlayerStrategy::ShowTerritory()
 	}
 }
 
-vector<Territory*> HumanPlayerStrategy::GetNonPlayerTerritory()
+vector<Territory*> HumanPlayerStrategy::GetEnemyTerritory()
 {
 	vector<Territory*> nonPlayerTerritory;
 	
@@ -270,6 +279,18 @@ vector<Territory*> HumanPlayerStrategy::GetNonPlayerTerritory()
 	}
 	
 	return nonPlayerTerritory;
+}
+
+set<Player*> HumanPlayerStrategy::GetPlayers()
+{
+	set<Player*> players;
+	for each (Territory* terr in player->getMap())
+	{
+		if (terr->getTerritoryOwner() != player) {
+			players.insert(terr->getTerritoryOwner());
+		}
+	}
+	return players;
 }
 
 #pragma endregion

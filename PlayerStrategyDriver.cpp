@@ -13,6 +13,7 @@ void PlayerStrategyDriverMain() {
 
 #pragma region Simple Map
 	Player* none = new Player();
+	none->setName("None");
 
 	Territory* t1 = new Territory();
 	Territory* t2 = new Territory();
