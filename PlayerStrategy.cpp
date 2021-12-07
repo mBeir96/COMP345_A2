@@ -198,6 +198,24 @@ void HumanPlayerStrategy::Airlift()
 
 void HumanPlayerStrategy::Bomb()
 {
+	//get enemy territory
+	vector<Territory*> enemyTerritory = GetNonPlayerTerritory();
+
+	//choose enemy territory
+	cout << "These are enemy Territory Territories" << endl;
+	for (int i = 0; i < enemyTerritory.size(); i++)
+	{
+		cout << i << ". " << enemyTerritory.at(i)->getTname() << " (" << enemyTerritory.at(i)->getArmyAmount() << ")";
+		cout << endl;
+	}
+	int territory = ChooseValidRegion(enemyTerritory.size());
+
+	//make bomb orders
+	BombOrders* bombOrders = new BombOrders();
+	bombOrders->setSelfPlayers(player);
+	bombOrders->setTargetTerritory(enemyTerritory.at(territory));
+
+	player->setOrder(bombOrders);
 }
 
 void HumanPlayerStrategy::Blockade()
@@ -238,6 +256,20 @@ void HumanPlayerStrategy::ShowTerritory()
 	{
 		cout << i << ". " << player->getTerritory().at(i)->getTname() << " (" << player->getTerritory().at(i)->getArmyAmount() << ")" << endl;
 	}
+}
+
+vector<Territory*> HumanPlayerStrategy::GetNonPlayerTerritory()
+{
+	vector<Territory*> nonPlayerTerritory;
+	
+	for each (Territory* territory in player->getMap())
+	{
+		if (territory->getTerritoryOwner() != player) {
+			nonPlayerTerritory.push_back(territory);
+		}
+	}
+	
+	return nonPlayerTerritory;
 }
 
 #pragma endregion

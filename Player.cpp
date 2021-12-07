@@ -300,6 +300,26 @@ void Player::removePlayerStrategy()
 	delete strategy;
 }
 
+void Player::setMap(vector<Territory*> map)
+{
+	this->map = map;
+}
+
+void Player::setNeutralPlayer(Player* neutralPlayer)
+{
+	this->neutralPlayer = neutralPlayer;
+}
+
+vector<Territory*> Player::getMap()
+{
+	return this->map;
+}
+
+Player* Player::getNeutralPlayer()
+{
+	return this->neutralPlayer;
+}
+
 
 
 

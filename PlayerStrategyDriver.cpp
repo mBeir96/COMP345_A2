@@ -33,6 +33,13 @@ void PlayerStrategyDriverMain() {
 	t4->edges.push_back(t3);
 	t4->edges.push_back(t1);
 
+	vector<Territory*>map;
+	map.push_back(t1);
+	map.push_back(t2);
+	map.push_back(t3);
+	map.push_back(t4);
+
+
 #pragma endregion
 
 	/*
@@ -247,12 +254,20 @@ void PlayerStrategyDriverMain() {
 	}
 #pragma endregion
 */
+
 #pragma region 3
 
 	cout << "Human Player testing\n\n";
 	Player* humanPlayer = new Player();
 	humanPlayer->setName("Human Player");
 	humanPlayer->setPlayerStrategy(Human);
+
+	Player* neutralPlayer2 = new Player();
+	neutralPlayer2->setName("Neutral Player");
+	neutralPlayer2->setPlayerStrategy(Neutral);
+
+	humanPlayer->setNeutralPlayer(neutralPlayer2);
+	humanPlayer->setMap(map);
 
 	t1->setTerritoryOwner(humanPlayer);
 	t2->setTerritoryOwner(humanPlayer);
@@ -261,7 +276,7 @@ void PlayerStrategyDriverMain() {
 
 	t1->setArmyAmount(2);
 	t2->setArmyAmount(0);
-	t3->setArmyAmount(0);
+	t3->setArmyAmount(5);
 	t4->setArmyAmount(0);
 
 	humanPlayer->setTerritory(t1);
@@ -283,7 +298,6 @@ void PlayerStrategyDriverMain() {
 	humanPlayer->setReinforcementPool(10);
 	humanPlayer->issueOrder();
 	executePlayerOrders(humanPlayer);
-
 
 	ShowTerritoryOwner(t1);
 	ShowTerritoryOwner(t2);

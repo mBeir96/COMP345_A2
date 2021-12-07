@@ -55,6 +55,13 @@ public:
     void printStrategy();
     void removePlayerStrategy();
 
+    //These are needed for human interaction
+    void setMap(vector<Territory*> map);
+    void setNeutralPlayer(Player* neutralPlayer);
+
+    vector<Territory*> getMap();
+    Player* getNeutralPlayer();
+
 private:
     string name;
     int reinforcementPool;
@@ -63,6 +70,9 @@ private:
     Hand* handCard;
     vector<Orders*> orderList;
     vector<Player*> playerTruces;
+
+    vector<Territory*> map;
+    Player* neutralPlayer;
 
     //friend classes
     friend class Hand;

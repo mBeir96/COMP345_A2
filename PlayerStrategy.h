@@ -59,6 +59,7 @@ private:
 	int ChooseValidRegion(int max);
 	int GetArmyNumber(int army);
 	void ShowTerritory();
+	vector<Territory*> GetNonPlayerTerritory();
 	Player* player;
 };
 

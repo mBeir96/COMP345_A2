@@ -628,3 +628,4 @@ Order: Deploy Order
 Order: Advance Order
 Order: Advance Order
 Order: Advance Order
+Order: Bomb Order
