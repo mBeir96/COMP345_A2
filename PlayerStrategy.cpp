@@ -124,11 +124,7 @@ void HumanPlayerStrategy::Deploy()
 {
 
 	//show necessary information
-	cout << "These are the available to deploy" << endl;
-	for (int i = 0; i < player->getTerritory().size(); i++)
-	{
-		cout << i << ". " << player->getTerritory().at(i)->getTname() << endl;
-	}
+	ShowTerritory();
 	cout << "Available Reinforcement: " << player->getReinforcementPool() << endl;
 
 	//get region and reinforcement
@@ -147,15 +143,40 @@ void HumanPlayerStrategy::Deploy()
 
 void HumanPlayerStrategy::Advance()
 {
+	//get source territory
+	ShowTerritory();
+	int source = ChooseValidRegion(player->getTerritory().size());
+	
+	//get target territory
+	cout << "These are the target Territories" << endl;
+	for (int i = 0; i < player->getTerritory().at(source)->edges.size(); i++)
+	{
+		cout << i << ". " << player->getTerritory().at(source)->edges.at(i)->getTname() << " (" << player->getTerritory().at(source)->edges.at(i)->getArmyAmount() << ")";
+		if (player->getTerritory().at(source)->edges.at(i)->getTerritoryOwner() != player)
+		{
+			cout << " (enemy)";
+		}
+		cout << endl;
+	}
+	int target = ChooseValidRegion(player->getTerritory().size());
+
+	//get army amount
+	cout << "Source armount is " << player->getTerritory().at(source)->getArmyAmount() << endl;
+	int army = GetArmyNumber(player->getTerritory().at(source)->getArmyAmount());
+
+	//make advance orders
+	AdvanceOrders* advanceOrder = new AdvanceOrders();
+	advanceOrder->setSelfPlayers(player);
+	advanceOrder->setSourceTerritory(player->getTerritory().at(source));
+	advanceOrder->setTargetTerritory(player->getTerritory().at(source)->edges.at(target));
+	advanceOrder->setArmyUnits(army);
+
+	player->setOrder(advanceOrder);
 }
 
 void HumanPlayerStrategy::Airlift()
 {
-	cout << "These are the available to Airlift source" << endl;
-	for (int i = 0; i < player->getTerritory().size(); i++)
-	{
-		cout << i << ". " << player->getTerritory().at(i)->getTname() << " (" << player->getTerritory().at(i)->getArmyAmount() << ")" << endl;
-	}
+	ShowTerritory();
 
 	int source = ChooseValidRegion(player->getTerritory().size());
 	
@@ -208,6 +229,15 @@ int HumanPlayerStrategy::GetArmyNumber(int army)
 	}
 
 	return rein;
+}
+
+void HumanPlayerStrategy::ShowTerritory()
+{
+	cout << "These are the available to Choose from" << endl;
+	for (int i = 0; i < player->getTerritory().size(); i++)
+	{
+		cout << i << ". " << player->getTerritory().at(i)->getTname() << " (" << player->getTerritory().at(i)->getArmyAmount() << ")" << endl;
+	}
 }
 
 #pragma endregion

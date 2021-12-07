@@ -58,6 +58,7 @@ private:
 	void Negotiate();
 	int ChooseValidRegion(int max);
 	int GetArmyNumber(int army);
+	void ShowTerritory();
 	Player* player;
 };
 

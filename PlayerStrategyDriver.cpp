@@ -251,7 +251,7 @@ void PlayerStrategyDriverMain() {
 
 	cout << "Human Player testing\n\n";
 	Player* humanPlayer = new Player();
-	humanPlayer->setName("Neutral Player");
+	humanPlayer->setName("Human Player");
 	humanPlayer->setPlayerStrategy(Human);
 
 	t1->setTerritoryOwner(humanPlayer);

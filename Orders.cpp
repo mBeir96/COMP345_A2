@@ -8,6 +8,8 @@ class Territory;
 class GameEngine;
 //this is the implementation initialisation
 
+#pragma region Orders
+
 void Orders::setSelfPlayers(Player *self){
     this->player = self;
 }
@@ -77,6 +79,10 @@ void Orders::stringToLog(string l)
 }
 
 //end of the orders class
+
+#pragma endregion
+
+#pragma region Deploy Orders
 
 DeployOrders::DeployOrders()
 {
@@ -195,7 +201,9 @@ bool DeployOrders::validate(bool valid)
 
 //end of DeployOrders
 
+#pragma endregion
 
+#pragma region Advance Orders
 
 AdvanceOrders::AdvanceOrders()
 {
@@ -409,6 +417,9 @@ bool AdvanceOrders::validate(bool valid)
 }
 
 //end of AdvanceOrders
+#pragma endregion
+
+#pragma region Bomb Orders
 
 BombOrders::BombOrders()
 {
@@ -508,6 +519,10 @@ bool BombOrders::validate(bool valid)
 }
 
 //end BombOrders
+
+#pragma endregion
+
+#pragma region Blockade Orders
 
 BlockadeOrders::BlockadeOrders()
 {
@@ -644,6 +659,9 @@ bool BlockadeOrders::validate(bool valid)
 }
 
 //end BlockadeOrders
+#pragma endregion
+
+#pragma region Airlift Orders
 
 AirliftOrders::AirliftOrders()
 {
@@ -737,9 +755,6 @@ void AirliftOrders::setSourceTerritory(Territory *target){
     source = target;
 }
 
-
-
-
 void AirliftOrders::execute()
 {
 
@@ -782,10 +797,10 @@ bool AirliftOrders::validate(bool valid)
     return valid;
 }
 
-
 //end AirliftOrders
+#pragma endregion
 
-//keep everything with negotiate orders
+#pragma region Negotiate Orders
 
 NegotiateOrders::NegotiateOrders()
 {
@@ -874,10 +889,10 @@ void NegotiateOrders::setPeacePlayer(Player* target)
 {
     this->peacePlayer = target;
 }
-
-
 //end NegotiateOrders
+#pragma endregion
 
+#pragma region OrderList
 
 OrdersList::OrdersList()
 {
@@ -933,6 +948,4 @@ void OrdersList::stringToLog(string l)
 
 }
 
-
-
-
+#pragma endregion
