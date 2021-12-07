@@ -276,7 +276,7 @@ void PlayerStrategyDriverMain() {
 	t4->setTerritoryOwner(none);
 
 	t1->setArmyAmount(2);
-	t2->setArmyAmount(0);
+	t2->setArmyAmount(1);
 	t3->setArmyAmount(5);
 	t4->setArmyAmount(0);
 

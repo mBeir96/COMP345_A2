@@ -212,6 +212,15 @@ void HumanPlayerStrategy::Bomb()
 
 void HumanPlayerStrategy::Blockade()
 {
+	ShowTerritory();
+	int region = ChooseValidOption(player->getTerritory().size());
+
+	BlockadeOrders* blockadeOrders = new BlockadeOrders();
+	blockadeOrders->setSelfPlayers(player);
+	blockadeOrders->setNeutralPlayer(player->getNeutralPlayer());
+	blockadeOrders->setTargetTerritory(player->getTerritory().at(region));
+
+	player->setOrder(blockadeOrders);
 }
 
 void HumanPlayerStrategy::Negotiate()

@@ -1,8 +1,16 @@
-﻿  PlayerStrategyDriver.cpp
+﻿  PlayerStrategy.cpp
+D:\Github\COMP345_A2\Player.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\GameEngine.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\PlayerStrategy.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\PlayerStrategy.cpp(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\Github\COMP345_A2\PlayerStrategy.cpp(234,3): warning C4834: discarding return value of function with 'nodiscard' attribute
+  PlayerStrategyDriver.cpp
 D:\Github\COMP345_A2\PlayerStrategyDriver.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\Player.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\PlayerStrategyDriver.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\PlayerStrategyDriver.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\PlayerStrategyDriver.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\Github\COMP345_A2\GameEngine.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
+D:\Github\COMP345_A2\PlayerStrategy.cpp(40): warning C4715: 'HumanPlayerStrategy::changeStrategy': not all control paths return a value
   A2.vcxproj -> D:\Github\COMP345_A2\x64\Debug\A2.exe
